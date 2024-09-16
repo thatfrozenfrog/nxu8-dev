@@ -1,0 +1,97 @@
+     VMA      LMA     Size Align Out     In      Symbol
+       0        0        0     1 SFRORIGIN = 0x8000F000
+       0        0        0     1 RAMENDNEXT = 0x8000F000
+       0        0        0     1 PROVIDE ( STACKSIZE = 0x00000400 )
+       0        0        0     1 STACKORIGIN = RAMENDNEXT - STACKSIZE
+       0        0        0     1 PROVIDE ( _$$SP = RAMENDNEXT )
+       0        0        0     1 DYNAMIC = __data_end + 0x2
+       0        0        0     1 DYNAMICSIZE = STACKORIGIN - DYNAMIC
+       0        0        0     1 ROMWINDOWSIZE = 0xCFFF
+       0        0        8     1 .text_vec
+       0        0        8     1         startup.o:(.text.isr_vector)
+       8        8        0     1         . = 0x8
+80009000      100        2     1 .data
+80009000      100        1     1         main.o:(.data)
+80009000      100        1     1                 lastbutton
+     102      102     2882     4 .rom
+     102      102        0     1         __rodata0_end = ( . )
+     102      102        0     1         
+     102      102        8     1         startup.o:(.text0.start_up)
+     102      102        0     1                 _$$start_up
+     104      104        0     1                 _$$brk_reset
+     104      104        0     1                 _$$error
+     104      104        0     1                 _$$bal_00
+     106      106        0     1                 _$begin
+     10a      10a        0     1         __text0_end = ( . )
+     10a      10a        0     1         
+     10a      10a     1000     1         main.o:(.rodata)
+     10a      10a     1000     1                 image_raw
+    110a     110a        a     1         startup.o:(.rodata)
+    110a     110a        0     1                 _$$init_info
+    1112     1112        0     1                 _$$init_info_end
+    1114     1114     1860     4         main.o:(.text)
+    1114     1114      5b4     1                 CheckButtons
+    16c8     16c8      166     1                 drawbitmap
+    1830     1830      580     1                 print
+    1db0     1db0      ba4     1                 PrintWord
+    2954     2954       20     1                 main
+    2974     2974        0     4         startup.o:(.text)
+    2974     2974       10     4         E:\Lexide\BuildTools\Ver.20231124\Lib\U16\longu8.a(PUSHPOPU8LW.o):(.text)
+    2974     2974        0     1                 __regpushu8lw
+    297c     297c        0     1                 __regpopu8lw
+80009002 80009002        6     1 .bss
+80009002 80009002        5     1         main.o:(.bss)
+80009002 80009002        5     1                 printdwordbuf
+80009008 80009008        0     1         __data_end = .
+       8        8        0     1 .vec
+       8        8        0     1         WDTINT = ABSOLUTE ( 0x0008 )
+       8        8        0     1         EXI0INT = ABSOLUTE ( 0x0010 )
+       8        8        0     1         EXI1INT = ABSOLUTE ( 0x0012 )
+       8        8        0     1         EXI2INT = ABSOLUTE ( 0x0014 )
+       8        8        0     1         EXI3INT = ABSOLUTE ( 0x0016 )
+       8        8        0     1         EXI4INT = ABSOLUTE ( 0x0018 )
+       8        8        0     1         EXI5INT = ABSOLUTE ( 0x001A )
+       8        8        0     1         EXI6INT = ABSOLUTE ( 0x001C )
+       8        8        0     1         EXI7INT = ABSOLUTE ( 0x001E )
+       8        8        0     1         CBUINT = ABSOLUTE ( 0x0020 )
+       8        8        0     1         MCSINT = ABSOLUTE ( 0x0024 )
+       8        8        0     1         UA00INT = ABSOLUTE ( 0x0026 )
+       8        8        0     1         UA01INT = ABSOLUTE ( 0x0028 )
+       8        8        0     1         SADINT = ABSOLUTE ( 0x002C )
+       8        8        0     1         SIOF0INT = ABSOLUTE ( 0x002E )
+       8        8        0     1         SIO0INT = ABSOLUTE ( 0x0030 )
+       8        8        0     1         I2CM0INT = ABSOLUTE ( 0x0034 )
+       8        8        0     1         FTM0INT = ABSOLUTE ( 0x0038 )
+       8        8        0     1         FTM1INT = ABSOLUTE ( 0x003A )
+       8        8        0     1         TM0INT = ABSOLUTE ( 0x003C )
+       8        8        0     1         TM1INT = ABSOLUTE ( 0x003E )
+       8        8        0     1         I2CU0INT = ABSOLUTE ( 0x0040 )
+       8        8        0     1         UA10INT = ABSOLUTE ( 0x0042 )
+       8        8        0     1         UA11INT = ABSOLUTE ( 0x0044 )
+       8        8        0     1         TM2INT = ABSOLUTE ( 0x004C )
+       8        8        0     1         TM3INT = ABSOLUTE ( 0x004E )
+       8        8        0     1         UA20INT = ABSOLUTE ( 0x0050 )
+       8        8        0     1         UA21INT = ABSOLUTE ( 0x0052 )
+       8        8        0     1         TM4INT = ABSOLUTE ( 0x005C )
+       8        8        0     1         TMXINT = ABSOLUTE ( 0x0072 )
+       8        8        0     1         LTB0INT = ABSOLUTE ( 0x0074 )
+       8        8        0     1         LTB3INT = ABSOLUTE ( 0x0076 )
+       8        8        0     1         LTB1INT = ABSOLUTE ( 0x0078 )
+       8        8        0     1         LTB2INT = ABSOLUTE ( 0x007A )
+8000f000 8000f000        0     1 .sfr
+8000f000 8000f000        0     1         DSR = ABSOLUTE ( 0xF000 )
+8000f000 8000f000        0     1 PROVIDE ( __START_DATA_lma = LOADADDR ( .data ) )
+8000f000 8000f000        0     1 PROVIDE ( __START_DATA = ADDR ( .data ) )
+8000f000 8000f000        0     1 PROVIDE ( INITTAB = __START_DATA_lma & 65535 )
+8000f000 8000f000        0     1 PROVIDE ( INITVAR = __START_DATA & 65535 )
+8000f000 8000f000        0     1 PROVIDE ( INITSIZE = SIZEOF ( .data ) )
+8000f000 8000f000        0     1 PROVIDE ( INITTABSEG = ( ( __START_DATA_lma >> 16 ) & 15 ) )
+8000f000 8000f000        0     1 PROVIDE ( INITVARSEG = ( ( __START_DATA >> 16 ) & 15 ) )
+       0        0       4a     1 .comment
+       0        0       4a     1         <internal>:(.comment)
+       0        0      480     4 .symtab
+       0        0      480     4         <internal>:(.symtab)
+       0        0       48     1 .shstrtab
+       0        0       48     1         <internal>:(.shstrtab)
+       0        0      297     1 .strtab
+       0        0      297     1         <internal>:(.strtab)

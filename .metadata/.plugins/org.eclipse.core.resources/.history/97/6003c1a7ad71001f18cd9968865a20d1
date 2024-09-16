@@ -1,0 +1,11 @@
+enum SPECIAL_CHARS
+{
+
+	SP_UP = 0x20,
+	SP_DOWN = 0x22,
+	SP_LEFT = 0x29,
+	SP_RIGHT = 0x19,
+
+
+};
+

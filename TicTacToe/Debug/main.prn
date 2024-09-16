@@ -1,0 +1,462 @@
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   1 
+ Source File: main.asm
+ Object File: .\main.obj
+ Date  : 2024/09/16 Mon.[11:41]
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+                                    1   ;; Compile Options : /TML620906 /ML /far /SD /Oa /Om /W 1 /Fa.\ /Zs 
+                                    2   ;; Version Number  : Ver.3.66.2
+                                    3   ;; File Name       : main.c
+                                    4   
+                                    5   	type (ML620906) 
+                                    6   	model large, far
+                                    7   	$$delay$main segment code 2h any
+                                    8   	$$main$main segment code 2h any
+                                    9   	$$set_bits$main segment code 2h any
+                                   10   	STACKSEG 0400h
+                                   11   CVERSION 3.66.2
+                                   12   CGLOBAL 01H 03H 0000H "main" 08H 02H 0A4H 00H 80H 04H 00H 00H 01H
+                                   13   CGLOBAL 01H 03H 0000H "delay" 08H 02H 0A0H 00H 80H 00H 00H 00H 07H
+                                   14   CGLOBAL 01H 03H 0000H "set_bits" 08H 02H 0A3H 00H 83H 1aH 00H 00H 07H
+                                   15   CSTRUCTTAG 0000H 0000H 0003H 0002H 00000008H "_Notag"
+                                   16   CSTRUCTMEM 63H 00000004H 00000000H "quot" 02H 00H 02H
+                                   17   CSTRUCTMEM 63H 00000004H 00000004H "rem" 02H 00H 02H
+                                   18   CSTRUCTTAG 0000H 0000H 0002H 0002H 00000004H "_Notag"
+                                   19   CSTRUCTMEM 63H 00000002H 00000000H "quot" 02H 00H 01H
+                                   20   CSTRUCTMEM 63H 00000002H 00000002H "rem" 02H 00H 01H
+                                   21   CSTRUCTTAG 0000H 0000H 0001H 000CH 00000024H "_Notag"
+                                   22   CSTRUCTMEM 62H 00000002H 00000000H "_Mode" 02H 00H 08H
+                                   23   CSTRUCTMEM 63H 00000002H 00000002H "_Handle" 02H 00H 08H
+                                   24   CSTRUCTMEM 62H 00000003H 00000004H "_Buf" 04H 03H 04H 00H 00H
+                                   25   CSTRUCTMEM 62H 00000003H 00000008H "_Bend" 04H 03H 04H 00H 00H
+                                   26   CSTRUCTMEM 62H 00000003H 0000000CH "_Next" 04H 03H 04H 00H 00H
+                                   27   CSTRUCTMEM 62H 00000003H 00000010H "_Rend" 04H 03H 04H 00H 00H
+                                   28   CSTRUCTMEM 62H 00000003H 00000014H "_Rsave" 04H 03H 04H 00H 00H
+                                   29   CSTRUCTMEM 62H 00000003H 00000018H "_Wend" 04H 03H 04H 00H 00H
+                                   30   CSTRUCTMEM 62H 00000002H 0000001CH "_Back" 05H 01H 02H 00H 00H 00H
+                                   31   CSTRUCTMEM 62H 00000001H 0000001EH "_Cbuf" 02H 00H 00H
+                                   32   CSTRUCTMEM 62H 00000001H 0000001FH "_Nback" 02H 00H 00H
+                                   33   CSTRUCTMEM 63H 00000003H 00000020H "_Tmpnam" 04H 03H 04H 00H 00H
+                                   34   CSTRUCTTAG 0000H 0000H 0000H 0001H 00000004H "_Notag"
+                                   35   CSTRUCTMEM 62H 00000004H 00000000H "_Off" 02H 00H 02H
+                                   36   CTYPEDEF 0000H 0000H 63H "_Ptrdifft" 02H 00H 01H
+                                   37   CTYPEDEF 0000H 0000H 63H "sword" 02H 00H 08H
+                                   38   CTYPEDEF 0000H 0000H 62H "ushort" 02H 00H 08H
+                                   39   CTYPEDEF 0000H 0000H 62H "byte" 02H 00H 00H
+                                   40   CTYPEDEF 0000H 0000H 62H "_Sizet" 02H 00H 01H
+                                   41   CTYPEDEF 0000H 0000H 62H "size_t" 02H 00H 01H
+                                   42   CTYPEDEF 0000H 0000H 62H "uint8_t" 02H 00H 00H
+                                   43   CTYPEDEF 0000H 0000H 63H "fpos_t" 04H 00H 05H 00H 00H
+                                   44   CTYPEDEF 0000H 0000H 03H "_Cmpfun_nf" 08H 02H 31H 00H 00H 00H 00H 00H 01H
+                                   45   CTYPEDEF 0000H 0000H 03H "_Cmpfun_nn" 08H 02H 30H 00H 00H 00H 00H 00H 01H
+                                   46   CTYPEDEF 0000H 0000H 03H "_Cmpfun_ff" 08H 02H 33H 00H 00H 00H 00H 00H 01H
+                                   47   CTYPEDEF 0000H 0000H 03H "_Cmpfun_fn" 08H 02H 32H 00H 00H 00H 00H 00H 01H
+                                   48   CTYPEDEF 0000H 0000H 62H "word" 02H 00H 08H
+                                   49   CTYPEDEF 0000H 0000H 63H "FILE" 04H 00H 05H 01H 00H
+                                   50   CTYPEDEF 0000H 0000H 63H "div_t" 04H 00H 05H 02H 00H
+                                   51   CTYPEDEF 0000H 0000H 63H "ldiv_t" 04H 00H 05H 03H 00H
+                                   52   CTYPEDEF 0000H 0000H 62H "uint16_t" 02H 00H 08H
+                                   53   CFILE 0001H 00000070H "..\\base.h"
+                                   54   CFILE 0002H 00000105H "E:\\Lexide\\BuildTools\\Ver.20231124\\Inc\\U16\\stdio.h"
+                                   55   CFILE 0003H 0000007AH "E:\\Lexide\\BuildTools\\Ver.20231124\\Inc\\U16\\yvals.h"
+                                   56   CFILE 0004H 000000D8H "E:\\Lexide\\BuildTools\\Ver.20231124\\Inc\\U16\\stdlib.h"
+                                   57   CFILE 0005H 000000C9H "E:\\Lexide\\BuildTools\\Ver.20231124\\Inc\\U16\\string.h"
+                                   58   CFILE 0000H 0000004AH "..\\main.c"
+                                   59   
+  --------------------------       60   	rseg $$delay$main
+                                   61   CFUNCTION 160
+                                   62   
+??:0000                            63   _delay	:
+                                   64   CBLOCK 160 1 10
+                                   65   
+                                   66   ;;{
+                                   67   CLINEA 0000H 0001H 000AH 0001H 0001H
+                                   68   CBLOCK 160 2 10
+                                   69   CARGUMENT 46H 0002H 0024H "after_ticks" 02H 00H 01H
+                                   70   
+                                   71   ;;    if ((FCON & 2) != 0)
+                                   72   CLINEA 0000H 0001H 000BH 0005H 0018H
+??:0000 91-A0 0A-F0                73   	tb	00h:0f00ah.1
+??:0004 02 C9                      74   	beq	_$L1
+                                   75   
+                                   76   ;;        FCON &= 0xfd;
+                                   77   CLINEA 0000H 0001H 000CH 0009H 0015H
+??:0006 92-A0 0A-F0                78   	rb	00h:0f00ah.1
+??:000A                            79   _$L1 :
+                                   80   
+                                   81   ;;    __DI();
+                                   82   CLINEA 0000H 0001H 000DH 0005H 000BH
+??:000A F7-EB                      83   	di
+                                   84   
+                                   85   ;;    Timer0Interval = after_ticks;
+                                   86   CLINEA 0000H 0001H 000EH 0005H 0021H
+??:000C 13-90 20-F0                87   	st	er0,	00h:0f020h
+                                   88   
+                                   89   ;;    Timer0Counter = 0;
+                                   90   CLINEA 0000H 0001H 000FH 0005H 0016H
+??:0010 00 E0                      91   	mov	er0,	#0 
+??:0012 13-90 22-F0                92   	st	er0,	00h:0f022h
+                                   93   
+                                   94   ;;    Timer0Control = 0x0101;
+                                   95   CLINEA 0000H 0001H 0010H 0005H 001BH
+??:0016 01 00                      96   	mov	r0,	#01h
+??:0018 01 01                      97   	mov	r1,	#01h
+??:001A 13-90 24-F0                98   	st	er0,	00h:0f024h
+                                   99   
+                                  100   ;;    InterruptPending_W0 = 0;
+                                  101   CLINEA 0000H 0001H 0011H 0005H 001CH
+??:001E 00 E0                     102   	mov	er0,	#0 
+??:0020 13-90 14-F0               103   	st	er0,	00h:0f014h
+ ** Warning 25: illegal access to SFR
+                                  104   
+                                  105   ;;    StopAcceptor = 0x50;
+                                  106   CLINEA 0000H 0001H 0012H 0005H 0018H
+??:0024 50 00                     107   	mov	r0,	#050h
+??:0026 11-90 08-F0               108   	st	r0,	00h:0f008h
+                                  109   
+                                  110   ;;    StopAcceptor = 0xa0;
+                                  111   CLINEA 0000H 0001H 0013H 0005H 0018H
+??:002A A0 00                     112   	mov	r0,	#0a0h
+??:002C 11-90 08-F0               113   	st	r0,	00h:0f008h
+                                  114   
+                                  115   ;;    StopControl = 2;
+                                  116   CLINEA 0000H 0001H 0014H 0005H 0014H
+??:0030 02 00                     117   	mov	r0,	#02h
+??:0032 11-90 09-F0               118   	st	r0,	00h:0f009h
+                                  119   
+                                  120   ;;    __asm("nop");
+                                  121   CLINEA 0000H 0001H 0015H 0005H 0011H
+??:0036 8F-FE                     122   nop
+                                  123   
+                                  124   ;;    __asm("nop");
+                                  125   CLINEA 0000H 0001H 0016H 0005H 0011H
+??:0038 8F-FE                     126   nop
+                                  127   
+                                  128   ;;    __EI();
+                                  129   CLINEA 0000H 0001H 0017H 0005H 000BH
+??:003A 08-ED                     130   	ei
+                                  131   CBLOCKEND 160 2 24
+                                  132   
+                                  133   ;;}
+                                  134   CLINEA 0000H 0001H 0018H 0001H 0001H
+??:003C 1F-FE                     135   	rt
+                                  136   CBLOCKEND 160 1 24
+                                  137   CFUNCTIONEND 160
+                                  138   
+                                  139   
+  --------------------------      140   	rseg $$set_bits$main
+                                  141   CFUNCTION 163
+                                  142   
+??:0000                           143   _set_bits	:
+                                  144   CBLOCK 163 1 26
+                                  145   
+                                  146   ;;void set_bits(uint8_t *mem_address, int start_bit, int num_bits) {
+                                  147   CLINEA 0000H 0001H 001AH 0001H 0042H
+??:0000 CE-F8                     148   	push	lr
+??:0002 01-F0'00-00'              149   	bl	__regpushu8lw
+??:0006 F6 E1                     150   	add	sp,	#-010
+??:0008 05-F8                     151   	mov	er8,	er0
+??:000A 20-8A                     152   	mov	r10,	r2
+                                  153   CBLOCK 163 2 26
+                                  154   CRET 0016H
+                                  155   CARGUMENT 66H 0003H 1E28H "mem_address" 04H 03H 00H 00H 00H
+                                  156   CARGUMENT 43H 0002H 0010H "start_bit" 02H 00H 01H
+                                  157   CARGUMENT 43H 0002H 0012H "num_bits" 02H 00H 01H
+                                  158   CLOCAL 43H 0002H 0002H 0002H "start_byte" 02H 00H 01H
+                                  159   CLOCAL 43H 0002H 0004H 0002H "start_offset" 02H 00H 01H
+                                  160   CLOCAL 4BH 0002H 0000H 0002H "end_bit" 02H 00H 01H
+                                  161   CLOCAL 43H 0002H 0006H 0002H "end_byte" 02H 00H 01H
+                                  162   CLOCAL 43H 0002H 0008H 0002H "end_offset" 02H 00H 01H
+                                  163   CLOCAL 43H 0002H 000AH 0002H "i" 02H 00H 01H
+                                  164   CLOCAL 4AH 0001H 0000H 0002H "end_mask" 02H 00H 00H
+                                  165   
+                                  166   ;;    int start_byte = start_bit / 8;
+                                  167   CLINEA 0000H 0001H 001CH 0005H 0023H
+??:000C 50 B0                     168   	l	er0,	16[fp]
+??:000E 08 E2                     169   	mov	er2,	#8 
+??:0010 01-F0'00-00'              170   	bl	__idivu8lw
+??:0014 05-F6                     171   	mov	er6,	er0
+??:0016 FE B0                     172   	st	er0,	-2[fp]
+                                  173   
+                                  174   ;;    int start_offset = start_bit % 8;
+                                  175   CLINEA 0000H 0001H 001DH 0005H 0025H
+??:0018 50 B0                     176   	l	er0,	16[fp]
+??:001A 08 E2                     177   	mov	er2,	#8 
+??:001C 01-F0'00-00'              178   	bl	__imodu8lw
+??:0020 FC B0                     179   	st	er0,	-4[fp]
+                                  180   
+                                  181   ;;    int end_byte = end_bit / 8;
+                                  182   CLINEA 0000H 0001H 0020H 0005H 001FH
+??:0022 50 B4                     183   	l	er4,	16[fp]
+??:0024 52 B0                     184   	l	er0,	18[fp]
+??:0026 06-F4                     185   	add	er4,	er0
+??:0028 FF E4                     186   	add	er4,	#-1
+??:002A 45-F0                     187   	mov	er0,	er4
+??:002C 08 E2                     188   	mov	er2,	#8 
+??:002E 01-F0'00-00'              189   	bl	__idivu8lw
+??:0032 05-FC                     190   	mov	bp,	er0
+??:0034 FA B0                     191   	st	er0,	-6[fp]
+                                  192   
+                                  193   ;;    int end_offset = end_bit % 8;
+                                  194   CLINEA 0000H 0001H 0021H 0005H 0021H
+??:0036 45-F0                     195   	mov	er0,	er4
+??:0038 08 E2                     196   	mov	er2,	#8 
+??:003A 01-F0'00-00'              197   	bl	__imodu8lw
+??:003E F8 B0                     198   	st	er0,	-8[fp]
+                                  199   
+                                  200   ;;    if (start_byte == end_byte) {
+                                  201   CLINEA 0000H 0001H 0025H 0005H 0021H
+??:0040 C7-F6                     202   	cmp	er6,	bp
+??:0042 1E C8                     203   	bne	_$L4
+                                  204   CBLOCK 163 3 37
+                                  205   CLOCAL 4AH 0001H 0000H 0003H "mask" 02H 00H 00H
+                                  206   
+                                  207   ;;        *(mem_address + start_byte) |= mask;
+                                  208   CLINEA 0000H 0001H 0027H 0009H 002CH
+??:0044 01 E0                     209   	mov	er0,	#1 
+??:0046 52 B2                     210   	l	er2,	18[fp]
+??:0048 04 C9                     211   	beq	_$M2
+??:004A                           212   _$M3 :
+??:004A 1B-91                     213   	sllc	r1,	#01h
+??:004C 1A-90                     214   	sll	r0,	#01h
+??:004E FF E2                     215   	add	er2,	#-1
+??:0050 FC C8                     216   	bne	_$M3
+??:0052                           217   _$M2 :
+??:0052 05-F2                     218   	mov	er2,	er0
+??:0054 FF E2                     219   	add	er2,	#-1
+??:0056 08 E0                     220   	mov	er0,	#8 
+??:0058 7C B4                     221   	l	er4,	-4[fp]
+??:005A 48-80                     222   	sub	r0,	r4
+??:005C 59-81                     223   	subc	r1,	r5
+??:005E 52 B4                     224   	l	er4,	18[fp]
+??:0060 48-80                     225   	sub	r0,	r4
+??:0062 59-81                     226   	subc	r1,	r5
+??:0064 05-F0                     227   	mov	er0,	er0
+??:0066 04 C9                     228   	beq	_$M4
+??:0068                           229   _$M5 :
+??:0068 1B-93                     230   	sllc	r3,	#01h
+??:006A 1A-92                     231   	sll	r2,	#01h
+??:006C FF E0                     232   	add	er0,	#-1
+??:006E FC C8                     233   	bne	_$M5
+??:0070                           234   _$M4 :
+??:0070 7E B0                     235   	l	er0,	-2[fp]
+??:0072 86-F0                     236   	add	er0,	er8
+??:0074 AF-90 00-93               237   	l	r3,	r10:[er0]
+??:0078 23-83                     238   	or	r3,	r2
+??:007A 9F-FE 01-93               239   	st	r3,	DSR:[er0]
+                                  240   CBLOCKEND 163 3 40
+??:007E 2F CE                     241   	bal	_$L6
+??:0080                           242   _$L4 :
+                                  243   
+                                  244   ;;    } else {
+                                  245   CLINEA 0000H 0000H 0028H 0005H 000CH
+                                  246   CBLOCK 163 4 40
+                                  247   CLOCAL 4AH 0001H 0000H 0004H "start_mask" 02H 00H 00H
+                                  248   
+                                  249   ;;        *(mem_address + start_byte) |= start_mask;
+                                  250   CLINEA 0000H 0001H 002BH 0009H 0032H
+??:0080 7E B0                     251   	l	er0,	-2[fp]
+??:0082 86-F0                     252   	add	er0,	er8
+??:0084 05-F2                     253   	mov	er2,	er0
+??:0086 FF 00                     254   	mov	r0,	#0ffh
+??:0088 00 01                     255   	mov	r1,	#00h
+??:008A 7C B6                     256   	l	er6,	-4[fp]
+??:008C 04 C9                     257   	beq	_$M6
+??:008E                           258   _$M7 :
+??:008E 1D-90                     259   	srlc	r0,	#01h
+??:0090 1E-91                     260   	sra	r1,	#01h
+??:0092 FF E6                     261   	add	er6,	#-1
+??:0094 FC C8                     262   	bne	_$M7
+??:0096                           263   _$M6 :
+??:0096 AF-90 20-91               264   	l	r1,	r10:[er2]
+??:009A 03-81                     265   	or	r1,	r0
+??:009C 9F-FE 21-91               266   	st	r1,	DSR:[er2]
+                                  267   
+                                  268   ;;        for (i = start_byte + 1; i < end_byte; i++) {
+                                  269   CLINEA 0000H 0001H 002EH 0009H 0035H
+??:00A0 7E B0                     270   	l	er0,	-2[fp]
+??:00A2 05 CE                     271   	bal	_$L12
+??:00A4                           272   _$L9 :
+                                  273   CBLOCK 163 5 46
+                                  274   
+                                  275   ;;            *(mem_address + i) = 0xFF;
+                                  276   CLINEA 0000H 0001H 002FH 000DH 0026H
+??:00A4 86-F0                     277   	add	er0,	er8
+??:00A6 FF 03                     278   	mov	r3,	#0ffh
+??:00A8 AF-90 01-93               279   	st	r3,	r10:[er0]
+                                  280   CBLOCKEND 163 5 48
+                                  281   
+                                  282   ;;        for (i = start_byte + 1; i < end_byte; i++) {
+                                  283   CLINEA 0000H 0000H 002EH 0009H 0035H
+??:00AC 76 B0                     284   	l	er0,	-10[fp]
+??:00AE                           285   _$L12 :
+??:00AE 81 E0                     286   	add	er0,	#1 
+??:00B0 F6 B0                     287   	st	er0,	-10[fp]
+??:00B2 7A B2                     288   	l	er2,	-6[fp]
+??:00B4 27-F0                     289   	cmp	er0,	er2
+??:00B6 F6 C5                     290   	blts	_$L9
+                                  291   
+                                  292   ;;        *(mem_address + end_byte) |= end_mask;
+                                  293   CLINEA 0000H 0001H 0034H 0009H 002EH
+??:00B8 25-F0                     294   	mov	er0,	er2
+??:00BA 86-F0                     295   	add	er0,	er8
+??:00BC 05-F2                     296   	mov	er2,	er0
+??:00BE 78 B4                     297   	l	er4,	-8[fp]
+??:00C0 81 E4                     298   	add	er4,	#1 
+??:00C2 FF 00                     299   	mov	r0,	#0ffh
+??:00C4 00 01                     300   	mov	r1,	#00h
+??:00C6 45-F4                     301   	mov	er4,	er4
+??:00C8 04 C9                     302   	beq	_$M8
+??:00CA                           303   _$M9 :
+??:00CA 1D-90                     304   	srlc	r0,	#01h
+??:00CC 1E-91                     305   	sra	r1,	#01h
+??:00CE FF E4                     306   	add	er4,	#-1
+??:00D0 FC C8                     307   	bne	_$M9
+??:00D2                           308   _$M8 :
+??:00D2 FF 40                     309   	xor	r0,	#0ffh
+??:00D4 AF-90 20-91               310   	l	r1,	r10:[er2]
+??:00D8 03-81                     311   	or	r1,	r0
+??:00DA 9F-FE 21-91               312   	st	r1,	DSR:[er2]
+                                  313   CBLOCKEND 163 4 53
+                                  314   
+                                  315   ;;    }
+                                  316   CLINEA 0000H 0000H 0035H 0005H 0005H
+??:00DE                           317   _$L6 :
+                                  318   CBLOCKEND 163 2 54
+                                  319   
+                                  320   ;;}
+                                  321   CLINEA 0000H 0001H 0036H 0001H 0001H
+??:00DE 00-F0'00-00'              322   	b	__regpopu8lw
+                                  323   CBLOCKEND 163 1 54
+                                  324   CFUNCTIONEND 163
+                                  325   
+                                  326   
+  --------------------------      327   	rseg $$main$main
+                                  328   CFUNCTION 164
+                                  329   
+??:0000                           330   _main	:
+                                  331   CBLOCK 164 1 56
+                                  332   
+                                  333   ;;int main() {
+                                  334   CLINEA 0000H 0001H 0038H 0001H 000CH
+                                  335   CBLOCK 164 2 56
+                                  336   CLOCAL 6AH 0003H 0000H 0002H "mem_address" 04H 03H 00H 00H 00H
+                                  337   CLOCAL 4AH 0001H 0000H 0002H "j" 02H 00H 00H
+                                  338   CLOCAL 4AH 0001H 0000H 0002H "k" 02H 00H 00H
+                                  339   
+                                  340   ;;	memset(0xD000,0x00,0x15D3);
+                                  341   CLINEA 0000H 0001H 003DH 0002H 001CH
+??:0000 D3 00                     342   	mov	r0,	#0d3h
+??:0002 15 01                     343   	mov	r1,	#015h
+??:0004 5E-F0                     344   	push	er0
+??:0006 00 E0                     345   	mov	er0,	#0 
+??:0008 5E-F0                     346   	push	er0
+??:000A D0 01                     347   	mov	r1,	#0d0h
+??:000C 00 02                     348   	mov	r2,	#00h
+??:000E 01-F0'00-00'              349   	bl	_memset_f
+??:0012 04 E1                     350   	add	sp,	#4 
+                                  351   
+                                  352   ;;	memset(0xf800,0x00,0x800);
+                                  353   CLINEA 0000H 0001H 003EH 0002H 001BH
+??:0014 00 00                     354   	mov	r0,	#00h
+??:0016 08 01                     355   	mov	r1,	#08h
+??:0018 5E-F0                     356   	push	er0
+??:001A 00 E0                     357   	mov	er0,	#0 
+??:001C 5E-F0                     358   	push	er0
+??:001E F8 01                     359   	mov	r1,	#0f8h
+??:0020 00 02                     360   	mov	r2,	#00h
+??:0022 01-F0'00-00'              361   	bl	_memset_f
+??:0026 04 E1                     362   	add	sp,	#4 
+                                  363   
+                                  364   ;;	while (1) {
+                                  365   CLINEA 0000H 0001H 0041H 0002H 000CH
+??:0028 25 CE                     366   	bal	_$L14
+??:002A                           367   _$L16 :
+                                  368   CBLOCK 164 3 65
+                                  369   
+                                  370   ;;		memset(0xf800,0x00,0x800);
+                                  371   CLINEA 0000H 0001H 0042H 0003H 001CH
+??:002A 00 00                     372   	mov	r0,	#00h
+??:002C 08 01                     373   	mov	r1,	#08h
+??:002E 5E-F0                     374   	push	er0
+??:0030 00 E0                     375   	mov	er0,	#0 
+??:0032 5E-F0                     376   	push	er0
+??:0034 F8 01                     377   	mov	r1,	#0f8h
+??:0036 00 02                     378   	mov	r2,	#00h
+??:0038 01-F0'00-00'              379   	bl	_memset_f
+??:003C 04 E1                     380   	add	sp,	#4 
+                                  381   
+                                  382   ;;		set_bits(mem_address, j, k);
+                                  383   CLINEA 0000H 0001H 0045H 0003H 001EH
+??:003E 10-90 0C-F0               384   	l	r0,	00h:0f00ch
+??:0042 00 01                     385   	mov	r1,	#00h
+??:0044 00-82                     386   	mov	r2,	r0
+??:0046 00 03                     387   	mov	r3,	#00h
+??:0048 C0 04                     388   	mov	r4,	#0c0h
+??:004A 49-F2                     389   	div	er2,	r4
+??:004C 00 05                     390   	mov	r5,	#00h
+??:004E C0 02                     391   	mov	r2,	#0c0h
+??:0050 00 03                     392   	mov	r3,	#00h
+??:0052 48-82                     393   	sub	r2,	r4
+??:0054 59-83                     394   	subc	r3,	r5
+??:0056 01-F0'00-00'              395   	bl	__imodu8lw
+??:005A 00 21                     396   	and	r1,	#00h
+??:005C 5E-F0                     397   	push	er0
+??:005E 5E-F4                     398   	push	er4
+??:0060 20 00                     399   	mov	r0,	#020h
+??:0062 F8 01                     400   	mov	r1,	#0f8h
+??:0064 00 02                     401   	mov	r2,	#00h
+??:0066 01-F0'00-00'              402   	bl	_set_bits
+??:006A 04 E1                     403   	add	sp,	#4 
+                                  404   
+                                  405   ;;		delay(1000);
+                                  406   CLINEA 0000H 0001H 0046H 0003H 000EH
+??:006C E8 00                     407   	mov	r0,	#0e8h
+??:006E 03 01                     408   	mov	r1,	#03h
+??:0070 01-F0'00-00'              409   	bl	_delay
+                                  410   CBLOCKEND 164 3 71
+                                  411   
+                                  412   ;;	}
+                                  413   CLINEA 0000H 0000H 0047H 0002H 0002H
+??:0074                           414   _$L14 :
+                                  415   
+                                  416   ;;	while (1) {
+                                  417   CLINEA 0000H 0000H 0041H 0000H 0000H
+??:0074 DA CE                     418   	bal	_$L16
+                                  419   
+                                  420   ;;    return 0;
+                                  421   CLINEA 0000H 0001H 0048H 0005H 000DH
+                                  422   CBLOCKEND 164 2 73
+                                  423   
+                                  424   ;;}
+                                  425   CLINEA 0000H 0000H 0049H 0001H 0001H
+                                  426   CBLOCKEND 164 1 73
+                                  427   CFUNCTIONEND 164
+                                  428   
+                                  429   	public _main
+                                  430   	public _delay
+                                  431   	public _set_bits
+                                  432   	extrn code far : _memset_f
+                                  433   	extrn code : $$start_up
+                                  434   
+  --------------------------      435   	cseg #00h at 02h
+00:0002 00-00'                    436   	dw	$$start_up
+                                  437   	extrn code : __imodu8lw
+                                  438   	extrn code : __idivu8lw
+                                  439   	extrn code : __regpushu8lw
+                                  440   	extrn code : __regpopu8lw
+                                  441   
+                                  442   	end
+
+
+
+  Target       : ML620906 (nX-U8/100)
+  Memory Model : LARGE
+  Data   Model : FAR
+  ROM WINDOW   :    0H to CFFFH
+  Internal RAM : D000H to EFFFH
+
+  Errors   : 0
+  Warnings : 1  (/Wrpeast)
+  Lines    : 442

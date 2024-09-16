@@ -1,0 +1,216 @@
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   1 
+ Source File: main.asm
+ Object File: main.obj
+ Date  : 2024/08/10 Sat.[17:14]
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+                                    1   ;; Compile Options : /TML620906 /ML /SD
+                                         /Om /Zc /Orp /Famain.asm /Lv 
+                                    2   ;; Version Number  : Ver.3.66.2
+                                    3   ;; File Name       : main.c
+                                    4   
+                                    5   	type (ML620906) 
+                                    6   	model large, near
+                                    7   	$$FCODmain segment code 2h any
+                                    8   	STACKSEG 0400h
+                                    9   CVERSION 3.66.2
+                                   10   CGLOBAL 01H 03H 0000H "render" 08H 02H 
+                                        00H 00H 81H 0eH 00H 00H 07H
+                                   11   CGLOBAL 01H 03H 0000H "main" 08H 02H 01
+                                        H 00H 80H 00H 00H 00H 07H
+                                   12   CTYPEDEF 0000H 0000H 42H "byte" 02H 00H
+                                         00H
+                                   13   CTYPEDEF 0000H 0000H 42H "word" 02H 00H
+                                         08H
+                                   14   CGLOBAL 00H 42H 0002H "width" 02H 00H 0
+                                        8H
+                                   15   CGLOBAL 00H 42H 0002H "height" 02H 00H 
+                                        08H
+                                   16   CFILE 0001H 0000000BH "base.h"
+                                   17   CFILE 0000H 0000001FH "main.c"
+                                   18   
+  --------------------------       19   	rseg $$FCODmain
+                                   20   CFUNCTION 0
+                                   21   
+??:0000                            22   _render	:
+                                   23   CBLOCK 0 1 11
+                                   24   
+                                   25   ;;{
+                                   26   CLINEA 0000H 0001H 000BH 0001H 0001H
+                                   27   ;;*************************************
+                                        ****
+                                   28   ;;	register/stack information
+                                   29   ;;*************************************
+                                        ****
+                                   30   ;;*************************************
+                                        ****
+                                   31   
+??:0000 CE-F8                      32   	push	lr
+??:0002 01-F0'00-00'               33   	bl	__regpushu8lw
+??:0006 25-FA                      34   	mov	er10,	er2
+??:0008 05-F8                      35   	mov	er8,	er0
+                                   36   CBLOCK 0 2 11
+                                   37   CRET 000CH
+                                   38   CARGUMENT 46H 0002H 0028H "addr" 02H 00
+                                        H 01H
+                                   39   CARGUMENT 46H 0002H 0029H "x" 02H 00H 0
+                                        1H
+                                   40   CLOCAL 46H 0002H 0027H 0002H "i" 02H 00
+                                        H 08H
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   2 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+                                   41   CLOCAL 46H 0002H 0026H 0002H "j" 02H 00
+                                        H 08H
+                                   42   CLOCAL 46H 0002H 002AH 0002H "s" 02H 00
+                                        H 08H
+                                   43   
+                                   44   ;;    word j = x;
+                                   45   CLINEA 0000H 0001H 000DH 0005H 000FH
+??:000A 25-F4                      46   	mov	er4,	er2	;; _lj$
+                                        2
+                                   47   
+                                   48   ;;    word s = width * height;
+                                   49   CLINEA 0000H 0001H 000EH 0005H 001CH
+??:000C 12-90 00-00'               50   	l	er0,	NEAR _height
+??:0010 12-92 00-00'               51   	l	er2,	NEAR _width
+??:0014 01-F0'00-00'               52   	bl	__imulu8lw
+??:0018 05-FC                      53   	mov	bp,	er0	;; _ls$
+                                        4
+                                   54   
+                                   55   ;;    for (i = 0; i < s; i++)
+                                   56   CLINEA 0000H 0001H 000FH 0005H 001BH
+??:001A 00 E6                      57   	mov	er6,	#0 	;; _li$
+                                        0
+??:001C 11 CE                      58   	bal	_$L6
+??:001E                            59   _$L3 :
+                                   60   CBLOCK 0 3 16
+                                   61   
+                                   62   ;;        j++;
+                                   63   CLINEA 0000H 0000H 0011H 0009H 000CH
+??:001E 81 E4                      64   	add	er4,	#1 
+??:0020 45-F0                      65   	mov	er0,	er4	;; _lj$
+                                        2
+                                   66   
+                                   67   ;;        if ((j & 0x001F) == 0x18)
+                                   68   CLINEA 0000H 0001H 0012H 0009H 0021H
+??:0022 1F 20                      69   	and	r0,	#01fh
+??:0024 00 21                      70   	and	r1,	#00h
+??:0026 18 70                      71   	cmp	r0,	#018h
+??:0028 00 51                      72   	cmpc	r1,	#00h
+??:002A 04 C8                      73   	bne	_$L7
+                                   74   CBLOCK 0 4 19
+                                   75   
+                                   76   ;;            j += 8 + x;
+                                   77   CLINEA 0000H 0001H 0014H 000DH 0017H
+??:002C A5-F0                      78   	mov	er0,	er10
+??:002E 46-F0                      79   	add	er0,	er4
+??:0030 88 E0                      80   	add	er0,	#8 
+??:0032 05-F4                      81   	mov	er4,	er0	;; _lj$
+                                        2
+                                   82   CBLOCKEND 0 4 21
+                                   83   
+                                   84   ;;        }
+                                   85   CLINEA 0000H 0000H 0015H 0009H 0009H
+??:0034                            86   _$L7 :
+                                   87   
+                                   88   ;;        *((word *)(0xf820 + j)) = *((
+                                        word *)(addr + i));
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   3 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+                                   89   CLINEA 0000H 0001H 0016H 0009H 0038H
+??:0034 85-F0                      90   	mov	er0,	er8
+??:0036 66-F0                      91   	add	er0,	er6
+??:0038 02-90                      92   	l	er0,	[er0]
+??:003A 49-A0 20-F8                93   	st	er0,	0f820h[er4]
+                                   94   CBLOCKEND 0 3 23
+                                   95   
+                                   96   ;;    for (i = 0; i < s; i++)
+                                   97   CLINEA 0000H 0000H 000FH 0005H 001BH
+??:003E 81 E6                      98   	add	er6,	#1 
+??:0040                            99   _$L6 :
+??:0040 C7-F6                     100   	cmp	er6,	bp
+??:0042 ED C1                     101   	blt	_$L3
+                                  102   CBLOCKEND 0 2 24
+                                  103   
+                                  104   ;;}
+                                  105   CLINEA 0000H 0001H 0018H 0001H 0001H
+??:0044 00-F0'00-00'              106   	b	__regpopu8lw
+                                  107   CBLOCKEND 0 1 24
+                                  108   CFUNCTIONEND 0
+                                  109   
+                                  110   CFUNCTION 1
+                                  111   
+??:0048                           112   _main	:
+                                  113   CBLOCK 1 1 27
+                                  114   
+                                  115   ;;{
+                                  116   CLINEA 0000H 0001H 001BH 0001H 0001H
+                                  117   ;;*************************************
+                                        ****
+                                  118   ;;	register/stack information
+                                  119   ;;*************************************
+                                        ****
+                                  120   ;;*************************************
+                                        ****
+                                  121   
+                                  122   CBLOCK 1 2 27
+                                  123   
+                                  124   ;;    width = 0x18;
+                                  125   CLINEA 0000H 0001H 001CH 0005H 0011H
+??:0048 18 E0                     126   	mov	er0,	#24
+??:004A 13-90 00-00'              127   	st	er0,	NEAR _width
+                                  128   
+                                  129   ;;    height = 0x3f;
+                                  130   CLINEA 0000H 0001H 001DH 0005H 0012H
+??:004E 3F E0                     131   	mov	er0,	#63
+??:0050 13-90 00-00'              132   	st	er0,	NEAR _height
+                                  133   
+                                  134   ;;    render(0x0E40, 10);
+                                  135   CLINEA 0000H 0001H 001EH 0005H 0017H
+??:0054 0A E2                     136   	mov	er2,	#10
+??:0056 40 00                     137   	mov	r0,	#040h
+??:0058 0E 01                     138   	mov	r1,	#0eh
+??:005A 01-F0'00-00'              139   	bl	_render
+                                  140   CBLOCKEND 1 2 31
+                                  141   
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   4 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+                                  142   ;;}
+                                  143   CLINEA 0000H 0001H 001FH 0001H 0001H
+??:005E                           144   _$$end_of_main :
+??:005E FF CE                     145   	bal	$
+                                  146   CBLOCKEND 1 1 31
+                                  147   CFUNCTIONEND 1
+                                  148   
+                                  149   	public _render
+                                  150   	public _main
+                                  151   	_width comm data 02h #00h
+                                  152   	_height comm data 02h #00h
+                                  153   	extrn code : $$start_up
+                                  154   
+  --------------------------      155   	cseg #00h at 02h
+00:0002 00-00'                    156   	dw	$$start_up
+                                  157   	extrn code : __imulu8lw
+                                  158   	extrn code : __regpushu8lw
+                                  159   	extrn code : __regpopu8lw
+                                  160   
+                                  161   	end
+
+
+
+  Target       : ML620906 (nX-U8/100)
+  Memory Model : LARGE
+  Data   Model : NEAR
+  ROM WINDOW   :    0H to CFFFH
+  Internal RAM : D000H to EFFFH
+
+  Errors   : 0
+  Warnings : 0  (/Wrpeast)
+  Lines    : 161

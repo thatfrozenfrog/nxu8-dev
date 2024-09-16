@@ -1,0 +1,324 @@
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   1 
+ Source File: suwakOS.asm
+ Object File: suwakOS.obj
+ Date  : 2024/09/03 Tue.[16:45]
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+                                    1   type(ML620906)
+                                    2   model	large
+                                    3   romwindow 0, 0cfffh
+                                    4   
+    = 00:B6ACH                      5   _clear_DDD4			EQU 0:0
+                                        B6ACH
+    = 00:B9CAH                      6   _line_print			EQU 0:0
+                                        B9CAH
+    = 00:B9C8H                      7   _line_print_col0   EQU 0:0B9C8H
+    = 00:BEB0H                      8   _render_DDD4		EQU 0:0BEB0H
+    = 00:BF32H                      9   _render_stat_bar 	EQU 0:0BF32H
+    = 00:C95CH                     10   _delay				EQU 0:0
+                                        C95CH
+    = 00:C90AH                     11   _shutdown			EQU 0:0
+                                        C90AH
+    = 00:D8B8H                     12   _enter				EQU 0:0
+                                        D8B8H
+    = 00:D8C0H                     13   _leave				EQU 0:0
+                                        D8C0H
+    = 02:41DAH                     14   _hex_byte			EQU 2:4
+                                        1DAH
+    = 03:045EH                     15   _convert_keycode	EQU 3:045EH
+    = 02:06E0H                     16   _display_menu		EQU 2:06E0H
+    = 03:5D4AH                     17   _display_settings	EQU 3:5D4AH
+    = 03:86A2H                     18   _get_keycode		EQU 3:86A2H
+    = 00:C27AH                     19   _bitmap				EQU 0:0
+                                        C27AH
+    = 02:7B6CH                     20   _memset				EQU 2:7
+                                        B6CH
+                                   21   
+    = 00:CB8CH                     22   _reset_ko		EQU 0:0CB8CH
+                                   23   
+    = 00001B18H                    24   press_ac_str		EQU 1B18H
+    = 0000A8ECH                    25   keytable			EQU 0A8
+                                        ECH
+    = 0000D150H                    26   last_ki_ko		EQU 0D150h
+                                   27   
+    = 0000D400H                    28   _lastbutton			EQU 0D4
+                                        00H
+                                   29   
+    = 01:0EA0H                     30   __return			EQU 1:0
+                                        EA0H
+    = 03:003EH                     31   _lrstack			EQU 3:0
+                                        03EH
+    = 0000F000H                    32   _$$SP	EQU	0F000h
+  --------------------------       33   cseg	#3	at	0A170h
+03:A170                            34   _entry:
+03:A170 01-F1 A0-0E                35   	bl __return
+03:A174 00-F3 AC-A1                36   	b _main
+                                   37   
+                                   38   
+                                   39   
+                                   40   
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   2 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+03:A178                            41   _cpy:
+03:A178                            42   _loop:
+03:A178 03 E3 00-96                43   	l r6, 3:[er0]
+03:A17C 81 E0                      44   	add er0, #1
+03:A17E 51-96                      45   	st r6, [ea+]
+03:A180 FF E2                      46   	add er2, #-1
+03:A182 FA C8                      47   	bne _loop
+03:A184 1F-FE                      48   	rt
+                                   49   
+                                   50   
+03:A186                            51   _wait_AC:
+03:A186 CE-F8                      52   	push	lr
+03:A188 00 04                      53   	mov	r4,	#0
+03:A18A 02 05                      54   	mov	r5,	#2
+03:A18C                            55   _$waitac_loop:
+03:A18C 10 00                      56   	mov	r0,	#10h
+03:A18E 11-90 46-F0                57   	st	r0,	0F046h
+03:A192 3F E0                      58   	mov	er0,	#3Fh
+03:A194 A1-A0 40-F0                59   	tb	0F040h.2
+03:A198 04 C9                      60   	beq	_$waitac_ret
+03:A19A 01-F0 5C-C9                61   	bl	_delay
+03:A19E FF E4                      62   	add	er4,	#-1
+03:A1A0 F5 C8                      63   	bne	_$waitac_loop
+                                   64   
+03:A1A2                            65   _$waitac_ret:
+03:A1A2 10 00                      66   	mov    r0,    #10h
+03:A1A4 10 01                      67       mov    r1,    #10h
+03:A1A6 01-F0 5C-C9                68       bl    _delay
+03:A1AA 8E-F2                      69   	pop	pc
+                                   70   
+03:A1AC                            71   _main:
+03:A1AC 0C-F0 00-E7                72   	LEA 0E700h
+03:A1B0 3F E2                      73   	mov	er2, #03Fh
+03:A1B2 80 00                      74   	mov	r0,	#080h
+03:A1B4 FF 01                      75   	mov	r1,	#0FFh
+03:A1B6 01-F3 78-A1                76   	bl	_cpy 
+03:A1BA 0E 00                      77   	mov r0, #0Eh
+03:A1BC 11-90 37-D1                78   	st r0, 0D137H
+03:A1C0 16 00                      79   	mov r0, #16H
+03:A1C2 05 01                      80   	mov r1, #05H
+03:A1C4 00 02                      81   	mov r2, #00H
+03:A1C6 E7 03                      82   	mov r3, #0e7h
+03:A1C8 01-F0 CA-B9                83   	bl _line_print
+03:A1CC 0A 00                      84   	mov r0, #0Ah
+03:A1CE 11-90 37-D1                85   	st r0, 0D137H
+03:A1D2 63 00                      86   	mov r0, #63H
+03:A1D4 08 01                      87   	mov r1, #08H
+03:A1D6 08 02                      88   	mov r2, #08H
+03:A1D8 01-F0 CA-B9                89   	bl _line_print
+03:A1DC 14 01                      90   	mov r1, #20
+03:A1DE 0D 02                      91   	mov r2, #00Dh
+03:A1E0 01-F0 C8-B9                92   	bl _line_print_col0
+03:A1E4 1E 01                      93   	mov r1, #30
+03:A1E6 2E 02                      94   	mov r2, #02Eh
+03:A1E8 01-F0 C8-B9                95   	bl _line_print_col0
+03:A1EC 01-F0 B0-BE                96   	bl _render_DDD4
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   3 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+03:A1F0 01-F3 86-A1                97   	bl _wait_AC
+                                   98   	
+                                   99   	
+03:A1F4 0C-F0 00-E7               100   	LEA 0E700h
+03:A1F8 76 02                     101   	mov	r2,	#076h
+03:A1FA 02 03                     102   	mov	r3,	#02h
+03:A1FC 0A 00                     103   	mov	r0,	#00Ah
+03:A1FE FD 01                     104   	mov	r1,	#0FDh
+03:A200 01-F3 78-A1               105   	bl	_cpy
+                                  106   
+03:A204                           107   _startPin:
+03:A204 0C-F0 FF-00               108   	LEA 00FFH
+03:A208 CE-F1                     109   	PUSH EA
+03:A20A 00 E2                     110   	MOV ER2, #00H
+03:A20C F0 00                     111   	MOV R0, #0F0H
+03:A20E D7 01                     112   	MOV R1, #0D7H
+03:A210 01-F2 6C-7B               113   	BL _memset
+                                  114   	
+03:A214 01-F0 AC-B6               115   	bl _clear_DDD4
+                                  116   	
+03:A218 00 00                     117   	mov r0, #00h
+03:A21A E7 01                     118   	mov r1, #0e7h
+03:A21C 5E-F0                     119   	push er0
+03:A21E 50 02                     120   	mov r2, #050h
+03:A220 3F 03                     121   	mov r3, #3Fh
+03:A222 00 E0                     122   	mov er0, #0h
+03:A224 01-F0 7A-C2               123   	bl _bitmap
+03:A228 1E-F0                     124   	pop er0
+                                  125   	
+03:A22A 0C-F0 00-E7               126   	LEA 0E700h
+03:A22E 0A E2                     127   	mov	er2, #10
+03:A230 F0 00                     128   	mov	r0,	#0F0h
+03:A232 FC 01                     129   	mov	r1,	#0FCh
+03:A234 01-F3 78-A1               130   	bl	_cpy
+                                  131   	
+03:A238 0E 00                     132   	mov r0, #0Eh
+03:A23A 11-90 37-D1               133   	st r0, 0D137H
+03:A23E 4D 00                     134   	mov r0, #4DH
+03:A240 08 01                     135   	mov r1, #08H
+03:A242 00 02                     136   	mov r2, #00H
+03:A244 E7 03                     137   	mov r3, #0e7h
+03:A246 01-F0 CA-B9               138   	bl _line_print
+                                  139   	
+03:A24A 01-F0 B0-BE               140   	bl _render_DDD4
+                                  141   
+03:A24E 00 CE                     142   	gjmp _askPin
+                                  143   	
+                                  144   	
+03:A250                           145   _askPin:
+03:A250 00 0C                     146   mov r12, #0h
+03:A252 D8 0D                     147   mov r13, #0D8h
+03:A254 F0 06                     148   mov r6, #0F0h
+03:A256 D7 07                     149   mov r7, #0D7h
+                                  150   
+03:A258                           151   _$pin_loop:
+                                  152   	
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   4 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+03:A258 00 E0                     153   	mov	er0,	#0
+03:A25A C3-90                     154   	st	er0,	[bp]
+03:A25C 13-90 70-DA               155   	st	er0, 0DA70h
+03:A260 C5-F0                     156   	mov	er0,	bp
+03:A262 01-F3 FA-A2               157   	bl _get_keycode_fixed
+03:A266 00-80                     158   	mov	r0,	r0
+03:A268 25 C8                     159   	gbne	_$has_key_press
+03:A26A 00 E0                     160   	mov	er0,	#0
+03:A26C 13-90 50-D1               161   	st	er0,	last_ki_ko
+03:A270 F3 CE                     162   	bal	_$pin_loop
+                                  163   	
+03:A272                           164   _add_key:
+03:A272 12-90 70-DA               165   	l er0, 0DA70h
+03:A276 61-90                     166   	st r0, [er6]
+03:A278 81 E6                     167   	add er6, #1
+                                  168   	
+                                  169   	
+03:A27A 0A 00                     170   	mov r0, #0Ah
+03:A27C 11-90 37-D1               171   	st r0, 0D137H
+03:A280 4D 00                     172   	mov r0, #4DH
+03:A282 30 01                     173   	mov r1, #030H
+03:A284 F0 02                     174   	mov r2, #0f0H
+03:A286 D7 03                     175   	mov r3, #0d7h
+03:A288 01-F0 CA-B9               176   	bl _line_print
+                                  177   	
+03:A28C 01-F0 B0-BE               178   	bl _render_DDD4
+                                  179   	
+03:A290 FA 76                     180   	cmp r6, #0FAh
+03:A292 01 C9                     181   	gbeq _$pinstop
+                                  182   	
+03:A294 E1 CE                     183   	bal	_$pin_loop
+                                  184   
+03:A296                           185   _$pinstop:
+03:A296 0C-F0 00-E7               186   	LEA 0E700h
+03:A29A 0A E2                     187   	mov	er2, #10
+03:A29C 00 00                     188   	mov	r0,	#000h
+03:A29E FD 01                     189   	mov	r1,	#0FDh
+03:A2A0 01-F3 78-A1               190   	bl	_cpy
+                                  191   
+03:A2A4 0A E0                     192   	mov er0, #10
+03:A2A6 01-F3 DA-A2               193   	bl _compare
+03:A2AA 01 74                     194   	cmp r4, #01h
+03:A2AC 01 C9                     195   	gbeq _finish
+03:A2AE AA CE                     196   	gjmp _startPin
+                                  197   
+                                  198   
+03:A2B0                           199   _finish: ;Finished getting PIN
+03:A2B0 00-F3 3E-00               200   	b _lrstack ;End of this large f
+                                        unction
+                                  201   
+                                  202   
+                                  203   
+                                  204   
+                                  205   
+03:A2B4                           206   _$has_key_press:
+03:A2B4 C2-90                     207   	l	er0,	[bp]
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   5 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+03:A2B6 12-92 50-D1               208   	l	er2,	0D150h
+03:A2BA 27-F0                     209   	cmp	er0,	er2
+03:A2BC CD C9                     210   	gbeq	_$pin_loop
+03:A2BE 13-90 50-D1               211   	st	er0,	0D150h
+03:A2C2 00 00                     212   	mov	r0,	#0
+03:A2C4 84 D0                     213   	st	r0,	04h[bp]
+03:A2C6 C5-F0                     214   	mov	er0,	bp
+03:A2C8 EC 02                     215   	mov	r2,	#BYTE1 keytable
+03:A2CA A8 03                     216   	mov	r3,	#BYTE2 keytable
+03:A2CC 01-F3 5E-04               217   	bl	_convert_keycode
+03:A2D0 00 70                     218   	cmp r0, #0h
+03:A2D2 C2 C9                     219   	gbeq _$pin_loop
+03:A2D4 13-90 70-DA               220   	st er0, 0DA70h
+03:A2D8 CC CE                     221   	gjmp _add_key
+                                  222   
+                                  223   
+03:A2DA                           224   _compare:
+03:A2DA 08-92 EF-D7               225   	l r2, 0D7EFh[er0]
+03:A2DE 08-93 FF-E6               226   	l r3, 0E6FFh[er0]
+03:A2E2 37-82                     227   	cmp r2, r3
+03:A2E4 08 C8                     228   	bne $C3
+03:A2E6                           229   $C1:
+03:A2E6 FF E0                     230   	add er0, #-1H
+03:A2E8 00 70                     231   	cmp r0, #0h
+03:A2EA 00 51                     232   	cmpc r1, #0h
+03:A2EC 02 C9                     233   	beq $C2
+03:A2EE 00-F3 DA-A2               234   	b _compare
+03:A2F2                           235   $C2:
+03:A2F2 01 04                     236   	mov r4, #1h
+03:A2F4 1F-FE                     237   	rt
+03:A2F6                           238   $C3:
+03:A2F6 00 04                     239   	mov r4, #0h
+03:A2F8 1F-FE                     240   	rt
+                                  241   	
+                                  242   
+03:A2FA                           243   _get_keycode_fixed:
+03:A2FA CE-F8                     244       push    lr
+03:A2FC 01-F0 B8-D8               245       bl    _enter
+03:A300 05-F8                     246       mov    er8,    er0
+03:A302 01 04                     247       mov    r4,    #1
+03:A304 01 01                     248       mov    r1,    #1
+03:A306 01 03                     249       mov    r3,    #1
+03:A308                           250   _$get_key_loop:
+03:A308 11-91 46-F0               251       st    r1,    0F046H
+03:A30C 00 02                     252       mov    r2,    #0
+03:A30E 10-90 40-F0               253       l    r0,    0F040H
+03:A312 11-92 46-F0               254       st    r2,    0F046H
+03:A316 00-82                     255       mov    r2,    r0
+03:A318 FF 70                     256       cmp    r0,    #0FFh
+03:A31A 05 C9                     257       beq    _$continue
+03:A31C 89-91 01-00               258       st    r1,    01h[er8]
+03:A320 FF 40                     259       xor    r0,    #0FFh
+03:A322 81-90                     260       st    r0,    [er8]
+03:A324 05 CE                     261       bal    _$get_key_ret
+03:A326                           262   _$continue:
+03:A326 1A-91                     263       sll    r1,    #1
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   6 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+03:A328 01 13                     264       add    r3,    #1
+03:A32A 07 73                     265       cmp    r3,    #7
+03:A32C ED C3                     266       ble    _$get_key_loop
+03:A32E 00 04                     267       mov    r4,    #0
+03:A330                           268   _$get_key_ret:
+03:A330 01-F0 8C-CB               269   	bl	_reset_ko
+03:A334 40-80                     270   	mov	r0,	r4
+03:A336 00-F0 C0-D8               271   	b	_leave
+
+
+
+  Target       : ML620906 (nX-U8/100)
+  Memory Model : LARGE
+  Data   Model : NEAR
+  ROM WINDOW   :    0H to CFFFH
+  Internal RAM : D000H to EFFFH
+
+  Errors   : 0
+  Warnings : 0  (/Wrpeast)
+  Lines    : 271

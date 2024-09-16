@@ -1,0 +1,29 @@
+RLU8 Object Linker, Ver.1.60.3 Linkage Information
+[Sat Aug 10 17:14:54 2024]
+
+
+                         ------------------
+                          Control Synopsis
+                         ------------------
+
+I/O controls:   ND  SD NS NA
+Other controls: CC 
+                COMB( $$content_of_init $$end_of_init )
+                COMB( $$init_info $$init_info_end )
+
+
+
+                        ------------------------
+                         Object Module Synopsis
+                        ------------------------
+                                                                Creator
+Module Name           File Name                                 CCU8     RASU8
+-----------           ---------                                 -----    -----
+main                  main.obj                                  3.66     1.80
+startup               startup.obj                               -.--     1.80
+
+Error E010: Unresolved external symbol '__regpushu8lw'
+Error E010: Unresolved external symbol '__regpopu8lw'
+Error E010: Unresolved external symbol '__imulu8lw'
+
+ Discontinue!  Loading error detected.

@@ -1,0 +1,153 @@
+RLU8 Object Linker, Ver.1.60.3 Linkage Information
+[Mon Sep 16 11:41:55 2024]
+
+
+                         ------------------
+                          Control Synopsis
+                         ------------------
+
+I/O controls:    D  SD NS NA
+Other controls: CC ABW 
+                COMB( $$content_of_init $$end_of_init )
+                COMB( $$init_info $$init_info_end )
+
+
+
+                        ------------------------
+                         Object Module Synopsis
+                        ------------------------
+                                                                Creator
+Module Name           File Name                                 CCU8     RASU8
+-----------           ---------                                 -----    -----
+main                  .\main.obj                                3.66     1.80
+startup               .\startup.obj                             -.--     1.80
+SIDIVLW               E:/Lexide/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
+memset_f              E:/Lexide/BuildTools/Ver.20231124/Lib/U16\LU8100LW.LIB -.--     1.04
+SIDIMOLW              E:/Lexide/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
+CIDIMOLW              E:/Lexide/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
+PUSHPOPU8LW           E:/Lexide/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.61
+SIMODLW               E:/Lexide/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
+
+
+Number of Modules: 8
+
+Number of Symbols:
+ +---------------------------------------------------------------------------+
+ |          | CODE | DATA | BIT  |NVDATA|NVBIT |TABLE |NUMBER| TBIT || total |
+ |----------+------+------+------+------+------+------+------+------++-------|
+ | SEGMENT  |    11|     1|     0|     0|     0|     0|      |      ||     12|
+ |----------+------+------+------+------+------+------+------+------++-------|
+ | COMMUNAL |     0|     0|     0|     0|     0|     0|      |      ||      0|
+ |----------+------+------+------+------+------+------+------+------++-------|
+ | PUBLIC   |    11|     0|     0|     0|     0|     0|     0|     0||     11|
+ +---------------------------------------------------------------------------+
+
+Target:  ML620906 
+Model:   LARGE
+
+
+Memory Map - Program memory space #0:
+      Type     Start      Stop
+     -----------------------------
+      ROM      00:0000    00:FFFF
+
+Memory Map - Data memory space #0:
+      Type     Start      Stop
+     -----------------------------
+      RAM      00:D000    00:FFFF
+
+Memory Map - Memory space above #1:
+      Type     Start      Stop
+     -----------------------------
+      ROM      01:0000    03:FFFF
+      ROM      05:0000    05:FFFF
+      ROM      1F:0000    1F:0FFF
+
+                         ------------------
+                          Segment Synopsis
+                         ------------------
+
+Link Map - Program memory space #0 ( ROMWINDOW: 0000 - CFFF )
+
+      Type     Start      Stop       Size              Name
+     -------------------------------------------------------
+      S CODE   00:0000    00:01B3    01B4(436)         (absolute)
+*OVL* S CODE   00:0002    00:0003    0002(2)           (absolute)
+      S CODE   00:01B4    00:01C3    0010(16)          $$pushpopu8lw
+      S CODE   00:01C4    00:01D3    0010(16)          $$simodu8lw
+      S CODE   00:01D4    00:020F    003C(60)          $$XFCODmemset_f
+      S CODE   00:0210    00:0243    0034(52)          $$sidimou8lw
+      S CODE   00:0244    00:0283    0040(64)          $$cidimou8lw
+      S CODE   00:0284    00:02F9    0076(118)         $$main$main
+      S CODE   00:02FA    00:0307    000E(14)          $$sidivu8lw
+      S CODE   00:0308    00:0345    003E(62)          $$delay$main
+      S CODE   00:0346    00:0427    00E2(226)         $$set_bits$main
+
+
+Link Map - Data memory space #0
+
+      Type     Start      Stop       Size              Name
+     -------------------------------------------------------
+      Q ROMWIN 00:0000    00:CFFF    D000(53248)       (ROMWIN)
+>GAP<          00:D000.0  00:EBFF.7  1C00.0(7168.0)    (RAM)
+      S DATA   00:EC00    00:EFFF    0400(1024)        $STACK
+      Q SFR    00:F000    00:FFFF    1000(4096)        (SFR)
+
+
+Total size (CODE  ) = 0042A   (1066)
+Total size (DATA  ) = 00400   (1024)
+Total size (BIT   ) = 00000.0 (0.0)
+Total size (NVDATA) = 00000   (0)
+Total size (NVBIT ) = 00000.0 (0.0)
+Total size (TABLE ) = 00000   (0)
+
+          -----------------------
+           Symbol Table Synopsis
+          -----------------------
+
+Module         Value     Type         Symbol
+------         -----     ----------   ------
+main
+               00:0284   Pub CODE     _main
+               00:0308   Pub CODE     _delay
+               00:0346   Pub CODE     _set_bits
+
+Module         Value     Type         Symbol
+------         -----     ----------   ------
+startup
+               00:0160   Loc CODE     _init_port0
+               00:0150   Loc CODE     _init_port1
+               00:0170   Loc CODE     _init_p00
+              000000FF   Loc NUMBER   _$$WINVAL
+               00:0090   Loc CODE     _init_SFR
+               00:CFFF   Loc TABLE    _$$ROMWINEND
+               00:0180   Loc CODE     _reset_SFR
+               00:00A0   Loc CODE     _$init_clock
+               00:0000   Loc TABLE    _$$ROMWINSTART
+               00:01B0   Loc CODE     _entry
+               00:0052   Loc CODE     _BRK
+               00:00D8   Loc CODE     _timer
+               00:008E   Loc CODE     _reset_lr
+               00:005C   Loc CODE     _TM0INT
+               00:0108   Loc CODE     _stop
+              0000F000   Loc NUMBER   _$$SP
+               00:005A   Loc CODE     _INT
+               00:0120   Loc CODE     _init_screen
+               00:0070   Pub CODE     $$start_up
+
+
+Module         Value     Type         Symbol
+------         -----     ----------   ------
+memset_f
+
+
+Total ROM usage = 0042A   (1066)
+Total RAM usage = 00400   (1024)
+
+End of mapfile.
+
+Warning W025: Cannot find segment '$$content_of_init'
+Warning W025: Cannot find segment '$$end_of_init'
+Warning W025: Cannot find segment '$$init_info'
+Warning W025: Cannot find segment '$$init_info_end'
+Warning W011: CODE/TABLE segments overlap

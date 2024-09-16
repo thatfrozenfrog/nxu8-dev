@@ -1,0 +1,912 @@
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   1 
+ Source File: main.asm
+ Object File: main.obj
+ Date  : 2024/08/30 Fri.[20:08]
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+                                    1   ;; Compile Options : /TML620906 /ML /SD
+                                         /Om /Zc /Orp /Famain.asm /Lv 
+                                    2   ;; Version Number  : Ver.3.66.2
+                                    3   ;; File Name       : main.c
+                                    4   
+                                    5   	type (ML620906) 
+                                    6   	model large, near
+                                    7   	$$NTABmain segment table 2h #0h
+                                    8   	$$FCODmain segment code 2h any
+                                    9   	STACKSEG 0400h
+                                   10   CVERSION 3.66.2
+                                   11   CGLOBAL 01H 03H 0000H "main" 08H 02H 01
+                                        H 00H 80H 00H 00H 00H 07H
+                                   12   CGLOBAL 01H 03H 0000H "sinlookup" 08H 0
+                                        2H 00H 00H 80H 00H 00H 00H 00H
+                                   13   CTYPEDEF 0000H 0000H 42H "byte" 02H 00H
+                                         00H
+                                   14   CTYPEDEF 0000H 0000H 42H "word" 02H 00H
+                                         08H
+                                   15   CTYPEDEF 0000H 0000H 42H "uint16_t" 02H
+                                         00H 08H
+                                   16   CGLOBAL 01H 00H 02D0H "cos_table" 05H 0
+                                        1H 68H 01H 00H 08H
+                                   17   CGLOBAL 01H 00H 02D0H "sin_table" 05H 0
+                                        1H 68H 01H 00H 08H
+                                   18   CFILE 0001H 0000000BH "base.h"
+                                   19   CFILE 0000H 00000074H "main.c"
+                                   20   
+  --------------------------       21   	rseg $$FCODmain
+                                   22   CFUNCTION 0
+                                   23   
+??:0000                            24   _sinlookup	:
+                                   25   CBLOCK 0 1 108
+                                   26   
+                                   27   ;;char sinlookup(byte rad) {
+                                   28   CLINEA 0000H 0001H 006CH 0001H 001AH
+                                   29   ;;*************************************
+                                        ****
+                                   30   ;;	register/stack information
+                                   31   ;;*************************************
+                                        ****
+                                   32   ;;*************************************
+                                        ****
+                                   33   
+                                   34   CBLOCK 0 2 108
+                                   35   CARGUMENT 46H 0001H 0014H "rad" 02H 00H
+                                         00H
+                                   36   
+                                   37   ;;    return sin_table[rad];
+                                   38   CLINEA 0000H 0001H 006DH 0005H 001AH
+??:0000 00 01                      39   	mov	r1,	#00h
+??:0002 06-F0                      40   	add	er0,	er0
+??:0004 08-90 00-00'               41   	l	r0,	NEAR _sin_table
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   2 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+                                        [er0]
+                                   42   CBLOCKEND 0 2 110
+                                   43   
+                                   44   ;;}
+                                   45   CLINEA 0000H 0000H 006EH 0001H 0001H
+??:0008 1F-FE                      46   	rt
+                                   47   CBLOCKEND 0 1 110
+                                   48   CFUNCTIONEND 0
+                                   49   
+                                   50   CFUNCTION 1
+                                   51   
+??:000A                            52   _main	:
+                                   53   CBLOCK 1 1 112
+                                   54   
+                                   55   ;;void main(void) {
+                                   56   CLINEA 0000H 0001H 0070H 0001H 0011H
+                                   57   ;;*************************************
+                                        ****
+                                   58   ;;	register/stack information
+                                   59   ;;*************************************
+                                        ****
+                                   60   ;;*************************************
+                                        ****
+                                   61   
+                                   62   CBLOCK 1 2 112
+                                   63   CLOCAL 4AH 0001H 0000H 0002H "val" 02H 
+                                        00H 00H
+                                   64   
+                                   65   ;;    deref(0xD810) = sinlookup(val);
+                                   66   CLINEA 0000H 0000H 0072H 0005H 0023H
+??:000A 10-90 00-D8                67   	l	r0,	0d800h
+??:000E 01-F0'00-00'               68   	bl	_sinlookup
+??:0012 11-90 10-D8                69   	st	r0,	0d810h
+                                   70   
+                                   71   ;;    deref(0xD822) = deref(0xD820) - d
+                                        eref(0xD821);
+                                   72   CLINEA 0000H 0001H 0073H 0005H 0032H
+??:0016 10-90 20-D8                73   	l	r0,	0d820h
+??:001A 10-91 21-D8                74   	l	r1,	0d821h
+??:001E 18-80                      75   	sub	r0,	r1
+??:0020 11-90 22-D8                76   	st	r0,	0d822h
+                                   77   CBLOCKEND 1 2 116
+                                   78   
+                                   79   ;;}
+                                   80   CLINEA 0000H 0001H 0074H 0001H 0001H
+??:0024                            81   _$$end_of_main :
+??:0024 FF CE                      82   	bal	$
+                                   83   CBLOCKEND 1 1 116
+                                   84   CFUNCTIONEND 1
+                                   85   
+                                   86   	public _cos_table
+                                   87   	public _sin_table
+                                   88   	public _main
+                                   89   	public _sinlookup
+                                   90   	extrn code : $$start_up
+                                   91   
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   3 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+  --------------------------       92   	cseg #00h at 02h
+00:0002 00-00'                     93   	dw	$$start_up
+                                   94   
+  --------------------------       95   	rseg $$NTABmain
+00:0000                            96   _sin_table :
+00:0000 00-00                      97   	dw	00h
+00:0002 1B-00                      98   	dw	01bh
+00:0004 1D-00                      99   	dw	01dh
+00:0006 05-00                     100   	dw	05h
+00:0008 E8-FF                     101   	dw	0ffe8h
+00:000A E1-FF                     102   	dw	0ffe1h
+00:000C F7-FF                     103   	dw	0fff7h
+00:000E 15-00                     104   	dw	015h
+00:0010 20-00                     105   	dw	020h
+00:0012 0D-00                     106   	dw	0dh
+00:0014 EF-FF                     107   	dw	0ffefh
+00:0016 E0-FF                     108   	dw	0ffe0h
+00:0018 EF-FF                     109   	dw	0ffefh
+00:001A 0D-00                     110   	dw	0dh
+00:001C 20-00                     111   	dw	020h
+00:001E 15-00                     112   	dw	015h
+00:0020 F7-FF                     113   	dw	0fff7h
+00:0022 E1-FF                     114   	dw	0ffe1h
+00:0024 E8-FF                     115   	dw	0ffe8h
+00:0026 05-00                     116   	dw	05h
+00:0028 1D-00                     117   	dw	01dh
+00:002A 1B-00                     118   	dw	01bh
+00:002C 00-00                     119   	dw	00h
+00:002E E5-FF                     120   	dw	0ffe5h
+00:0030 E3-FF                     121   	dw	0ffe3h
+00:0032 FC-FF                     122   	dw	0fffch
+00:0034 18-00                     123   	dw	018h
+00:0036 1F-00                     124   	dw	01fh
+00:0038 09-00                     125   	dw	09h
+00:003A EB-FF                     126   	dw	0ffebh
+00:003C E0-FF                     127   	dw	0ffe0h
+00:003E F3-FF                     128   	dw	0fff3h
+00:0040 12-00                     129   	dw	012h
+00:0042 20-00                     130   	dw	020h
+00:0044 11-00                     131   	dw	011h
+00:0046 F2-FF                     132   	dw	0fff2h
+00:0048 E0-FF                     133   	dw	0ffe0h
+00:004A EB-FF                     134   	dw	0ffebh
+00:004C 09-00                     135   	dw	09h
+00:004E 1F-00                     136   	dw	01fh
+00:0050 18-00                     137   	dw	018h
+00:0052 FB-FF                     138   	dw	0fffbh
+00:0054 E3-FF                     139   	dw	0ffe3h
+00:0056 E5-FF                     140   	dw	0ffe5h
+00:0058 01-00                     141   	dw	01h
+00:005A 1B-00                     142   	dw	01bh
+00:005C 1D-00                     143   	dw	01dh
+00:005E 04-00                     144   	dw	04h
+00:0060 E7-FF                     145   	dw	0ffe7h
+00:0062 E1-FF                     146   	dw	0ffe1h
+00:0064 F8-FF                     147   	dw	0fff8h
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   4 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+00:0066 15-00                     148   	dw	015h
+00:0068 20-00                     149   	dw	020h
+00:006A 0D-00                     150   	dw	0dh
+00:006C EE-FF                     151   	dw	0ffeeh
+00:006E E0-FF                     152   	dw	0ffe0h
+00:0070 EF-FF                     153   	dw	0ffefh
+00:0072 0E-00                     154   	dw	0eh
+00:0074 20-00                     155   	dw	020h
+00:0076 14-00                     156   	dw	014h
+00:0078 F6-FF                     157   	dw	0fff6h
+00:007A E1-FF                     158   	dw	0ffe1h
+00:007C E8-FF                     159   	dw	0ffe8h
+00:007E 05-00                     160   	dw	05h
+00:0080 1D-00                     161   	dw	01dh
+00:0082 1A-00                     162   	dw	01ah
+00:0084 FF-FF                     163   	dw	0ffffh
+00:0086 E5-FF                     164   	dw	0ffe5h
+00:0088 E3-FF                     165   	dw	0ffe3h
+00:008A FC-FF                     166   	dw	0fffch
+00:008C 19-00                     167   	dw	019h
+00:008E 1E-00                     168   	dw	01eh
+00:0090 08-00                     169   	dw	08h
+00:0092 EA-FF                     170   	dw	0ffeah
+00:0094 E0-FF                     171   	dw	0ffe0h
+00:0096 F4-FF                     172   	dw	0fff4h
+00:0098 12-00                     173   	dw	012h
+00:009A 20-00                     174   	dw	020h
+00:009C 10-00                     175   	dw	010h
+00:009E F2-FF                     176   	dw	0fff2h
+00:00A0 E0-FF                     177   	dw	0ffe0h
+00:00A2 EC-FF                     178   	dw	0ffech
+00:00A4 0A-00                     179   	dw	0ah
+00:00A6 1F-00                     180   	dw	01fh
+00:00A8 17-00                     181   	dw	017h
+00:00AA FA-FF                     182   	dw	0fffah
+00:00AC E2-FF                     183   	dw	0ffe2h
+00:00AE E6-FF                     184   	dw	0ffe6h
+00:00B0 01-00                     185   	dw	01h
+00:00B2 1C-00                     186   	dw	01ch
+00:00B4 1D-00                     187   	dw	01dh
+00:00B6 03-00                     188   	dw	03h
+00:00B8 E7-FF                     189   	dw	0ffe7h
+00:00BA E2-FF                     190   	dw	0ffe2h
+00:00BC F8-FF                     191   	dw	0fff8h
+00:00BE 16-00                     192   	dw	016h
+00:00C0 1F-00                     193   	dw	01fh
+00:00C2 0C-00                     194   	dw	0ch
+00:00C4 EE-FF                     195   	dw	0ffeeh
+00:00C6 E0-FF                     196   	dw	0ffe0h
+00:00C8 F0-FF                     197   	dw	0fff0h
+00:00CA 0E-00                     198   	dw	0eh
+00:00CC 20-00                     199   	dw	020h
+00:00CE 14-00                     200   	dw	014h
+00:00D0 F6-FF                     201   	dw	0fff6h
+00:00D2 E1-FF                     202   	dw	0ffe1h
+00:00D4 E9-FF                     203   	dw	0ffe9h
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   5 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+00:00D6 06-00                     204   	dw	06h
+00:00D8 1E-00                     205   	dw	01eh
+00:00DA 1A-00                     206   	dw	01ah
+00:00DC FF-FF                     207   	dw	0ffffh
+00:00DE E4-FF                     208   	dw	0ffe4h
+00:00E0 E4-FF                     209   	dw	0ffe4h
+00:00E2 FD-FF                     210   	dw	0fffdh
+00:00E4 19-00                     211   	dw	019h
+00:00E6 1E-00                     212   	dw	01eh
+00:00E8 08-00                     213   	dw	08h
+00:00EA EA-FF                     214   	dw	0ffeah
+00:00EC E1-FF                     215   	dw	0ffe1h
+00:00EE F4-FF                     216   	dw	0fff4h
+00:00F0 13-00                     217   	dw	013h
+00:00F2 20-00                     218   	dw	020h
+00:00F4 10-00                     219   	dw	010h
+00:00F6 F1-FF                     220   	dw	0fff1h
+00:00F8 E0-FF                     221   	dw	0ffe0h
+00:00FA EC-FF                     222   	dw	0ffech
+00:00FC 0B-00                     223   	dw	0bh
+00:00FE 1F-00                     224   	dw	01fh
+00:0100 17-00                     225   	dw	017h
+00:0102 FA-FF                     226   	dw	0fffah
+00:0104 E2-FF                     227   	dw	0ffe2h
+00:0106 E6-FF                     228   	dw	0ffe6h
+00:0108 02-00                     229   	dw	02h
+00:010A 1C-00                     230   	dw	01ch
+00:010C 1C-00                     231   	dw	01ch
+00:010E 03-00                     232   	dw	03h
+00:0110 E7-FF                     233   	dw	0ffe7h
+00:0112 E2-FF                     234   	dw	0ffe2h
+00:0114 F9-FF                     235   	dw	0fff9h
+00:0116 16-00                     236   	dw	016h
+00:0118 1F-00                     237   	dw	01fh
+00:011A 0C-00                     238   	dw	0ch
+00:011C ED-FF                     239   	dw	0ffedh
+00:011E E0-FF                     240   	dw	0ffe0h
+00:0120 F0-FF                     241   	dw	0fff0h
+00:0122 0F-00                     242   	dw	0fh
+00:0124 20-00                     243   	dw	020h
+00:0126 13-00                     244   	dw	013h
+00:0128 F5-FF                     245   	dw	0fff5h
+00:012A E1-FF                     246   	dw	0ffe1h
+00:012C E9-FF                     247   	dw	0ffe9h
+00:012E 06-00                     248   	dw	06h
+00:0130 1E-00                     249   	dw	01eh
+00:0132 1A-00                     250   	dw	01ah
+00:0134 FE-FF                     251   	dw	0fffeh
+00:0136 E4-FF                     252   	dw	0ffe4h
+00:0138 E4-FF                     253   	dw	0ffe4h
+00:013A FD-FF                     254   	dw	0fffdh
+00:013C 19-00                     255   	dw	019h
+00:013E 1E-00                     256   	dw	01eh
+00:0140 07-00                     257   	dw	07h
+00:0142 EA-FF                     258   	dw	0ffeah
+00:0144 E1-FF                     259   	dw	0ffe1h
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   6 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+00:0146 F5-FF                     260   	dw	0fff5h
+00:0148 13-00                     261   	dw	013h
+00:014A 20-00                     262   	dw	020h
+00:014C 0F-00                     263   	dw	0fh
+00:014E F1-FF                     264   	dw	0fff1h
+00:0150 E0-FF                     265   	dw	0ffe0h
+00:0152 ED-FF                     266   	dw	0ffedh
+00:0154 0B-00                     267   	dw	0bh
+00:0156 1F-00                     268   	dw	01fh
+00:0158 17-00                     269   	dw	017h
+00:015A F9-FF                     270   	dw	0fff9h
+00:015C E2-FF                     271   	dw	0ffe2h
+00:015E E6-FF                     272   	dw	0ffe6h
+00:0160 02-00                     273   	dw	02h
+00:0162 1C-00                     274   	dw	01ch
+00:0164 1C-00                     275   	dw	01ch
+00:0166 02-00                     276   	dw	02h
+00:0168 E6-FF                     277   	dw	0ffe6h
+00:016A E2-FF                     278   	dw	0ffe2h
+00:016C F9-FF                     279   	dw	0fff9h
+00:016E 17-00                     280   	dw	017h
+00:0170 1F-00                     281   	dw	01fh
+00:0172 0B-00                     282   	dw	0bh
+00:0174 ED-FF                     283   	dw	0ffedh
+00:0176 E0-FF                     284   	dw	0ffe0h
+00:0178 F1-FF                     285   	dw	0fff1h
+00:017A 0F-00                     286   	dw	0fh
+00:017C 20-00                     287   	dw	020h
+00:017E 13-00                     288   	dw	013h
+00:0180 F5-FF                     289   	dw	0fff5h
+00:0182 E1-FF                     290   	dw	0ffe1h
+00:0184 EA-FF                     291   	dw	0ffeah
+00:0186 07-00                     292   	dw	07h
+00:0188 1E-00                     293   	dw	01eh
+00:018A 19-00                     294   	dw	019h
+00:018C FD-FF                     295   	dw	0fffdh
+00:018E E4-FF                     296   	dw	0ffe4h
+00:0190 E4-FF                     297   	dw	0ffe4h
+00:0192 FE-FF                     298   	dw	0fffeh
+00:0194 1A-00                     299   	dw	01ah
+00:0196 1E-00                     300   	dw	01eh
+00:0198 06-00                     301   	dw	06h
+00:019A E9-FF                     302   	dw	0ffe9h
+00:019C E1-FF                     303   	dw	0ffe1h
+00:019E F5-FF                     304   	dw	0fff5h
+00:01A0 13-00                     305   	dw	013h
+00:01A2 20-00                     306   	dw	020h
+00:01A4 0F-00                     307   	dw	0fh
+00:01A6 F0-FF                     308   	dw	0fff0h
+00:01A8 E0-FF                     309   	dw	0ffe0h
+00:01AA ED-FF                     310   	dw	0ffedh
+00:01AC 0C-00                     311   	dw	0ch
+00:01AE 1F-00                     312   	dw	01fh
+00:01B0 16-00                     313   	dw	016h
+00:01B2 F9-FF                     314   	dw	0fff9h
+00:01B4 E2-FF                     315   	dw	0ffe2h
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   7 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+00:01B6 E7-FF                     316   	dw	0ffe7h
+00:01B8 03-00                     317   	dw	03h
+00:01BA 1C-00                     318   	dw	01ch
+00:01BC 1C-00                     319   	dw	01ch
+00:01BE 02-00                     320   	dw	02h
+00:01C0 E6-FF                     321   	dw	0ffe6h
+00:01C2 E2-FF                     322   	dw	0ffe2h
+00:01C4 FA-FF                     323   	dw	0fffah
+00:01C6 17-00                     324   	dw	017h
+00:01C8 1F-00                     325   	dw	01fh
+00:01CA 0B-00                     326   	dw	0bh
+00:01CC EC-FF                     327   	dw	0ffech
+00:01CE E0-FF                     328   	dw	0ffe0h
+00:01D0 F1-FF                     329   	dw	0fff1h
+00:01D2 10-00                     330   	dw	010h
+00:01D4 20-00                     331   	dw	020h
+00:01D6 13-00                     332   	dw	013h
+00:01D8 F4-FF                     333   	dw	0fff4h
+00:01DA E1-FF                     334   	dw	0ffe1h
+00:01DC EA-FF                     335   	dw	0ffeah
+00:01DE 08-00                     336   	dw	08h
+00:01E0 1E-00                     337   	dw	01eh
+00:01E2 19-00                     338   	dw	019h
+00:01E4 FD-FF                     339   	dw	0fffdh
+00:01E6 E4-FF                     340   	dw	0ffe4h
+00:01E8 E4-FF                     341   	dw	0ffe4h
+00:01EA FF-FF                     342   	dw	0ffffh
+00:01EC 1A-00                     343   	dw	01ah
+00:01EE 1E-00                     344   	dw	01eh
+00:01F0 06-00                     345   	dw	06h
+00:01F2 E9-FF                     346   	dw	0ffe9h
+00:01F4 E1-FF                     347   	dw	0ffe1h
+00:01F6 F6-FF                     348   	dw	0fff6h
+00:01F8 14-00                     349   	dw	014h
+00:01FA 20-00                     350   	dw	020h
+00:01FC 0E-00                     351   	dw	0eh
+00:01FE F0-FF                     352   	dw	0fff0h
+00:0200 E0-FF                     353   	dw	0ffe0h
+00:0202 EE-FF                     354   	dw	0ffeeh
+00:0204 0C-00                     355   	dw	0ch
+00:0206 1F-00                     356   	dw	01fh
+00:0208 16-00                     357   	dw	016h
+00:020A F8-FF                     358   	dw	0fff8h
+00:020C E2-FF                     359   	dw	0ffe2h
+00:020E E7-FF                     360   	dw	0ffe7h
+00:0210 03-00                     361   	dw	03h
+00:0212 1D-00                     362   	dw	01dh
+00:0214 1C-00                     363   	dw	01ch
+00:0216 01-00                     364   	dw	01h
+00:0218 E6-FF                     365   	dw	0ffe6h
+00:021A E2-FF                     366   	dw	0ffe2h
+00:021C FA-FF                     367   	dw	0fffah
+00:021E 17-00                     368   	dw	017h
+00:0220 1F-00                     369   	dw	01fh
+00:0222 0A-00                     370   	dw	0ah
+00:0224 EC-FF                     371   	dw	0ffech
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   8 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+00:0226 E0-FF                     372   	dw	0ffe0h
+00:0228 F2-FF                     373   	dw	0fff2h
+00:022A 10-00                     374   	dw	010h
+00:022C 20-00                     375   	dw	020h
+00:022E 12-00                     376   	dw	012h
+00:0230 F4-FF                     377   	dw	0fff4h
+00:0232 E0-FF                     378   	dw	0ffe0h
+00:0234 EA-FF                     379   	dw	0ffeah
+00:0236 08-00                     380   	dw	08h
+00:0238 1E-00                     381   	dw	01eh
+00:023A 19-00                     382   	dw	019h
+00:023C FC-FF                     383   	dw	0fffch
+00:023E E3-FF                     384   	dw	0ffe3h
+00:0240 E5-FF                     385   	dw	0ffe5h
+00:0242 FF-FF                     386   	dw	0ffffh
+00:0244 1A-00                     387   	dw	01ah
+00:0246 1D-00                     388   	dw	01dh
+00:0248 05-00                     389   	dw	05h
+00:024A E8-FF                     390   	dw	0ffe8h
+00:024C E1-FF                     391   	dw	0ffe1h
+00:024E F6-FF                     392   	dw	0fff6h
+00:0250 14-00                     393   	dw	014h
+00:0252 20-00                     394   	dw	020h
+00:0254 0E-00                     395   	dw	0eh
+00:0256 EF-FF                     396   	dw	0ffefh
+00:0258 E0-FF                     397   	dw	0ffe0h
+00:025A EE-FF                     398   	dw	0ffeeh
+00:025C 0D-00                     399   	dw	0dh
+00:025E 20-00                     400   	dw	020h
+00:0260 15-00                     401   	dw	015h
+00:0262 F8-FF                     402   	dw	0fff8h
+00:0264 E1-FF                     403   	dw	0ffe1h
+00:0266 E7-FF                     404   	dw	0ffe7h
+00:0268 04-00                     405   	dw	04h
+00:026A 1D-00                     406   	dw	01dh
+00:026C 1B-00                     407   	dw	01bh
+00:026E 01-00                     408   	dw	01h
+00:0270 E5-FF                     409   	dw	0ffe5h
+00:0272 E3-FF                     410   	dw	0ffe3h
+00:0274 FB-FF                     411   	dw	0fffbh
+00:0276 18-00                     412   	dw	018h
+00:0278 1F-00                     413   	dw	01fh
+00:027A 09-00                     414   	dw	09h
+00:027C EB-FF                     415   	dw	0ffebh
+00:027E E0-FF                     416   	dw	0ffe0h
+00:0280 F2-FF                     417   	dw	0fff2h
+00:0282 11-00                     418   	dw	011h
+00:0284 20-00                     419   	dw	020h
+00:0286 12-00                     420   	dw	012h
+00:0288 F3-FF                     421   	dw	0fff3h
+00:028A E0-FF                     422   	dw	0ffe0h
+00:028C EB-FF                     423   	dw	0ffebh
+00:028E 09-00                     424   	dw	09h
+00:0290 1F-00                     425   	dw	01fh
+00:0292 18-00                     426   	dw	018h
+00:0294 FC-FF                     427   	dw	0fffch
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   9 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+00:0296 E3-FF                     428   	dw	0ffe3h
+00:0298 E5-FF                     429   	dw	0ffe5h
+00:029A 00-00                     430   	dw	00h
+00:029C 1B-00                     431   	dw	01bh
+00:029E 1D-00                     432   	dw	01dh
+00:02A0 05-00                     433   	dw	05h
+00:02A2 E8-FF                     434   	dw	0ffe8h
+00:02A4 E1-FF                     435   	dw	0ffe1h
+00:02A6 F7-FF                     436   	dw	0fff7h
+00:02A8 15-00                     437   	dw	015h
+00:02AA 20-00                     438   	dw	020h
+00:02AC 0D-00                     439   	dw	0dh
+00:02AE EF-FF                     440   	dw	0ffefh
+00:02B0 E0-FF                     441   	dw	0ffe0h
+00:02B2 EF-FF                     442   	dw	0ffefh
+00:02B4 0D-00                     443   	dw	0dh
+00:02B6 20-00                     444   	dw	020h
+00:02B8 15-00                     445   	dw	015h
+00:02BA F7-FF                     446   	dw	0fff7h
+00:02BC E1-FF                     447   	dw	0ffe1h
+00:02BE E8-FF                     448   	dw	0ffe8h
+00:02C0 05-00                     449   	dw	05h
+00:02C2 1D-00                     450   	dw	01dh
+00:02C4 1B-00                     451   	dw	01bh
+00:02C6 00-00                     452   	dw	00h
+00:02C8 E5-FF                     453   	dw	0ffe5h
+00:02CA E3-FF                     454   	dw	0ffe3h
+00:02CC FB-FF                     455   	dw	0fffbh
+00:02CE 18-00                     456   	dw	018h
+00:02D0                           457   _cos_table :
+00:02D0 20-00                     458   	dw	020h
+00:02D2 11-00                     459   	dw	011h
+00:02D4 F3-FF                     460   	dw	0fff3h
+00:02D6 E0-FF                     461   	dw	0ffe0h
+00:02D8 EB-FF                     462   	dw	0ffebh
+00:02DA 09-00                     463   	dw	09h
+00:02DC 1F-00                     464   	dw	01fh
+00:02DE 18-00                     465   	dw	018h
+00:02E0 FB-FF                     466   	dw	0fffbh
+00:02E2 E3-FF                     467   	dw	0ffe3h
+00:02E4 E5-FF                     468   	dw	0ffe5h
+00:02E6 00-00                     469   	dw	00h
+00:02E8 1B-00                     470   	dw	01bh
+00:02EA 1D-00                     471   	dw	01dh
+00:02EC 04-00                     472   	dw	04h
+00:02EE E8-FF                     473   	dw	0ffe8h
+00:02F0 E1-FF                     474   	dw	0ffe1h
+00:02F2 F7-FF                     475   	dw	0fff7h
+00:02F4 15-00                     476   	dw	015h
+00:02F6 20-00                     477   	dw	020h
+00:02F8 0D-00                     478   	dw	0dh
+00:02FA EE-FF                     479   	dw	0ffeeh
+00:02FC E0-FF                     480   	dw	0ffe0h
+00:02FE EF-FF                     481   	dw	0ffefh
+00:0300 0E-00                     482   	dw	0eh
+00:0302 20-00                     483   	dw	020h
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:  10 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+00:0304 15-00                     484   	dw	015h
+00:0306 F7-FF                     485   	dw	0fff7h
+00:0308 E1-FF                     486   	dw	0ffe1h
+00:030A E8-FF                     487   	dw	0ffe8h
+00:030C 05-00                     488   	dw	05h
+00:030E 1D-00                     489   	dw	01dh
+00:0310 1B-00                     490   	dw	01bh
+00:0312 00-00                     491   	dw	00h
+00:0314 E5-FF                     492   	dw	0ffe5h
+00:0316 E3-FF                     493   	dw	0ffe3h
+00:0318 FC-FF                     494   	dw	0fffch
+00:031A 18-00                     495   	dw	018h
+00:031C 1F-00                     496   	dw	01fh
+00:031E 09-00                     497   	dw	09h
+00:0320 EB-FF                     498   	dw	0ffebh
+00:0322 E0-FF                     499   	dw	0ffe0h
+00:0324 F3-FF                     500   	dw	0fff3h
+00:0326 12-00                     501   	dw	012h
+00:0328 20-00                     502   	dw	020h
+00:032A 11-00                     503   	dw	011h
+00:032C F2-FF                     504   	dw	0fff2h
+00:032E E0-FF                     505   	dw	0ffe0h
+00:0330 EC-FF                     506   	dw	0ffech
+00:0332 0A-00                     507   	dw	0ah
+00:0334 1F-00                     508   	dw	01fh
+00:0336 18-00                     509   	dw	018h
+00:0338 FB-FF                     510   	dw	0fffbh
+00:033A E3-FF                     511   	dw	0ffe3h
+00:033C E5-FF                     512   	dw	0ffe5h
+00:033E 01-00                     513   	dw	01h
+00:0340 1B-00                     514   	dw	01bh
+00:0342 1D-00                     515   	dw	01dh
+00:0344 04-00                     516   	dw	04h
+00:0346 E7-FF                     517   	dw	0ffe7h
+00:0348 E2-FF                     518   	dw	0ffe2h
+00:034A F8-FF                     519   	dw	0fff8h
+00:034C 16-00                     520   	dw	016h
+00:034E 20-00                     521   	dw	020h
+00:0350 0D-00                     522   	dw	0dh
+00:0352 EE-FF                     523   	dw	0ffeeh
+00:0354 E0-FF                     524   	dw	0ffe0h
+00:0356 EF-FF                     525   	dw	0ffefh
+00:0358 0E-00                     526   	dw	0eh
+00:035A 20-00                     527   	dw	020h
+00:035C 14-00                     528   	dw	014h
+00:035E F6-FF                     529   	dw	0fff6h
+00:0360 E1-FF                     530   	dw	0ffe1h
+00:0362 E8-FF                     531   	dw	0ffe8h
+00:0364 05-00                     532   	dw	05h
+00:0366 1D-00                     533   	dw	01dh
+00:0368 1A-00                     534   	dw	01ah
+00:036A FF-FF                     535   	dw	0ffffh
+00:036C E5-FF                     536   	dw	0ffe5h
+00:036E E3-FF                     537   	dw	0ffe3h
+00:0370 FC-FF                     538   	dw	0fffch
+00:0372 19-00                     539   	dw	019h
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:  11 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+00:0374 1E-00                     540   	dw	01eh
+00:0376 08-00                     541   	dw	08h
+00:0378 EA-FF                     542   	dw	0ffeah
+00:037A E0-FF                     543   	dw	0ffe0h
+00:037C F4-FF                     544   	dw	0fff4h
+00:037E 12-00                     545   	dw	012h
+00:0380 20-00                     546   	dw	020h
+00:0382 10-00                     547   	dw	010h
+00:0384 F2-FF                     548   	dw	0fff2h
+00:0386 E0-FF                     549   	dw	0ffe0h
+00:0388 EC-FF                     550   	dw	0ffech
+00:038A 0A-00                     551   	dw	0ah
+00:038C 1F-00                     552   	dw	01fh
+00:038E 17-00                     553   	dw	017h
+00:0390 FA-FF                     554   	dw	0fffah
+00:0392 E2-FF                     555   	dw	0ffe2h
+00:0394 E6-FF                     556   	dw	0ffe6h
+00:0396 01-00                     557   	dw	01h
+00:0398 1C-00                     558   	dw	01ch
+00:039A 1D-00                     559   	dw	01dh
+00:039C 03-00                     560   	dw	03h
+00:039E E7-FF                     561   	dw	0ffe7h
+00:03A0 E2-FF                     562   	dw	0ffe2h
+00:03A2 F8-FF                     563   	dw	0fff8h
+00:03A4 16-00                     564   	dw	016h
+00:03A6 1F-00                     565   	dw	01fh
+00:03A8 0C-00                     566   	dw	0ch
+00:03AA EE-FF                     567   	dw	0ffeeh
+00:03AC E0-FF                     568   	dw	0ffe0h
+00:03AE F0-FF                     569   	dw	0fff0h
+00:03B0 0F-00                     570   	dw	0fh
+00:03B2 20-00                     571   	dw	020h
+00:03B4 14-00                     572   	dw	014h
+00:03B6 F6-FF                     573   	dw	0fff6h
+00:03B8 E1-FF                     574   	dw	0ffe1h
+00:03BA E9-FF                     575   	dw	0ffe9h
+00:03BC 06-00                     576   	dw	06h
+00:03BE 1E-00                     577   	dw	01eh
+00:03C0 1A-00                     578   	dw	01ah
+00:03C2 FE-FF                     579   	dw	0fffeh
+00:03C4 E4-FF                     580   	dw	0ffe4h
+00:03C6 E4-FF                     581   	dw	0ffe4h
+00:03C8 FD-FF                     582   	dw	0fffdh
+00:03CA 19-00                     583   	dw	019h
+00:03CC 1E-00                     584   	dw	01eh
+00:03CE 07-00                     585   	dw	07h
+00:03D0 EA-FF                     586   	dw	0ffeah
+00:03D2 E1-FF                     587   	dw	0ffe1h
+00:03D4 F4-FF                     588   	dw	0fff4h
+00:03D6 13-00                     589   	dw	013h
+00:03D8 20-00                     590   	dw	020h
+00:03DA 10-00                     591   	dw	010h
+00:03DC F1-FF                     592   	dw	0fff1h
+00:03DE E0-FF                     593   	dw	0ffe0h
+00:03E0 EC-FF                     594   	dw	0ffech
+00:03E2 0B-00                     595   	dw	0bh
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:  12 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+00:03E4 1F-00                     596   	dw	01fh
+00:03E6 17-00                     597   	dw	017h
+00:03E8 FA-FF                     598   	dw	0fffah
+00:03EA E2-FF                     599   	dw	0ffe2h
+00:03EC E6-FF                     600   	dw	0ffe6h
+00:03EE 02-00                     601   	dw	02h
+00:03F0 1C-00                     602   	dw	01ch
+00:03F2 1C-00                     603   	dw	01ch
+00:03F4 03-00                     604   	dw	03h
+00:03F6 E7-FF                     605   	dw	0ffe7h
+00:03F8 E2-FF                     606   	dw	0ffe2h
+00:03FA F9-FF                     607   	dw	0fff9h
+00:03FC 16-00                     608   	dw	016h
+00:03FE 1F-00                     609   	dw	01fh
+00:0400 0B-00                     610   	dw	0bh
+00:0402 ED-FF                     611   	dw	0ffedh
+00:0404 E0-FF                     612   	dw	0ffe0h
+00:0406 F0-FF                     613   	dw	0fff0h
+00:0408 0F-00                     614   	dw	0fh
+00:040A 20-00                     615   	dw	020h
+00:040C 13-00                     616   	dw	013h
+00:040E F5-FF                     617   	dw	0fff5h
+00:0410 E1-FF                     618   	dw	0ffe1h
+00:0412 E9-FF                     619   	dw	0ffe9h
+00:0414 07-00                     620   	dw	07h
+00:0416 1E-00                     621   	dw	01eh
+00:0418 1A-00                     622   	dw	01ah
+00:041A FE-FF                     623   	dw	0fffeh
+00:041C E4-FF                     624   	dw	0ffe4h
+00:041E E4-FF                     625   	dw	0ffe4h
+00:0420 FE-FF                     626   	dw	0fffeh
+00:0422 1A-00                     627   	dw	01ah
+00:0424 1E-00                     628   	dw	01eh
+00:0426 07-00                     629   	dw	07h
+00:0428 E9-FF                     630   	dw	0ffe9h
+00:042A E1-FF                     631   	dw	0ffe1h
+00:042C F5-FF                     632   	dw	0fff5h
+00:042E 13-00                     633   	dw	013h
+00:0430 20-00                     634   	dw	020h
+00:0432 0F-00                     635   	dw	0fh
+00:0434 F1-FF                     636   	dw	0fff1h
+00:0436 E0-FF                     637   	dw	0ffe0h
+00:0438 ED-FF                     638   	dw	0ffedh
+00:043A 0B-00                     639   	dw	0bh
+00:043C 1F-00                     640   	dw	01fh
+00:043E 17-00                     641   	dw	017h
+00:0440 F9-FF                     642   	dw	0fff9h
+00:0442 E2-FF                     643   	dw	0ffe2h
+00:0444 E6-FF                     644   	dw	0ffe6h
+00:0446 02-00                     645   	dw	02h
+00:0448 1C-00                     646   	dw	01ch
+00:044A 1C-00                     647   	dw	01ch
+00:044C 02-00                     648   	dw	02h
+00:044E E6-FF                     649   	dw	0ffe6h
+00:0450 E2-FF                     650   	dw	0ffe2h
+00:0452 F9-FF                     651   	dw	0fff9h
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:  13 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+00:0454 17-00                     652   	dw	017h
+00:0456 1F-00                     653   	dw	01fh
+00:0458 0B-00                     654   	dw	0bh
+00:045A ED-FF                     655   	dw	0ffedh
+00:045C E0-FF                     656   	dw	0ffe0h
+00:045E F1-FF                     657   	dw	0fff1h
+00:0460 10-00                     658   	dw	010h
+00:0462 20-00                     659   	dw	020h
+00:0464 13-00                     660   	dw	013h
+00:0466 F5-FF                     661   	dw	0fff5h
+00:0468 E1-FF                     662   	dw	0ffe1h
+00:046A EA-FF                     663   	dw	0ffeah
+00:046C 07-00                     664   	dw	07h
+00:046E 1E-00                     665   	dw	01eh
+00:0470 19-00                     666   	dw	019h
+00:0472 FD-FF                     667   	dw	0fffdh
+00:0474 E4-FF                     668   	dw	0ffe4h
+00:0476 E4-FF                     669   	dw	0ffe4h
+00:0478 FE-FF                     670   	dw	0fffeh
+00:047A 1A-00                     671   	dw	01ah
+00:047C 1E-00                     672   	dw	01eh
+00:047E 06-00                     673   	dw	06h
+00:0480 E9-FF                     674   	dw	0ffe9h
+00:0482 E1-FF                     675   	dw	0ffe1h
+00:0484 F5-FF                     676   	dw	0fff5h
+00:0486 14-00                     677   	dw	014h
+00:0488 20-00                     678   	dw	020h
+00:048A 0F-00                     679   	dw	0fh
+00:048C F0-FF                     680   	dw	0fff0h
+00:048E E0-FF                     681   	dw	0ffe0h
+00:0490 ED-FF                     682   	dw	0ffedh
+00:0492 0C-00                     683   	dw	0ch
+00:0494 1F-00                     684   	dw	01fh
+00:0496 16-00                     685   	dw	016h
+00:0498 F9-FF                     686   	dw	0fff9h
+00:049A E2-FF                     687   	dw	0ffe2h
+00:049C E7-FF                     688   	dw	0ffe7h
+00:049E 03-00                     689   	dw	03h
+00:04A0 1C-00                     690   	dw	01ch
+00:04A2 1C-00                     691   	dw	01ch
+00:04A4 02-00                     692   	dw	02h
+00:04A6 E6-FF                     693   	dw	0ffe6h
+00:04A8 E2-FF                     694   	dw	0ffe2h
+00:04AA FA-FF                     695   	dw	0fffah
+00:04AC 17-00                     696   	dw	017h
+00:04AE 1F-00                     697   	dw	01fh
+00:04B0 0A-00                     698   	dw	0ah
+00:04B2 EC-FF                     699   	dw	0ffech
+00:04B4 E0-FF                     700   	dw	0ffe0h
+00:04B6 F1-FF                     701   	dw	0fff1h
+00:04B8 10-00                     702   	dw	010h
+00:04BA 20-00                     703   	dw	020h
+00:04BC 12-00                     704   	dw	012h
+00:04BE F4-FF                     705   	dw	0fff4h
+00:04C0 E1-FF                     706   	dw	0ffe1h
+00:04C2 EA-FF                     707   	dw	0ffeah
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:  14 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+00:04C4 08-00                     708   	dw	08h
+00:04C6 1E-00                     709   	dw	01eh
+00:04C8 19-00                     710   	dw	019h
+00:04CA FD-FF                     711   	dw	0fffdh
+00:04CC E3-FF                     712   	dw	0ffe3h
+00:04CE E4-FF                     713   	dw	0ffe4h
+00:04D0 FF-FF                     714   	dw	0ffffh
+00:04D2 1A-00                     715   	dw	01ah
+00:04D4 1E-00                     716   	dw	01eh
+00:04D6 06-00                     717   	dw	06h
+00:04D8 E9-FF                     718   	dw	0ffe9h
+00:04DA E1-FF                     719   	dw	0ffe1h
+00:04DC F6-FF                     720   	dw	0fff6h
+00:04DE 14-00                     721   	dw	014h
+00:04E0 20-00                     722   	dw	020h
+00:04E2 0E-00                     723   	dw	0eh
+00:04E4 F0-FF                     724   	dw	0fff0h
+00:04E6 E0-FF                     725   	dw	0ffe0h
+00:04E8 EE-FF                     726   	dw	0ffeeh
+00:04EA 0C-00                     727   	dw	0ch
+00:04EC 20-00                     728   	dw	020h
+00:04EE 16-00                     729   	dw	016h
+00:04F0 F8-FF                     730   	dw	0fff8h
+00:04F2 E2-FF                     731   	dw	0ffe2h
+00:04F4 E7-FF                     732   	dw	0ffe7h
+00:04F6 04-00                     733   	dw	04h
+00:04F8 1D-00                     734   	dw	01dh
+00:04FA 1B-00                     735   	dw	01bh
+00:04FC 01-00                     736   	dw	01h
+00:04FE E6-FF                     737   	dw	0ffe6h
+00:0500 E3-FF                     738   	dw	0ffe3h
+00:0502 FB-FF                     739   	dw	0fffbh
+00:0504 18-00                     740   	dw	018h
+00:0506 1F-00                     741   	dw	01fh
+00:0508 0A-00                     742   	dw	0ah
+00:050A EC-FF                     743   	dw	0ffech
+00:050C E0-FF                     744   	dw	0ffe0h
+00:050E F2-FF                     745   	dw	0fff2h
+00:0510 11-00                     746   	dw	011h
+00:0512 20-00                     747   	dw	020h
+00:0514 12-00                     748   	dw	012h
+00:0516 F3-FF                     749   	dw	0fff3h
+00:0518 E0-FF                     750   	dw	0ffe0h
+00:051A EA-FF                     751   	dw	0ffeah
+00:051C 08-00                     752   	dw	08h
+00:051E 1E-00                     753   	dw	01eh
+00:0520 19-00                     754   	dw	019h
+00:0522 FC-FF                     755   	dw	0fffch
+00:0524 E3-FF                     756   	dw	0ffe3h
+00:0526 E5-FF                     757   	dw	0ffe5h
+00:0528 FF-FF                     758   	dw	0ffffh
+00:052A 1B-00                     759   	dw	01bh
+00:052C 1D-00                     760   	dw	01dh
+00:052E 05-00                     761   	dw	05h
+00:0530 E8-FF                     762   	dw	0ffe8h
+00:0532 E1-FF                     763   	dw	0ffe1h
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:  15 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+00:0534 F6-FF                     764   	dw	0fff6h
+00:0536 14-00                     765   	dw	014h
+00:0538 20-00                     766   	dw	020h
+00:053A 0E-00                     767   	dw	0eh
+00:053C EF-FF                     768   	dw	0ffefh
+00:053E E0-FF                     769   	dw	0ffe0h
+00:0540 EE-FF                     770   	dw	0ffeeh
+00:0542 0D-00                     771   	dw	0dh
+00:0544 20-00                     772   	dw	020h
+00:0546 15-00                     773   	dw	015h
+00:0548 F7-FF                     774   	dw	0fff7h
+00:054A E1-FF                     775   	dw	0ffe1h
+00:054C E8-FF                     776   	dw	0ffe8h
+00:054E 04-00                     777   	dw	04h
+00:0550 1D-00                     778   	dw	01dh
+00:0552 1B-00                     779   	dw	01bh
+00:0554 00-00                     780   	dw	00h
+00:0556 E5-FF                     781   	dw	0ffe5h
+00:0558 E3-FF                     782   	dw	0ffe3h
+00:055A FB-FF                     783   	dw	0fffbh
+00:055C 18-00                     784   	dw	018h
+00:055E 1F-00                     785   	dw	01fh
+00:0560 09-00                     786   	dw	09h
+00:0562 EB-FF                     787   	dw	0ffebh
+00:0564 E0-FF                     788   	dw	0ffe0h
+00:0566 F2-FF                     789   	dw	0fff2h
+00:0568 11-00                     790   	dw	011h
+00:056A 20-00                     791   	dw	020h
+00:056C 12-00                     792   	dw	012h
+00:056E F3-FF                     793   	dw	0fff3h
+00:0570 E0-FF                     794   	dw	0ffe0h
+00:0572 EB-FF                     795   	dw	0ffebh
+00:0574 09-00                     796   	dw	09h
+00:0576 1F-00                     797   	dw	01fh
+00:0578 18-00                     798   	dw	018h
+00:057A FC-FF                     799   	dw	0fffch
+00:057C E3-FF                     800   	dw	0ffe3h
+00:057E E5-FF                     801   	dw	0ffe5h
+00:0580 00-00                     802   	dw	00h
+00:0582 1B-00                     803   	dw	01bh
+00:0584 1D-00                     804   	dw	01dh
+00:0586 05-00                     805   	dw	05h
+00:0588 E8-FF                     806   	dw	0ffe8h
+00:058A E1-FF                     807   	dw	0ffe1h
+00:058C F7-FF                     808   	dw	0fff7h
+00:058E 15-00                     809   	dw	015h
+00:0590 20-00                     810   	dw	020h
+00:0592 0D-00                     811   	dw	0dh
+00:0594 EF-FF                     812   	dw	0ffefh
+00:0596 E0-FF                     813   	dw	0ffe0h
+00:0598 EF-FF                     814   	dw	0ffefh
+00:059A 0D-00                     815   	dw	0dh
+00:059C 20-00                     816   	dw	020h
+00:059E 15-00                     817   	dw	015h
+                                  818   
+                                  819   	end
+
+
+
+  Target       : ML620906 (nX-U8/100)
+  Memory Model : LARGE
+  Data   Model : NEAR
+  ROM WINDOW   :    0H to CFFFH
+  Internal RAM : D000H to EFFFH
+
+  Errors   : 0
+  Warnings : 0  (/Wrpeast)
+  Lines    : 819

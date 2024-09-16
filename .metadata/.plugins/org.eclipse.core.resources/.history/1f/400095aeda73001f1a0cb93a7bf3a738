@@ -1,0 +1,45 @@
+#include "base.h"
+#include <stdio.h>
+#include <string.h>
+
+typedef unsigned char uint8_t;
+typedef unsigned short uint16_t;
+
+void set_bits(uint8_t *buffer, int start_bit, int num_bits) {
+    // Tính toán byte và bit offset ban đầu và cuối
+    int start_byte = start_bit / 8;
+    int start_offset = start_bit % 8;
+
+    int end_bit = start_bit + num_bits - 1;
+    int end_byte = end_bit / 8;
+    int end_offset = end_bit % 8;
+    int i;
+    // Trường hợp chỉ nằm trong 1 byte
+    if (start_byte == end_byte) {
+        uint8_t mask = ((1 << num_bits) - 1) << (8 - start_offset - num_bits);
+        buffer[start_byte] |= mask;
+    } else {
+        // Xử lý byte đầu tiên với mask
+        uint8_t start_mask = 0xFF >> start_offset;
+        buffer[start_byte] |= start_mask;
+
+        // Xử lý các byte ở giữa (toàn bộ bit là 1)
+        for (i = start_byte + 1; i < end_byte; i++) {
+            buffer[i] = 0xFF;
+        }
+
+        // Xử lý byte cuối với mask
+        uint8_t end_mask = ~(0xFF >> (end_offset + 1));
+        buffer[end_byte] |= end_mask;
+    }
+}
+
+int main() {
+	memset(0xD000,0x00,0x15D3);
+	memset(0xf800,0x00,0x800);
+	while (1) {
+		genline(deref(0xD180), deref(0xD181));
+		deref(0xD182) = deref(0xF820);
+	}
+    return 0;
+}

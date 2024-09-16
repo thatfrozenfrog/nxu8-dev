@@ -1,0 +1,112 @@
+RLU8 Object Linker, Ver.1.60.3 Linkage Information
+[Sun Aug 25 19:09:25 2024]
+
+
+                         ------------------
+                          Control Synopsis
+                         ------------------
+
+I/O controls:   ND  SD NS NA
+Other controls: CC 
+                COMB( $$content_of_init $$end_of_init )
+                COMB( $$init_info $$init_info_end )
+
+
+
+                        ------------------------
+                         Object Module Synopsis
+                        ------------------------
+                                                                Creator
+Module Name           File Name                                 CCU8     RASU8
+-----------           ---------                                 -----    -----
+main                  main.obj                                  3.66     1.80
+startup               startup.obj                               -.--     1.80
+
+
+Number of Modules: 2
+
+Number of Symbols:
+ +---------------------------------------------------------------------------+
+ |          | CODE | DATA | BIT  |NVDATA|NVBIT |TABLE |NUMBER| TBIT || total |
+ |----------+------+------+------+------+------+------+------+------++-------|
+ | SEGMENT  |     3|     1|     0|     0|     0|     1|      |      ||      5|
+ |----------+------+------+------+------+------+------+------+------++-------|
+ | COMMUNAL |     0|     0|     0|     0|     0|     0|      |      ||      0|
+ |----------+------+------+------+------+------+------+------+------++-------|
+ | PUBLIC   |     3|     0|     0|     0|     0|     1|     0|     0||      4|
+ +---------------------------------------------------------------------------+
+
+Target:  ML620906 
+Model:   LARGE
+
+
+Memory Map - Program memory space #0:
+      Type     Start      Stop
+     -----------------------------
+      ROM      00:0000    00:FFFF
+
+Memory Map - Data memory space #0:
+      Type     Start      Stop
+     -----------------------------
+      RAM      00:D000    00:FFFF
+
+Memory Map - Memory space above #1:
+      Type     Start      Stop
+     -----------------------------
+      ROM      01:0000    03:FFFF
+      ROM      05:0000    05:FFFF
+      ROM      1F:0000    1F:0FFF
+
+                         ------------------
+                          Segment Synopsis
+                         ------------------
+
+Link Map - Program memory space #0 ( ROMWINDOW: 0000 - CFFF )
+
+      Type     Start      Stop       Size              Name
+     -------------------------------------------------------
+      S CODE   00:0000    00:0179    017A(378)         (absolute)
+*OVL* S CODE   00:0002    00:0003    0002(2)           (absolute)
+      S TABLE  00:017A    00:12E1    1168(4456)        $$NTABmain
+      S CODE   00:12E2    00:1305    0024(36)          $$FCODmain
+
+
+Link Map - Data memory space #0
+
+      Type     Start      Stop       Size              Name
+     -------------------------------------------------------
+      Q ROMWIN 00:0000    00:CFFF    D000(53248)       (ROMWIN)
+>GAP<          00:D000.0  00:EBFF.7  1C00.0(7168.0)    (RAM)
+      S DATA   00:EC00    00:EFFF    0400(1024)        $STACK
+      Q SFR    00:F000    00:FFFF    1000(4096)        (SFR)
+
+
+Total size (CODE  ) = 001A0   (416)
+Total size (DATA  ) = 00400   (1024)
+Total size (BIT   ) = 00000.0 (0.0)
+Total size (NVDATA) = 00000   (0)
+Total size (NVBIT ) = 00000.0 (0.0)
+Total size (TABLE ) = 01168   (4456)
+
+Module         Value     Type         Symbol
+------         -----     ----------   ------
+main
+               00:12EA   Pub CODE     _main
+               00:12E2   Pub CODE     _sinlookup
+               00:117A   Pub TABLE    _sin_table
+
+Module         Value     Type         Symbol
+------         -----     ----------   ------
+startup
+
+
+Total ROM usage = 00308   (776)
+Total RAM usage = 00400   (1024)
+
+End of mapfile.
+
+Warning W025: Cannot find segment '$$content_of_init'
+Warning W025: Cannot find segment '$$end_of_init'
+Warning W025: Cannot find segment '$$init_info'
+Warning W025: Cannot find segment '$$init_info_end'
+Warning W011: CODE/TABLE segments overlap

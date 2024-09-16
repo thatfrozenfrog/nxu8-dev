@@ -1,0 +1,137 @@
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   1 
+ Source File: main.asm
+ Object File: main.obj
+ Date  : 2024/08/11 Sun.[20:18]
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+                                    1   type(ML620906)
+                                    2   model	large
+                                    3   romwindow 0, 0cfffh
+                                    4   
+    = 00:8C60H                      5   _clear_DDD4			EQU 0:8
+                                        C60H
+    = 00:8F7EH                      6   _line_print			EQU 0:8
+                                        F7EH
+    = 00:947CH                      7   _render_DDD4		EQU 0:947CH
+    = 00:94FEH                      8   _render_stat_bar 	EQU 0:94FEH
+    = 00:9F3AH                      9   _delay				EQU 0:9
+                                        F3AH
+    = 00:9EE8H                     10   _shutdown			EQU 0:9
+                                        EE8H
+    = 00:AC30H                     11   _enter				EQU 0:0
+                                        AC30H
+    = 00:AC38H                     12   _leave				EQU 0:0
+                                        AC38H
+    = 02:4010H                     13   _hex_byte			EQU 2:4
+                                        010H
+    = 02:9892H                     14   _convert_keycode	EQU 2:9892H
+    = 02:AD4CH                     15   _display_menu		EQU 2:0AD4CH
+    = 02:D5B8H                     16   _display_settings	EQU 2:0D5B8H
+    = 02:F5E8H                     17   _get_keycode		EQU 2:0F5E8H
+                                   18   
+    = 00001B18H                    19   press_ac_str		EQU 1B18H
+    = 000083DAH                    20   keytable			EQU 83D
+                                        AH
+    = 00030F00H                    21   startup_str_1		EQU 30F00H
+    = 00000013H                    22   startup_str_1_len	EQU 13H
+                                   23   
+    = 01:0EA6H                     24   __return			EQU 1:0
+                                        EA6H
+    = 02:9416H                     25   _lrstack			EQU 2:9
+                                        416H
+    = 0000F000H                    26   _$$SP	EQU	0F000h
+                                   27   
+                                   28   
+                                   29   ;cseg	#0	at	0000h
+  --------------------------       30   cseg	#3	at	1440h
+                                   31   
+                                   32   
+03:1440                            33   _entry:
+03:1440 00-F3 78-14                34   	b _main
+                                   35   	
+03:1444                            36   _render:
+03:1444 6E-F4                      37   	push	xr4
+03:1446 0C-F0 00-00                38   	LEA 0000H
+03:144A 05-F2                      39   	mov	er2,	er0 ;er2: Base
+03:144C 00 E4                      40   	mov er4, #0  ;er4: screen count
+                                        er
+03:144E A6-F4                      41   	add er4, er10
+                                   42   	;mov	er6,	#0 ;er6: base c
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   2 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+                                        ounter
+                                   43   	
+                                   44   
+03:1450                            45   _$L3:
+03:1450 81 E4                      46   	add	er4,	#1 ;add screen 
+                                        counter
+03:1452 45-F0                      47   	mov	er0,	er4
+                                   48   	
+03:1454 1F 20                      49   	and	r0,	#01fh	;Compar
+                                        e if end of screen, then skip
+03:1456 00 21                      50   	and	r1,	#00h
+03:1458 18 70                      51   	cmp	r0,	#018h
+03:145A 00 51                      52   	cmpc	r1,	#00h
+03:145C 02 C8                      53   	bne	_$L7	;If not end, sk
+                                        ip next code
+03:145E 88 E4                      54   	add	er4,	#8 ;Adding scre
+                                        en counter
+03:1460 A6-F4                      55   	add er4, er10
+                                   56   
+03:1462                            57   _$L7:
+03:1462 25-F0                      58   	mov	er0,	er2
+                                   59   	add	er0,	EA ;Adding base
+                                         with offset
+ ** Error 00: bad operand
+03:1464 8F-90 02-90                60   	l	er0,	r8:[er0] ;Read,
+                                         can add seg here
+                                   61   	;l	er0,	r8:[EA]
+03:1468 49-A0 20-F8                62   	st	er0,	0f820h[er4] ;St
+                                        ore er0 at F820 with offset counter
+                                   63   	
+                                   64   	;add	er6,	#1 ;Adding base
+                                         counter
+03:146C 2F-FE                      65   	INC [EA]
+03:146E E8 76                      66   	cmp	r6,	#0e8h	
+03:1470 05 57                      67   	cmpc	r7,	#05h ;Check end
+                                         of screen
+03:1472 EE C1                      68   	blt	_$L3 ;If not, loop back
+03:1474 2E-F4                      69   	pop	xr4
+03:1476 1F-FE                      70   	rt ;END OF RENDER
+                                   71   	
+03:1478                            72   _main:	
+                                   73   
+03:1478 40 00                      74   	mov	r0,	#040h
+03:147A 0E 01                      75   	mov	r1,	#0eh
+                                   76   	
+03:147C 03 08                      77   	mov r8, #03h
+03:147E 00 0B                      78   	mov r11, #0h
+03:1480 16 0A                      79   	mov r10, #16h
+                                   80   	
+                                   81   	
+03:1482 01-F3 44-14                82   	bl	_render
+03:1486 10 00                      83   	mov    r0,    #10h
+03:1488 10 01                      84       mov    r1,    #10h
+03:148A 01-F0 3A-9F                85       bl    _delay
+03:148E 01-F1 A6-0E                86   	bl __return
+03:1492 00-F2 16-94                87   	b _lrstack
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   3 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+                                   88   	
+
+
+
+  Target       : ML620906 (nX-U8/100)
+  Memory Model : LARGE
+  Data   Model : NEAR
+  ROM WINDOW   :    0H to CFFFH
+  Internal RAM : D000H to EFFFH
+
+  Errors   : 1
+  Warnings : 0  (/Wrpeast)
+  Lines    : 88

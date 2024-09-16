@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="installedFeatures">
+		<item value="com.lapis_tech.lexide.feature:1.1.1.20231227_r17761"/>
+		<item value="org.eclipse.cdt.autotools:11.0.0.202211091556"/>
+		<item value="org.eclipse.cdt.build.crossgcc:11.0.0.202211062329"/>
+		<item value="org.eclipse.cdt.cmake:11.0.0.202211080413"/>
+		<item value="org.eclipse.cdt.core.lrparser.feature:9.11.1.202004012021"/>
+		<item value="org.eclipse.cdt.debug.gdbjtag:11.0.0.202211221643"/>
+		<item value="org.eclipse.cdt.debug.standalone:11.0.0.202211211546"/>
+		<item value="org.eclipse.cdt.debug.ui.memory:11.0.0.202211062329"/>
+		<item value="org.eclipse.cdt.docker.launcher:11.0.0.202211290115"/>
+		<item value="org.eclipse.cdt.gdb:11.0.0.202211062329"/>
+		<item value="org.eclipse.cdt.gnu.build:11.0.0.202211211546"/>
+		<item value="org.eclipse.cdt.gnu.debug:11.0.0.202211062329"/>
+		<item value="org.eclipse.cdt.gnu.dsf:11.0.0.202211221643"/>
+		<item value="org.eclipse.cdt.launch.remote:11.0.0.202211062329"/>
+		<item value="org.eclipse.cdt.launch.serial.feature:11.0.0.202211062329"/>
+		<item value="org.eclipse.cdt.meson:11.0.0.202211091556"/>
+		<item value="org.eclipse.cdt.native:11.0.0.202211300214"/>
+		<item value="org.eclipse.cdt.platform:11.0.0.202211300214"/>
+		<item value="org.eclipse.cdt.testsrunner.feature:11.0.0.202211062329"/>
+		<item value="org.eclipse.cdt:11.0.0.202211300214"/>
+		<item value="org.eclipse.egit:6.4.0.202211300538-r"/>
+		<item value="org.eclipse.embedcdt.codered:6.3.1.202210101738"/>
+		<item value="org.eclipse.embedcdt.debug.gdbjtag.jlink:6.3.1.202210101738"/>
+		<item value="org.eclipse.embedcdt.debug.gdbjtag.openocd:6.3.1.202210101738"/>
+		<item value="org.eclipse.embedcdt.debug.gdbjtag.pyocd:6.3.1.202210101738"/>
+		<item value="org.eclipse.embedcdt.debug.gdbjtag.qemu:6.3.1.202210101738"/>
+		<item value="org.eclipse.embedcdt.debug.gdbjtag:6.3.1.202210101738"/>
+		<item value="org.eclipse.embedcdt.doc.user:6.3.1.202210101738"/>
+		<item value="org.eclipse.embedcdt.managedbuild.cross.arm:6.3.1.202210101738"/>
+		<item value="org.eclipse.embedcdt.packs:6.3.1.202210101738"/>
+		<item value="org.eclipse.embedcdt:6.3.1.202210101738"/>
+		<item value="org.eclipse.emf.common:2.28.0.v20221121-1400"/>
+		<item value="org.eclipse.emf.ecore:2.30.0.v20221121-1400"/>
+		<item value="org.eclipse.epp.mpc:1.10.1.v20221110-1841"/>
+		<item value="org.eclipse.epp.package.embedcpp.feature:4.26.0.20221201-1200"/>
+		<item value="org.eclipse.help:2.3.1200.v20221123-1800"/>
+		<item value="org.eclipse.jgit.gpg.bc:6.4.0.202211300538-r"/>
+		<item value="org.eclipse.jgit.http.apache:6.4.0.202211300538-r"/>
+		<item value="org.eclipse.jgit.ssh.apache:6.4.0.202211300538-r"/>
+		<item value="org.eclipse.jgit:6.4.0.202211300538-r"/>
+		<item value="org.eclipse.launchbar.remote:11.0.0.202211062329"/>
+		<item value="org.eclipse.launchbar:11.0.0.202211062329"/>
+		<item value="org.eclipse.mylyn.wikitext.editors_feature:3.0.42.202201072301"/>
+		<item value="org.eclipse.mylyn.wikitext_feature:3.0.42.202201072301"/>
+		<item value="org.eclipse.oomph.p2:1.25.0.v20221125-1553"/>
+		<item value="org.eclipse.oomph.setup.core:1.26.0.v20221125-1553"/>
+		<item value="org.eclipse.oomph.setup:1.27.0.v20221125-1553"/>
+		<item value="org.eclipse.platform:4.26.0.v20221123-2302"/>
+		<item value="org.eclipse.rcp:4.26.0.v20221123-2302"/>
+		<item value="org.eclipse.remote:11.0.0.202211080413"/>
+		<item value="org.eclipse.tm.terminal.connector.ssh.feature:11.0.0.202211062329"/>
+		<item value="org.eclipse.tm.terminal.control.feature:11.0.0.202211062329"/>
+		<item value="org.eclipse.tm.terminal.feature:11.0.0.202210031642"/>
+		<item value="org.eclipse.tm.terminal.view.feature:11.0.0.202211062329"/>
+		<item value="org.eclipse.userstorage:1.2.0.v20210517-0327"/>
+	</list>
+	<section name="NewWizardAction">
+	</section>
+	<section name="SaveAsDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="706"/>
+		<item key="DIALOG_Y_ORIGIN" value="162"/>
+		<item key="DIALOG_WIDTH" value="525"/>
+		<item key="DIALOG_HEIGHT" value="580"/>
+		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
+	</section>
+</section>

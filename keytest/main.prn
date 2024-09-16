@@ -1,0 +1,117 @@
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   1 
+ Source File: main.asm
+ Object File: main.obj
+ Date  : 2024/08/31 Sat.[16:08]
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+                                    1   type(ML620906)
+                                    2   model	large
+                                    3   romwindow 0, 0cfffh
+                                    4   
+    = 00:8C60H                      5   _clear_DDD4		EQU 0:8C60H
+    = 00:8F7EH                      6   _line_print		EQU 0:8F7EH
+    = 00:947CH                      7   _render_DDD4		EQU 0:947CH
+    = 00:94FEH                      8   _render_stat_bar 	EQU 0:94FEH
+    = 00:9F3AH                      9   _delay			EQU 0:9F3AH
+    = 00:9EE8H                     10   _shutdown		EQU 0:9EE8H
+    = 00:AC30H                     11   _enter			EQU 0:0AC30H
+    = 00:AC38H                     12   _leave			EQU 0:0AC38H
+    = 02:4010H                     13   _hex_byte		EQU 2:4010H
+    = 02:9892H                     14   _convert_keycode	EQU 2:9892H
+    = 02:AD4CH                     15   _display_menu		EQU 2:0AD4CH
+    = 02:D5B8H                     16   _display_settings	EQU 2:0D5B8H
+    = 02:F5E8H                     17   _get_keycode		EQU 2:0F5E8H
+    = 00:8C0CH                     18   fill_screen		EQU 0:8C0CH
+    = 00:A16AH                     19   _reset_ko		EQU 0:0A16AH
+    = 00001B18H                    20   press_ac_str		EQU 1B18H
+    = 000083DAH                    21   keytable		EQU 83DAH
+    = 00030F00H                    22   startup_str_1		EQU 30F00H
+    = 00000013H                    23   startup_str_1_len	EQU 13H
+    = 0000D150H                    24   last_ki_ko		EQU 0D150h
+                                   25   
+    = 02:9416H                     26   _return_flow EQU 2:9416H
+                                   27   
+  --------------------------       28   cseg	#3	at	0E40h
+                                   29   
+                                   30   
+03:0E40 00 0C                      31   mov r12, #0h
+03:0E42 D8 0D                      32   mov r13, #0D8h
+                                   33   
+03:0E44                            34   _$main_loop:
+03:0E44 00 E0                      35   	mov	er0,	#0
+03:0E46 C3-90                      36   	st	er0,	[bp]
+03:0E48 C5-F0                      37   	mov	er0,	bp
+                                   38   	;bl	_get_keycode_fixed
+03:0E4A 01-F2 E8-F5                39   	bl _get_keycode
+03:0E4E 00-80                      40   	mov	r0,	r0
+03:0E50 24 C8                      41   	bne	_$has_key_press
+03:0E52 00 E0                      42   	mov	er0,	#0
+03:0E54 13-90 50-D1                43   	st	er0,	last_ki_ko
+03:0E58 F5 CE                      44   	bal	_$main_loop
+                                   45   
+03:0E5A                            46   _get_keycode_fixed:
+03:0E5A CE-F8                      47       push    lr
+03:0E5C 01-F0 30-AC                48       bl    _enter
+03:0E60 05-F8                      49       mov    er8,    er0
+03:0E62 01 04                      50       mov    r4,    #1
+03:0E64 01 01                      51       mov    r1,    #1
+03:0E66 01 03                      52       mov    r3,    #1
+03:0E68                            53   _$get_key_loop:
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   2 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+03:0E68 11-91 46-F0                54       st    r1,    0F046H
+03:0E6C 00 02                      55       mov    r2,    #0
+03:0E6E 10-90 40-F0                56       l    r0,    0F040H
+03:0E72 11-92 46-F0                57       st    r2,    0F046H
+03:0E76 00-82                      58       mov    r2,    r0
+03:0E78 FF 70                      59       cmp    r0,    #0FFh
+03:0E7A 05 C9                      60       beq    _$continue
+03:0E7C 89-91 01-00                61       st    r1,    01h[er8]
+03:0E80 FF 40                      62       xor    r0,    #0FFh
+03:0E82 81-90                      63       st    r0,    [er8]
+03:0E84 05 CE                      64       bal    _$get_key_ret
+03:0E86                            65   _$continue:
+03:0E86 1A-91                      66       sll    r1,    #1
+03:0E88 01 13                      67       add    r3,    #1
+03:0E8A 07 73                      68       cmp    r3,    #7
+03:0E8C ED C3                      69       ble    _$get_key_loop
+03:0E8E 00 04                      70       mov    r4,    #0
+03:0E90                            71   _$get_key_ret:
+03:0E90 01-F0 6A-A1                72   	bl	_reset_ko
+03:0E94 40-80                      73   	mov	r0,	r4
+03:0E96 00-F0 38-AC                74   	b	_leave
+                                   75   	
+                                   76   
+03:0E9A                            77   _$has_key_press:
+03:0E9A C2-90                      78   	l	er0,	[bp]
+03:0E9C 12-92 50-D1                79   	l	er2,	0D150h
+03:0EA0 27-F0                      80   	cmp	er0,	er2
+03:0EA2 D0 C9                      81   	gbeq	_$main_loop
+03:0EA4 13-90 50-D1                82   	st	er0,	0D150h
+03:0EA8 00 00                      83   	mov	r0,	#0
+03:0EAA 84 D0                      84   	st	r0,	04h[bp]
+03:0EAC C5-F0                      85   	mov	er0,	bp
+03:0EAE DA 02                      86   	mov	r2,	#BYTE1 keytable
+03:0EB0 83 03                      87   	mov	r3,	#BYTE2 keytable
+03:0EB2 01-F2 92-98                88   	bl	_convert_keycode	
+                                        ;2:52DC
+03:0EB6 13-90 70-DA                89   	st er0, 0DA70h
+                                   90   	
+03:0EBA C4 CE                      91   	gjmp _$main_loop
+                                   92   	
+                                   93   
+
+
+
+  Target       : ML620906 (nX-U8/100)
+  Memory Model : LARGE
+  Data   Model : NEAR
+  ROM WINDOW   :    0H to CFFFH
+  Internal RAM : D000H to EFFFH
+
+  Errors   : 0
+  Warnings : 0  (/Wrpeast)
+  Lines    : 93

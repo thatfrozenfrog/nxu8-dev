@@ -1,0 +1,105 @@
+RLU8 Object Linker, Ver.1.60.3 Linkage Information
+[Fri Aug  9 14:39:01 2024]
+
+
+                         ------------------
+                          Control Synopsis
+                         ------------------
+
+I/O controls:   ND  SD NS NA
+Other controls: CC 
+                COMB( $$content_of_init $$end_of_init )
+                COMB( $$init_info $$init_info_end )
+
+
+
+                        ------------------------
+                         Object Module Synopsis
+                        ------------------------
+                                                                Creator
+Module Name           File Name                                 CCU8     RASU8
+-----------           ---------                                 -----    -----
+main                  main.obj                                  -.--     1.80
+
+
+Number of Modules: 1
+
+Number of Symbols:
+ +---------------------------------------------------------------------------+
+ |          | CODE | DATA | BIT  |NVDATA|NVBIT |TABLE |NUMBER| TBIT || total |
+ |----------+------+------+------+------+------+------+------+------++-------|
+ | SEGMENT  |     1|     0|     0|     0|     0|     0|      |      ||      1|
+ |----------+------+------+------+------+------+------+------+------++-------|
+ | COMMUNAL |     0|     0|     0|     0|     0|     0|      |      ||      0|
+ |----------+------+------+------+------+------+------+------+------++-------|
+ | PUBLIC   |     0|     0|     0|     0|     0|     0|     0|     0||      0|
+ +---------------------------------------------------------------------------+
+
+Target:  ML620906 
+Model:   LARGE
+
+
+Memory Map - Program memory space #0:
+      Type     Start      Stop
+     -----------------------------
+      ROM      00:0000    00:FFFF
+
+Memory Map - Data memory space #0:
+      Type     Start      Stop
+     -----------------------------
+      RAM      00:D000    00:FFFF
+
+Memory Map - Memory space above #1:
+      Type     Start      Stop
+     -----------------------------
+      ROM      01:0000    03:FFFF
+      ROM      05:0000    05:FFFF
+      ROM      1F:0000    1F:0FFF
+
+                         ------------------
+                          Segment Synopsis
+                         ------------------
+
+Link Map - Program memory space #0 ( ROMWINDOW: 0000 - CFFF )
+
+
+Link Map - Data memory space #0
+
+      Type     Start      Stop       Size              Name
+     -------------------------------------------------------
+      Q ROMWIN 00:0000    00:CFFF    D000(53248)       (ROMWIN)
+>GAP<          00:D000.0  00:EFFF.7  2000.0(8192.0)    (RAM)
+      Q SFR    00:F000    00:FFFF    1000(4096)        (SFR)
+
+
+Link Map - Memory space above #1
+
+      Type     Start      Stop       Size              Name
+     -------------------------------------------------------
+ ---
+>GAP<          03:0000.0  03:143F.7  1440.0(5184.0)    (ROM)
+      S CODE   03:1440    03:148D    004E(78)          (absolute)
+
+
+Total size (CODE  ) = 0004E   (78)
+Total size (DATA  ) = 00000   (0)
+Total size (BIT   ) = 00000.0 (0.0)
+Total size (NVDATA) = 00000   (0)
+Total size (NVBIT ) = 00000.0 (0.0)
+Total size (TABLE ) = 00000   (0)
+
+Module         Value     Type         Symbol
+------         -----     ----------   ------
+main
+
+
+Total ROM usage = 0004E   (78)
+Total RAM usage = 00000   (0)
+
+End of mapfile.
+
+Warning W025: Cannot find segment '$$content_of_init'
+Warning W025: Cannot find segment '$$end_of_init'
+Warning W025: Cannot find segment '$$init_info'
+Warning W025: Cannot find segment '$$init_info_end'
+Warning W033: Reset vector table not allocated

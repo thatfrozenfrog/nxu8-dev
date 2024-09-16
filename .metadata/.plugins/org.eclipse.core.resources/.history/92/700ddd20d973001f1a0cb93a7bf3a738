@@ -1,0 +1,20 @@
+#include "base.h"
+#include <stdio.h>
+#include <string.h>
+
+typedef unsigned char uint8_t;
+typedef unsigned short uint16_t;
+
+void genline(byte n, byte offset) {
+    word org = 0xF820;
+    if (n <= 8 - offset || true) {
+        org = 0xFF >> offset;
+    }
+}
+
+int main() {
+	memset(0xD000,0x00,0x15D3);
+	memset(0xf800,0x00,0x800);
+    genline(4, 4);
+    return 0;
+}

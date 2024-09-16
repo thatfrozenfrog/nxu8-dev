@@ -1,0 +1,287 @@
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   1 
+ Source File: main.asm
+ Object File: main.obj
+ Date  : 2024/08/26 Mon.[21:16]
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+                                    1   type(ML620906)
+                                    2   model	large
+                                    3   romwindow 0, 0cfffh
+                                    4   
+    = 00:8C60H                      5   _clear_DDD4			EQU 0:8
+                                        C60H
+    = 00:8F7EH                      6   _line_print			EQU 0:8
+                                        F7EH
+    = 00:947CH                      7   _render_DDD4		EQU 0:947CH
+    = 00:9470H                      8   _render_E3D4		EQU 0:9470H
+    = 00:94FEH                      9   _render_stat_bar 	EQU 0:94FEH
+    = 00:9F3AH                     10   _delay				EQU 0:9
+                                        F3AH
+    = 00:9EE8H                     11   _shutdown			EQU 0:9
+                                        EE8H
+    = 00:AC30H                     12   _enter				EQU 0:0
+                                        AC30H
+    = 00:AC38H                     13   _leave				EQU 0:0
+                                        AC38H
+    = 02:4010H                     14   _hex_byte			EQU 2:4
+                                        010H
+    = 02:9892H                     15   _convert_keycode	EQU 2:9892H
+    = 02:AD4CH                     16   _display_menu		EQU 2:0AD4CH
+    = 02:D5B8H                     17   _display_settings	EQU 2:0D5B8H
+    = 02:F5E8H                     18   _get_keycode		EQU 2:0F5E8H
+    = 00:9846H                     19   _bitmap				EQU 0:9
+                                        846H
+    = 01:EB94H                     20   _memset				EQU 1:0
+                                        EB94H
+    = 01:F24CH                     21   _read_key			EQU 1:0
+                                        F24CH
+                                   22   
+    = 00:91FCH                     23   _set_pixel	        EQU 0:091FCH
+                                   24   
+    = 02:4080H                     25   _waitkey 			EQU 2:4
+                                        080H
+    = 01:0EA6H                     26   __return			EQU 1:0
+                                        EA6H
+    = 02:9416H                     27   _lrstack			EQU 2:9
+                                        416H
+    = 0000F000H                    28   _$$SP	EQU	0F000h
+                                   29   
+                                   30   
+                                   31   ;cseg	#0	at	0000h
+  --------------------------       32   cseg	#3	at	1440h
+                                   33   
+                                   34   
+03:1440                            35   _entry:
+                                   36   	
+03:1440 7B CE                      37   	gjmp _main
+                                   38   
+                                   39   
+03:1442                            40   _plot_line	:
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   2 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+    = FFFFFFFEH                    41   	_sx$2	set	-2
+    = FFFFFFFAH                    42   	_sy$6	set	-6
+    = FFFFFFFCH                    43   	_e2$10	set	-4
+                                   44   
+03:1442 CE-F8                      45   	push	lr
+03:1444 01-F0 30-AC                46   	bl	_enter
+03:1448 FA E1                      47   	add	sp,	#-06
+03:144A 20-8A                      48   	mov	r10,	r2
+03:144C 00-88                      49   	mov	r8,	r0
+03:144E 30-8B                      50   	mov	r11,	r3
+03:1450 10-89                      51   	mov	r9,	r1
+                                   52   
+                                   53   ;;  int dx =  abs (x1 - x0), sx = x0 < 
+                                        x1 ? 1 : -1;
+03:1452 20-80                      54   	mov	r0,	r2
+03:1454 00 01                      55   	mov	r1,	#00h
+03:1456 00 03                      56   	mov	r3,	#00h
+03:1458 88-80                      57   	sub	r0,	r8
+03:145A 39-81                      58   	subc	r1,	r3
+03:145C 01-F3 CE-14                59   	bl	_abs
+03:1460 05-F4                      60   	mov	er4,	er0	;; _ldx
+                                        $0
+03:1462 A7-88                      61   	cmp	r8,	r10
+03:1464 02 C0                      62   	bge	_$L6
+03:1466 01 E0                      63   	mov	er0,	#1 
+03:1468 01 CE                      64   	bal	_$L8
+03:146A                            65   _$L6 :
+03:146A 7F E0                      66   	mov	er0,	#-1
+03:146C                            67   _$L8 :
+03:146C FE B0                      68   	st	er0,	_sx$2[fp]
+                                   69   
+                                   70   ;;  int dy = -abs (y1 - y0), sy = y0 < 
+                                        y1 ? 1 : -1;
+03:146E B0-80                      71   	mov	r0,	r11
+03:1470 00 01                      72   	mov	r1,	#00h
+03:1472 00 03                      73   	mov	r3,	#00h
+03:1474 98-80                      74   	sub	r0,	r9
+03:1476 39-81                      75   	subc	r1,	r3
+03:1478 01-F3 CE-14                76   	bl	_abs
+03:147C 05-F2                      77   	mov	er2,	er0
+03:147E 00 E0                      78   	mov	er0,	#0 
+03:1480 28-80                      79   	sub	r0,	r2
+03:1482 39-81                      80   	subc	r1,	r3
+03:1484 05-F6                      81   	mov	er6,	er0	;; _ldy
+                                        $4
+03:1486 B7-89                      82   	cmp	r9,	r11
+03:1488 02 C0                      83   	bge	_$L9
+03:148A 01 E0                      84   	mov	er0,	#1 
+03:148C 01 CE                      85   	bal	_$L11
+03:148E                            86   _$L9 :
+03:148E 7F E0                      87   	mov	er0,	#-1
+03:1490                            88   _$L11 :
+03:1490 FA B0                      89   	st	er0,	_sy$6[fp]
+                                   90   
+                                   91   ;;  int err = dx + dy, e2;
+03:1492 45-F0                      92   	mov	er0,	er4
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   3 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+03:1494 66-F0                      93   	add	er0,	er6
+03:1496 05-FC                      94   	mov	bp,	er0	;; _ler
+                                        r$8
+                                   95   
+                                   96   ;;  for (;;){
+03:1498                            97   _$L14 :
+                                   98   
+                                   99   ;;    set_pixel (x0,y0);
+03:1498 90-81                     100   	mov	r1,	r9
+03:149A 80-80                     101   	mov	r0,	r8
+03:149C 00 02                     102   	mov r2, #0h
+03:149E 00 03                     103   	mov r3, #0h
+03:14A0 01-F0 FC-91               104   	bl	_set_pixel
+                                  105   
+                                  106   ;;    if (x0 == x1 && y0 == y1) break;
+03:14A4 87-8A                     107   	cmp	r10,	r8
+03:14A6 04 C8                     108   	bne	_$L18
+03:14A8 97-8B                     109   	cmp	r11,	r9
+03:14AA 02 C8                     110   	bne	_$L18
+                                  111   
+                                  112   ;;}
+03:14AC 00-F0 38-AC               113   	b	_leave
+                                  114   
+                                  115   ;;    if (x0 == x1 && y0 == y1) break;
+03:14B0                           116   _$L18 :
+                                  117   
+                                  118   ;;    e2 = 2 * err;
+03:14B0 C5-F0                     119   	mov	er0,	bp
+03:14B2 C6-F0                     120   	add	er0,	bp
+03:14B4 FC B0                     121   	st	er0,	_e2$10[fp]
+                                  122   
+                                  123   ;;    if (e2 >= dy) { err += dy; x0 += 
+                                        sx; }
+03:14B6 67-F0                     124   	cmp	er0,	er6
+03:14B8 03 C5                     125   	blts	_$L25
+03:14BA 66-FC                     126   	add	bp,	er6
+03:14BC 7E D1                     127   	l	r1,	_sx$2[fp]
+03:14BE 11-88                     128   	add	r8,	r1
+03:14C0                           129   _$L25 :
+                                  130   
+                                  131   ;;    if (e2 <= dx) { err += dx; y0 += 
+                                        sy; }
+03:14C0 7C B0                     132   	l	er0,	_e2$10[fp]
+03:14C2 47-F0                     133   	cmp	er0,	er4
+03:14C4 E9 C6                     134   	bgts	_$L14
+03:14C6 46-FC                     135   	add	bp,	er4
+03:14C8 7A D1                     136   	l	r1,	_sy$6[fp]
+03:14CA 11-89                     137   	add	r9,	r1
+                                  138   
+                                  139   ;;  }
+03:14CC E5 CE                     140   	bal	_$L14
+                                  141   	
+03:14CE                           142   _abs	:
+03:14CE CE-F8                     143   	push lr
+03:14D0 05-F2                     144   	mov	er2,	er0
+03:14D2 05-F0                     145   	mov	er0,	er0
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   4 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+03:14D4 04 CC                     146   	bps	_absneg
+03:14D6 00 E0                     147   	mov	er0,	#0 
+03:14D8 28-80                     148   	sub	r0,	r2
+03:14DA 39-81                     149   	subc	r1,	r3
+03:14DC                           150   _absrt:
+03:14DC 8E-F2                     151   	pop pc
+03:14DE                           152   _absneg:
+03:14DE 25-F0                     153   	mov	er0,	er2
+03:14E0 FD CE                     154   	bal	_absrt
+                                  155   	
+03:14E2                           156   _ssmain	:
+                                  157   
+                                  158   ;;{
+                                  159   ;;*************************************
+                                        ****
+                                  160   ;;	register/stack information
+                                  161   ;;*************************************
+                                        ****
+                                  162   ;;*************************************
+                                        ****
+                                  163   
+                                  164   
+                                  165   ;;    plot_line(0x05,0x01,0xC0,0xC1);
+03:14E2 C1 03                     166   	mov	r3,	#0c1h
+03:14E4 C0 02                     167   	mov	r2,	#0c0h
+03:14E6 01 01                     168   	mov	r1,	#01h
+03:14E8 05 00                     169   	mov	r0,	#05h
+03:14EA 12-90 00-D9               170   	l er0, 0D900h
+03:14EE 12-92 10-D9               171   	l er2, 0D910h
+03:14F2 01-F3 42-14               172   	bl	_plot_line
+                                  173   	
+03:14F6 01-F0 7C-94               174   	bl _render_DDD4
+03:14FA 1E CE                     175   	gjmp _main
+                                  176   	
+03:14FC                           177   _drawLoop:
+                                  178   
+03:14FC CE-F8                     179   	push	lr
+03:14FE 01-F0 30-AC               180   	bl	_enter
+03:1502 05-F8                     181   	mov	er8,	er0
+                                  182   
+                                  183   ;;    word line = l << 8 | 0x00;
+                                  184   
+03:1504 25-FC                     185   	mov	bp,	er2	;; _lli
+                                        ne$2
+                                  186   
+                                  187   ;;    for(i = 0; i < line * 4; i += 4)
+03:1506 00 E6                     188   	mov	er6,	#0 	;; _li$
+                                        0
+03:1508 10 CE                     189   	bal	_$Loop7
+03:150A                           190   _$Loop4 :
+                                  191   
+                                  192   ;;        blank(a,b,c,d);
+03:150A 85-F0                     193   	mov	er0,	er8
+03:150C 66-F0                     194   	add	er0,	er6
+03:150E 08-93 03-00               195   	l	r3,	03h[er0]
+03:1512 08-92 02-00               196   	l	r2,	02h[er0]
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   5 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+03:1516 08-91 01-00               197   	l	r1,	01h[er0]
+03:151A 85-F4                     198   	mov	er4,	er8
+03:151C 66-F4                     199   	add	er4,	er6
+03:151E 40-90                     200   	l	r0,	[er4]
+03:1520 01-F3 42-14               201   	bl	_plot_line
+03:1524 01-F0 7C-94               202   	bl _render_DDD4
+                                  203   ;;    for(i = 0; i < line * 4; i += 4)
+03:1528 84 E6                     204   	add	er6,	#4 
+03:152A                           205   _$Loop7 :
+03:152A C5-F0                     206   	mov	er0,	bp
+03:152C 2B-91                     207   	sllc	r1,	#02h
+03:152E 2A-90                     208   	sll	r0,	#02h
+                                  209   
+03:1530 07-F6                     210   	cmp	er6,	er0
+03:1532 EB C1                     211   	blt	_$Loop4
+                                  212   
+                                  213   ;;}
+03:1534 00-F0 38-AC               214   	b	_leave
+                                  215   
+03:1538                           216   _main:
+03:1538 00 02                     217   	mov	r2,	#00h
+03:153A 47 03                     218   	mov r3, #47h
+03:153C 00 00                     219   	mov	r0,	#00h
+03:153E E7 01                     220   	mov	r1,	#0e7h
+                                  221   	;gjmp _drawLoop
+03:1540 01-F0 7C-94               222   	bl _render_DDD4
+                                  223   	
+03:1544                           224   _loop:
+03:1544 01-F2 E8-F5               225   	bl _get_keycode
+03:1548 FD CE                     226   	gjmp _loop
+                                  227   
+
+
+
+  Target       : ML620906 (nX-U8/100)
+  Memory Model : LARGE
+  Data   Model : NEAR
+  ROM WINDOW   :    0H to CFFFH
+  Internal RAM : D000H to EFFFH
+
+  Errors   : 0
+  Warnings : 0  (/Wrpeast)
+  Lines    : 227

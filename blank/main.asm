@@ -1,0 +1,819 @@
+;; Compile Options : /TML620906 /ML /SD /Om /Zc /Orp /Famain.asm /Lv 
+;; Version Number  : Ver.3.66.2
+;; File Name       : main.c
+
+	type (ML620906) 
+	model large, near
+	$$NTABmain segment table 2h #0h
+	$$FCODmain segment code 2h any
+	STACKSEG 0400h
+CVERSION 3.66.2
+CGLOBAL 01H 03H 0000H "main" 08H 02H 01H 00H 80H 00H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "sinlookup" 08H 02H 00H 00H 80H 00H 00H 00H 00H
+CTYPEDEF 0000H 0000H 42H "byte" 02H 00H 00H
+CTYPEDEF 0000H 0000H 42H "word" 02H 00H 08H
+CTYPEDEF 0000H 0000H 42H "uint16_t" 02H 00H 08H
+CGLOBAL 01H 00H 02D0H "cos_table" 05H 01H 68H 01H 00H 08H
+CGLOBAL 01H 00H 02D0H "sin_table" 05H 01H 68H 01H 00H 08H
+CFILE 0001H 0000000BH "base.h"
+CFILE 0000H 00000074H "main.c"
+
+	rseg $$FCODmain
+CFUNCTION 0
+
+_sinlookup	:
+CBLOCK 0 1 108
+
+;;char sinlookup(byte rad) {
+CLINEA 0000H 0001H 006CH 0001H 001AH
+;;*****************************************
+;;	register/stack information
+;;*****************************************
+;;*****************************************
+
+CBLOCK 0 2 108
+CARGUMENT 46H 0001H 0014H "rad" 02H 00H 00H
+
+;;    return sin_table[rad];
+CLINEA 0000H 0001H 006DH 0005H 001AH
+	mov	r1,	#00h
+	add	er0,	er0
+	l	r0,	NEAR _sin_table[er0]
+CBLOCKEND 0 2 110
+
+;;}
+CLINEA 0000H 0000H 006EH 0001H 0001H
+	rt
+CBLOCKEND 0 1 110
+CFUNCTIONEND 0
+
+CFUNCTION 1
+
+_main	:
+CBLOCK 1 1 112
+
+;;void main(void) {
+CLINEA 0000H 0001H 0070H 0001H 0011H
+;;*****************************************
+;;	register/stack information
+;;*****************************************
+;;*****************************************
+
+CBLOCK 1 2 112
+CLOCAL 4AH 0001H 0000H 0002H "val" 02H 00H 00H
+
+;;    deref(0xD810) = sinlookup(val);
+CLINEA 0000H 0000H 0072H 0005H 0023H
+	l	r0,	0d800h
+	bl	_sinlookup
+	st	r0,	0d810h
+
+;;    deref(0xD822) = deref(0xD820) - deref(0xD821);
+CLINEA 0000H 0001H 0073H 0005H 0032H
+	l	r0,	0d820h
+	l	r1,	0d821h
+	sub	r0,	r1
+	st	r0,	0d822h
+CBLOCKEND 1 2 116
+
+;;}
+CLINEA 0000H 0001H 0074H 0001H 0001H
+_$$end_of_main :
+	bal	$
+CBLOCKEND 1 1 116
+CFUNCTIONEND 1
+
+	public _cos_table
+	public _sin_table
+	public _main
+	public _sinlookup
+	extrn code : $$start_up
+
+	cseg #00h at 02h
+	dw	$$start_up
+
+	rseg $$NTABmain
+_sin_table :
+	dw	00h
+	dw	01bh
+	dw	01dh
+	dw	05h
+	dw	0ffe8h
+	dw	0ffe1h
+	dw	0fff7h
+	dw	015h
+	dw	020h
+	dw	0dh
+	dw	0ffefh
+	dw	0ffe0h
+	dw	0ffefh
+	dw	0dh
+	dw	020h
+	dw	015h
+	dw	0fff7h
+	dw	0ffe1h
+	dw	0ffe8h
+	dw	05h
+	dw	01dh
+	dw	01bh
+	dw	00h
+	dw	0ffe5h
+	dw	0ffe3h
+	dw	0fffch
+	dw	018h
+	dw	01fh
+	dw	09h
+	dw	0ffebh
+	dw	0ffe0h
+	dw	0fff3h
+	dw	012h
+	dw	020h
+	dw	011h
+	dw	0fff2h
+	dw	0ffe0h
+	dw	0ffebh
+	dw	09h
+	dw	01fh
+	dw	018h
+	dw	0fffbh
+	dw	0ffe3h
+	dw	0ffe5h
+	dw	01h
+	dw	01bh
+	dw	01dh
+	dw	04h
+	dw	0ffe7h
+	dw	0ffe1h
+	dw	0fff8h
+	dw	015h
+	dw	020h
+	dw	0dh
+	dw	0ffeeh
+	dw	0ffe0h
+	dw	0ffefh
+	dw	0eh
+	dw	020h
+	dw	014h
+	dw	0fff6h
+	dw	0ffe1h
+	dw	0ffe8h
+	dw	05h
+	dw	01dh
+	dw	01ah
+	dw	0ffffh
+	dw	0ffe5h
+	dw	0ffe3h
+	dw	0fffch
+	dw	019h
+	dw	01eh
+	dw	08h
+	dw	0ffeah
+	dw	0ffe0h
+	dw	0fff4h
+	dw	012h
+	dw	020h
+	dw	010h
+	dw	0fff2h
+	dw	0ffe0h
+	dw	0ffech
+	dw	0ah
+	dw	01fh
+	dw	017h
+	dw	0fffah
+	dw	0ffe2h
+	dw	0ffe6h
+	dw	01h
+	dw	01ch
+	dw	01dh
+	dw	03h
+	dw	0ffe7h
+	dw	0ffe2h
+	dw	0fff8h
+	dw	016h
+	dw	01fh
+	dw	0ch
+	dw	0ffeeh
+	dw	0ffe0h
+	dw	0fff0h
+	dw	0eh
+	dw	020h
+	dw	014h
+	dw	0fff6h
+	dw	0ffe1h
+	dw	0ffe9h
+	dw	06h
+	dw	01eh
+	dw	01ah
+	dw	0ffffh
+	dw	0ffe4h
+	dw	0ffe4h
+	dw	0fffdh
+	dw	019h
+	dw	01eh
+	dw	08h
+	dw	0ffeah
+	dw	0ffe1h
+	dw	0fff4h
+	dw	013h
+	dw	020h
+	dw	010h
+	dw	0fff1h
+	dw	0ffe0h
+	dw	0ffech
+	dw	0bh
+	dw	01fh
+	dw	017h
+	dw	0fffah
+	dw	0ffe2h
+	dw	0ffe6h
+	dw	02h
+	dw	01ch
+	dw	01ch
+	dw	03h
+	dw	0ffe7h
+	dw	0ffe2h
+	dw	0fff9h
+	dw	016h
+	dw	01fh
+	dw	0ch
+	dw	0ffedh
+	dw	0ffe0h
+	dw	0fff0h
+	dw	0fh
+	dw	020h
+	dw	013h
+	dw	0fff5h
+	dw	0ffe1h
+	dw	0ffe9h
+	dw	06h
+	dw	01eh
+	dw	01ah
+	dw	0fffeh
+	dw	0ffe4h
+	dw	0ffe4h
+	dw	0fffdh
+	dw	019h
+	dw	01eh
+	dw	07h
+	dw	0ffeah
+	dw	0ffe1h
+	dw	0fff5h
+	dw	013h
+	dw	020h
+	dw	0fh
+	dw	0fff1h
+	dw	0ffe0h
+	dw	0ffedh
+	dw	0bh
+	dw	01fh
+	dw	017h
+	dw	0fff9h
+	dw	0ffe2h
+	dw	0ffe6h
+	dw	02h
+	dw	01ch
+	dw	01ch
+	dw	02h
+	dw	0ffe6h
+	dw	0ffe2h
+	dw	0fff9h
+	dw	017h
+	dw	01fh
+	dw	0bh
+	dw	0ffedh
+	dw	0ffe0h
+	dw	0fff1h
+	dw	0fh
+	dw	020h
+	dw	013h
+	dw	0fff5h
+	dw	0ffe1h
+	dw	0ffeah
+	dw	07h
+	dw	01eh
+	dw	019h
+	dw	0fffdh
+	dw	0ffe4h
+	dw	0ffe4h
+	dw	0fffeh
+	dw	01ah
+	dw	01eh
+	dw	06h
+	dw	0ffe9h
+	dw	0ffe1h
+	dw	0fff5h
+	dw	013h
+	dw	020h
+	dw	0fh
+	dw	0fff0h
+	dw	0ffe0h
+	dw	0ffedh
+	dw	0ch
+	dw	01fh
+	dw	016h
+	dw	0fff9h
+	dw	0ffe2h
+	dw	0ffe7h
+	dw	03h
+	dw	01ch
+	dw	01ch
+	dw	02h
+	dw	0ffe6h
+	dw	0ffe2h
+	dw	0fffah
+	dw	017h
+	dw	01fh
+	dw	0bh
+	dw	0ffech
+	dw	0ffe0h
+	dw	0fff1h
+	dw	010h
+	dw	020h
+	dw	013h
+	dw	0fff4h
+	dw	0ffe1h
+	dw	0ffeah
+	dw	08h
+	dw	01eh
+	dw	019h
+	dw	0fffdh
+	dw	0ffe4h
+	dw	0ffe4h
+	dw	0ffffh
+	dw	01ah
+	dw	01eh
+	dw	06h
+	dw	0ffe9h
+	dw	0ffe1h
+	dw	0fff6h
+	dw	014h
+	dw	020h
+	dw	0eh
+	dw	0fff0h
+	dw	0ffe0h
+	dw	0ffeeh
+	dw	0ch
+	dw	01fh
+	dw	016h
+	dw	0fff8h
+	dw	0ffe2h
+	dw	0ffe7h
+	dw	03h
+	dw	01dh
+	dw	01ch
+	dw	01h
+	dw	0ffe6h
+	dw	0ffe2h
+	dw	0fffah
+	dw	017h
+	dw	01fh
+	dw	0ah
+	dw	0ffech
+	dw	0ffe0h
+	dw	0fff2h
+	dw	010h
+	dw	020h
+	dw	012h
+	dw	0fff4h
+	dw	0ffe0h
+	dw	0ffeah
+	dw	08h
+	dw	01eh
+	dw	019h
+	dw	0fffch
+	dw	0ffe3h
+	dw	0ffe5h
+	dw	0ffffh
+	dw	01ah
+	dw	01dh
+	dw	05h
+	dw	0ffe8h
+	dw	0ffe1h
+	dw	0fff6h
+	dw	014h
+	dw	020h
+	dw	0eh
+	dw	0ffefh
+	dw	0ffe0h
+	dw	0ffeeh
+	dw	0dh
+	dw	020h
+	dw	015h
+	dw	0fff8h
+	dw	0ffe1h
+	dw	0ffe7h
+	dw	04h
+	dw	01dh
+	dw	01bh
+	dw	01h
+	dw	0ffe5h
+	dw	0ffe3h
+	dw	0fffbh
+	dw	018h
+	dw	01fh
+	dw	09h
+	dw	0ffebh
+	dw	0ffe0h
+	dw	0fff2h
+	dw	011h
+	dw	020h
+	dw	012h
+	dw	0fff3h
+	dw	0ffe0h
+	dw	0ffebh
+	dw	09h
+	dw	01fh
+	dw	018h
+	dw	0fffch
+	dw	0ffe3h
+	dw	0ffe5h
+	dw	00h
+	dw	01bh
+	dw	01dh
+	dw	05h
+	dw	0ffe8h
+	dw	0ffe1h
+	dw	0fff7h
+	dw	015h
+	dw	020h
+	dw	0dh
+	dw	0ffefh
+	dw	0ffe0h
+	dw	0ffefh
+	dw	0dh
+	dw	020h
+	dw	015h
+	dw	0fff7h
+	dw	0ffe1h
+	dw	0ffe8h
+	dw	05h
+	dw	01dh
+	dw	01bh
+	dw	00h
+	dw	0ffe5h
+	dw	0ffe3h
+	dw	0fffbh
+	dw	018h
+_cos_table :
+	dw	020h
+	dw	011h
+	dw	0fff3h
+	dw	0ffe0h
+	dw	0ffebh
+	dw	09h
+	dw	01fh
+	dw	018h
+	dw	0fffbh
+	dw	0ffe3h
+	dw	0ffe5h
+	dw	00h
+	dw	01bh
+	dw	01dh
+	dw	04h
+	dw	0ffe8h
+	dw	0ffe1h
+	dw	0fff7h
+	dw	015h
+	dw	020h
+	dw	0dh
+	dw	0ffeeh
+	dw	0ffe0h
+	dw	0ffefh
+	dw	0eh
+	dw	020h
+	dw	015h
+	dw	0fff7h
+	dw	0ffe1h
+	dw	0ffe8h
+	dw	05h
+	dw	01dh
+	dw	01bh
+	dw	00h
+	dw	0ffe5h
+	dw	0ffe3h
+	dw	0fffch
+	dw	018h
+	dw	01fh
+	dw	09h
+	dw	0ffebh
+	dw	0ffe0h
+	dw	0fff3h
+	dw	012h
+	dw	020h
+	dw	011h
+	dw	0fff2h
+	dw	0ffe0h
+	dw	0ffech
+	dw	0ah
+	dw	01fh
+	dw	018h
+	dw	0fffbh
+	dw	0ffe3h
+	dw	0ffe5h
+	dw	01h
+	dw	01bh
+	dw	01dh
+	dw	04h
+	dw	0ffe7h
+	dw	0ffe2h
+	dw	0fff8h
+	dw	016h
+	dw	020h
+	dw	0dh
+	dw	0ffeeh
+	dw	0ffe0h
+	dw	0ffefh
+	dw	0eh
+	dw	020h
+	dw	014h
+	dw	0fff6h
+	dw	0ffe1h
+	dw	0ffe8h
+	dw	05h
+	dw	01dh
+	dw	01ah
+	dw	0ffffh
+	dw	0ffe5h
+	dw	0ffe3h
+	dw	0fffch
+	dw	019h
+	dw	01eh
+	dw	08h
+	dw	0ffeah
+	dw	0ffe0h
+	dw	0fff4h
+	dw	012h
+	dw	020h
+	dw	010h
+	dw	0fff2h
+	dw	0ffe0h
+	dw	0ffech
+	dw	0ah
+	dw	01fh
+	dw	017h
+	dw	0fffah
+	dw	0ffe2h
+	dw	0ffe6h
+	dw	01h
+	dw	01ch
+	dw	01dh
+	dw	03h
+	dw	0ffe7h
+	dw	0ffe2h
+	dw	0fff8h
+	dw	016h
+	dw	01fh
+	dw	0ch
+	dw	0ffeeh
+	dw	0ffe0h
+	dw	0fff0h
+	dw	0fh
+	dw	020h
+	dw	014h
+	dw	0fff6h
+	dw	0ffe1h
+	dw	0ffe9h
+	dw	06h
+	dw	01eh
+	dw	01ah
+	dw	0fffeh
+	dw	0ffe4h
+	dw	0ffe4h
+	dw	0fffdh
+	dw	019h
+	dw	01eh
+	dw	07h
+	dw	0ffeah
+	dw	0ffe1h
+	dw	0fff4h
+	dw	013h
+	dw	020h
+	dw	010h
+	dw	0fff1h
+	dw	0ffe0h
+	dw	0ffech
+	dw	0bh
+	dw	01fh
+	dw	017h
+	dw	0fffah
+	dw	0ffe2h
+	dw	0ffe6h
+	dw	02h
+	dw	01ch
+	dw	01ch
+	dw	03h
+	dw	0ffe7h
+	dw	0ffe2h
+	dw	0fff9h
+	dw	016h
+	dw	01fh
+	dw	0bh
+	dw	0ffedh
+	dw	0ffe0h
+	dw	0fff0h
+	dw	0fh
+	dw	020h
+	dw	013h
+	dw	0fff5h
+	dw	0ffe1h
+	dw	0ffe9h
+	dw	07h
+	dw	01eh
+	dw	01ah
+	dw	0fffeh
+	dw	0ffe4h
+	dw	0ffe4h
+	dw	0fffeh
+	dw	01ah
+	dw	01eh
+	dw	07h
+	dw	0ffe9h
+	dw	0ffe1h
+	dw	0fff5h
+	dw	013h
+	dw	020h
+	dw	0fh
+	dw	0fff1h
+	dw	0ffe0h
+	dw	0ffedh
+	dw	0bh
+	dw	01fh
+	dw	017h
+	dw	0fff9h
+	dw	0ffe2h
+	dw	0ffe6h
+	dw	02h
+	dw	01ch
+	dw	01ch
+	dw	02h
+	dw	0ffe6h
+	dw	0ffe2h
+	dw	0fff9h
+	dw	017h
+	dw	01fh
+	dw	0bh
+	dw	0ffedh
+	dw	0ffe0h
+	dw	0fff1h
+	dw	010h
+	dw	020h
+	dw	013h
+	dw	0fff5h
+	dw	0ffe1h
+	dw	0ffeah
+	dw	07h
+	dw	01eh
+	dw	019h
+	dw	0fffdh
+	dw	0ffe4h
+	dw	0ffe4h
+	dw	0fffeh
+	dw	01ah
+	dw	01eh
+	dw	06h
+	dw	0ffe9h
+	dw	0ffe1h
+	dw	0fff5h
+	dw	014h
+	dw	020h
+	dw	0fh
+	dw	0fff0h
+	dw	0ffe0h
+	dw	0ffedh
+	dw	0ch
+	dw	01fh
+	dw	016h
+	dw	0fff9h
+	dw	0ffe2h
+	dw	0ffe7h
+	dw	03h
+	dw	01ch
+	dw	01ch
+	dw	02h
+	dw	0ffe6h
+	dw	0ffe2h
+	dw	0fffah
+	dw	017h
+	dw	01fh
+	dw	0ah
+	dw	0ffech
+	dw	0ffe0h
+	dw	0fff1h
+	dw	010h
+	dw	020h
+	dw	012h
+	dw	0fff4h
+	dw	0ffe1h
+	dw	0ffeah
+	dw	08h
+	dw	01eh
+	dw	019h
+	dw	0fffdh
+	dw	0ffe3h
+	dw	0ffe4h
+	dw	0ffffh
+	dw	01ah
+	dw	01eh
+	dw	06h
+	dw	0ffe9h
+	dw	0ffe1h
+	dw	0fff6h
+	dw	014h
+	dw	020h
+	dw	0eh
+	dw	0fff0h
+	dw	0ffe0h
+	dw	0ffeeh
+	dw	0ch
+	dw	020h
+	dw	016h
+	dw	0fff8h
+	dw	0ffe2h
+	dw	0ffe7h
+	dw	04h
+	dw	01dh
+	dw	01bh
+	dw	01h
+	dw	0ffe6h
+	dw	0ffe3h
+	dw	0fffbh
+	dw	018h
+	dw	01fh
+	dw	0ah
+	dw	0ffech
+	dw	0ffe0h
+	dw	0fff2h
+	dw	011h
+	dw	020h
+	dw	012h
+	dw	0fff3h
+	dw	0ffe0h
+	dw	0ffeah
+	dw	08h
+	dw	01eh
+	dw	019h
+	dw	0fffch
+	dw	0ffe3h
+	dw	0ffe5h
+	dw	0ffffh
+	dw	01bh
+	dw	01dh
+	dw	05h
+	dw	0ffe8h
+	dw	0ffe1h
+	dw	0fff6h
+	dw	014h
+	dw	020h
+	dw	0eh
+	dw	0ffefh
+	dw	0ffe0h
+	dw	0ffeeh
+	dw	0dh
+	dw	020h
+	dw	015h
+	dw	0fff7h
+	dw	0ffe1h
+	dw	0ffe8h
+	dw	04h
+	dw	01dh
+	dw	01bh
+	dw	00h
+	dw	0ffe5h
+	dw	0ffe3h
+	dw	0fffbh
+	dw	018h
+	dw	01fh
+	dw	09h
+	dw	0ffebh
+	dw	0ffe0h
+	dw	0fff2h
+	dw	011h
+	dw	020h
+	dw	012h
+	dw	0fff3h
+	dw	0ffe0h
+	dw	0ffebh
+	dw	09h
+	dw	01fh
+	dw	018h
+	dw	0fffch
+	dw	0ffe3h
+	dw	0ffe5h
+	dw	00h
+	dw	01bh
+	dw	01dh
+	dw	05h
+	dw	0ffe8h
+	dw	0ffe1h
+	dw	0fff7h
+	dw	015h
+	dw	020h
+	dw	0dh
+	dw	0ffefh
+	dw	0ffe0h
+	dw	0ffefh
+	dw	0dh
+	dw	020h
+	dw	015h
+
+	end
