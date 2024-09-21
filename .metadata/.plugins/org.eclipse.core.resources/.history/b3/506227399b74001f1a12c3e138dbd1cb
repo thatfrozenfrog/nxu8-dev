@@ -1,0 +1,75 @@
+#include "base.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef unsigned char uint8_t;
+typedef unsigned short uint16_t;
+
+void delay(ushort after_ticks)
+{
+    if ((FCON & 2) != 0)
+        FCON &= 0xfd;
+    __DI();
+    Timer0Interval = after_ticks;
+    Timer0Counter = 0;
+    Timer0Control = 0x0101;
+    InterruptPending_W0 = 0;
+    StopAcceptor = 0x50;
+    StopAcceptor = 0xa0;
+    StopControl = 2;
+    __asm("nop");
+    __asm("nop");
+    __EI();
+}
+
+void set_bits(uint8_t *mem_address, int start_bit, int num_bits) {
+    // Tính byte và bit offset ban đầu và cuối
+    int start_byte = start_bit / 8;
+    int start_offset = start_bit % 8;
+
+    int end_bit = start_bit + num_bits - 1;
+    int end_byte = end_bit / 8;
+    int end_offset = end_bit % 8;
+    int i;
+    uint8_t end_mask;
+    // Trường hợp chỉ nằm trong 1 byte
+    if (start_byte == end_byte) {
+        uint8_t mask = ((1 << num_bits) - 1) << (8 - start_offset - num_bits);
+        *(mem_address + start_byte) |= mask;
+    } else {
+        // Xử lý byte đầu tiên với mask
+        uint8_t start_mask = 0xFF >> start_offset;
+        *(mem_address + start_byte) |= start_mask;
+
+        // Xử lý các byte ở giữa (toàn bộ bit là 1)
+        for (i = start_byte + 1; i < end_byte; i++) {
+            *(mem_address + i) = 0xFF;
+        }
+
+        // Xử lý byte cuối với mask
+        end_mask = ~(0xFF >> (end_offset + 1));
+        *(mem_address + end_byte) |= end_mask;
+    }
+}
+
+int main() {
+
+    // Địa chỉ bộ nhớ 0xF820
+    uint8_t *mem_address = (uint8_t *)0xF820;
+    byte j,k;
+	memset(0xD000,0x00,0x15D3);
+	memset(0xf800,0x00,0x800);
+
+    // Đặt 6 bit thành 1 từ bit offset 3, trên vùng nhớ bắt đầu từ địa chỉ 0xF820
+	while (1) {
+		memset(0xf800,0x00,0x800);
+		j = deref(0xF00C) % 192;
+		k = deref(0xF00C) % (192 - j);
+		set_bits(0xF820, j, k);
+		set_bits(0xF820+0x20, j, k);
+
+		delay(1000);
+	}
+    return 0;
+}

@@ -1,0 +1,299 @@
+/*
+ * main.c
+ *
+ *  Created on: 12 Sep 2024
+ */
+
+#include "base.h"
+#include "suwa.h"
+#include "printlib.h"
+#include <stdio.h>
+#include <string.h>
+#include "tictactoe.h"
+
+
+typedef unsigned char uint8_t;
+typedef unsigned short uint16_t;
+
+byte posy = 0;
+byte posx = 0;
+
+
+enum BUTTON
+{
+	B_0 = 0xb,
+	B_1 = 0x3f,
+	B_2 = 0x37,
+	B_3 = 0x2f,
+	B_4 = 0x3e,
+	B_5 = 0x36,
+	B_6 = 0x2e,
+	B_7 = 0x3d,
+	B_8 = 0x35,
+	B_9 = 0x2d,
+
+	SP_UP = 0x28,
+	SP_DOWN = 0x21,
+	SP_LEFT = 0x29,
+	SP_RIGHT = 0x20,
+	SP_PLUS = 0x27,
+	SP_MINUS = 0x1F,
+    SP_MUL = 0x26,
+    SP_DIV = 0x1E,
+    SP_OPTN = 0x39,
+    SP_CALC = 0x31
+};
+
+
+
+byte lastbutton = 0xff;
+byte CheckButtons()
+{
+	byte x;
+	byte y;
+	byte i = 0;
+	for(x = 0x80; x != 0; x = x >> 1)
+	{
+		deref(0xf046) = x;
+		for(y = 0x80; y != 0; y = y >> 1)
+		{
+			if((deref(0xf040) & y) == 0)
+			{
+				if(i != lastbutton)
+				{
+					lastbutton = i;
+					return i;
+				}
+				return 0xff;
+			}
+			++i;
+		}
+	}
+	lastbutton = 0x50;
+	return 0xff;
+}
+
+void delay(ushort after_ticks)
+{
+    if ((FCON & 2) != 0)
+        FCON &= 0xfd;
+    __DI();
+    Timer0Interval = after_ticks;
+    Timer0Counter = 0;
+    Timer0Control = 0x0101;
+    InterruptPending_W0 = 0;
+    StopAcceptor = 0x50;
+    StopAcceptor = 0xa0;
+    StopControl = 2;
+    __asm("nop");
+    __asm("nop");
+    __EI();
+}
+
+
+void drawbitmap(const byte* ptr, word offset, byte width, byte height)
+{
+    word x;
+    word y;
+    word i = 0;
+    word j = 0;
+    deref(0xF037) = 0;
+    for(y = 0; y < offset; y++)
+    {
+        ++j;
+        if((j&0x1f) == 0x18)
+        {
+            j += 0x8;
+        }
+    }
+
+    for(y = 0; y < height; y++)
+    {
+        for(x = 0; x < width; x++)
+        {
+            deref(0xf820+j) = ptr[i];
+            ++j;
+            if((j&0x1f) == 0x18)
+            {
+                j += 0x8;
+            }
+            ++i;
+        }
+        j += 32-width;
+        if((j&0x1f) == 0x18)
+        {
+            j += 0x8;
+        }
+    }
+}
+
+void invertbitmap( word offset, byte width, byte height)
+{
+    word x;
+    word y;
+    word i = 0;
+    word j = 0;
+    for(y = 0; y < offset; y++)
+    {
+        ++j;
+        if((j&0x1f) == 0x18)
+        {
+            j += 0x8;
+        }
+    }
+
+    for(y = 0; y < height; y++)
+    {
+        for(x = 0; x < width; x++)
+        {
+            deref(0xf820+j) = (~deref(0xF820+j));
+            ++j;
+            if((j&0x1f) == 0x18)
+            {
+                j += 0x8;
+            }
+            ++i;
+        }
+        j += 32-width;
+        if((j&0x1f) == 0x18)
+        {
+            j += 0x8;
+        }
+    }
+}
+
+
+void set_bits(uint8_t *mem_address, int start_bit, int num_bits, byte color, byte invert) {
+    // Tính byte và bit offset ban đầu và cuối
+    int start_byte = start_bit / 8;
+    int start_offset = start_bit % 8;
+
+    int end_bit = start_bit + num_bits - 1;
+    int end_byte = end_bit / 8;
+    int end_offset = end_bit % 8;
+    int i;
+    byte fill_byte = color * 0xFF;
+    uint8_t end_mask;
+    if (invert == 1) {
+    	fill_byte = 0xFF;
+    }
+    // Trường hợp chỉ nằm trong 1 byte
+    if (start_byte == end_byte) {
+        uint8_t mask = ((1 << num_bits) - 1) << (8 - start_offset - num_bits);
+        if (invert) {
+            *(mem_address + start_byte) ^= mask;  // XOR để invert bit
+        } else {
+            *(mem_address + start_byte) |= mask;  // OR để đặt bit thành 1
+        }
+    } else {
+        // Xử lý byte đầu tiên với mask
+        uint8_t start_mask = fill_byte >> start_offset;
+        if (invert) {
+            *(mem_address + start_byte) ^= start_mask;  // XOR để invert bit
+        } else {
+            *(mem_address + start_byte) |= start_mask;  // OR để đặt bit thành 1
+        }
+
+        // Xử lý các byte ở giữa (toàn bộ bit là 1 hoặc invert)
+        for (i = start_byte + 1; i < end_byte; i++) {
+            if (invert) {
+                *(mem_address + i) ^= fill_byte;  // XOR toàn bộ byte để invert
+            } else {
+                *(mem_address + i) = fill_byte;  // Đặt toàn bộ byte thành 1
+            }
+        }
+
+        // Xử lý byte cuối với mask
+        end_mask = ~(fill_byte >> (end_offset + 1));
+        if (invert) {
+            *(mem_address + end_byte) ^= end_mask;  // XOR để invert bit
+        } else {
+            *(mem_address + end_byte) |= end_mask;  // OR để đặt bit thành 1
+        }
+    }
+}
+
+
+
+void invert_line(const word line)
+{
+	word i = 0;
+	word j = 0;
+	word offset = (line<<9);
+	for(i = 0; i < 512; i++) //used to be 512
+	{
+		deref(0xF820+i+offset) = (~deref(0xF820+i+offset));
+	}
+}
+
+
+
+void main() {
+	char screen[] = "Tic Tac Toe";
+	posx = 1; posy = 1;
+	memset(0xD000,0x00,0x15D3);
+	memset(0xf800,0x00,0x800);
+
+
+	deref(0xF020) = 0xFF;
+	deref(0xF021) = 0xFF;
+	deref(0xF025) = 0x01;
+	__asm ("mov psw, #0h");
+	__asm ("EI");
+	deref(0xF010) = 0x20; //Enable TM0INT
+
+	drawstage();
+	while (1) {
+
+		byte pressedbutton = CheckButtons();
+
+
+		switch (pressedbutton) {
+			case 0xFF:
+				delay(100);
+				break;
+			case SP_DOWN:
+				posy++;
+				drawstage();
+				break;
+			case SP_UP:
+				posy--;
+				drawstage();
+				break;
+		}
+
+		deref(0xD181) = posy;
+
+
+	}
+}
+
+
+
+
+
+void drawstage(void){
+
+	if (posy > 3) {
+		posy = 1;
+	} else if (posy < 1) {
+		posy = 3;
+	}
+	if (posy == 0x01 ) {
+		deref(0xD180) = 0x08;
+	} else if ( posy == 0x02 ) {
+		deref(0xD180) = 0x0A;
+	} else {
+		deref(0xD180) = 0x0D;
+	}
+	drawbitmap(board1,0x08,0x8,0x3F);
+	invertbitmap(deref(0xD180),0x3,0x15);
+	delay(4);
+}
+
+
+
+void TM0(void){
+	deref(0xD181) = deref(0xF00D);
+}
+

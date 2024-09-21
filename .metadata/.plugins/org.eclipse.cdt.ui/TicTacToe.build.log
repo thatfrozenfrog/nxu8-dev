@@ -1,4 +1,4 @@
-11:41:55 **** Incremental Build of configuration Debug for project TicTacToe ****
+18:08:34 **** Incremental Build of configuration Debug for project TicTacToe ****
 make all 
 'Building file: ../main.c'
 'Invoking: Compiler'
@@ -7,12 +7,14 @@ CCU8 C Compiler, Ver.3.66
 Copyright (C) 2008-2020 LAPIS Technology Co., Ltd.
 
 ..\main.c
-..\main.c(61) : Warning : W5002 : 'argument' : different levels of indirection
-..\main.c(62) : Warning : W5002 : 'argument' : different levels of indirection
-..\main.c(66) : Warning : W5002 : 'argument' : different levels of indirection
+..\printlib.h(13) : Warning : W5031 : 'drawbitmap': call to function with no prototype
+..\main.c(264) : Warning : W4002 : 'const' ignored on argument
+..\main.c(282) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(283) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(294) : Warning : W5031 : 'drawstage': call to function with no prototype
 
 Error(s)     :  0
-Warning(s)   :  3
+Warning(s)   :  5
 
 'Finished building: ../main.c'
 ' '
@@ -25,16 +27,18 @@ Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
 [E:/Lexide/Dcl\ML620906.dcl] loading...
   pass1...
   pass2...
-main.asm(103):103: Warning 25 : illegal access to SFR
+main.asm(565):565: Warning 25 : illegal access to SFR
 	st	er0,	00h:0f014h
+main.asm(637):637: Warning 25 : illegal access to SFR
+	st	r0,	00h:0f037h
 
   Print   File : main.prn
   Object  File : .\main.obj
   Error   File : Console
 
   Errors   : 0
-  Warnings : 1  (/Wrpeast)
-  Lines    : 442
+  Warnings : 2  (/Wrpeast)
+  Lines    : 7630
   Assembly End.
 
 'Finished building: main.asm'
@@ -47,7 +51,6 @@ Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
  Loading segments and symbols...
 Warning W025: Cannot find segment '$$content_of_init'
 Warning W025: Cannot find segment '$$end_of_init'
-Warning W025: Cannot find segment '$$init_info'
 Warning W025: Cannot find segment '$$init_info_end'
  Allocating segments...
 Warning W011: CODE/TABLE segments overlap
@@ -56,8 +59,8 @@ Warning W011: CODE/TABLE segments overlap
  Absfile: TicTacToe.abs
  Mapfile: TicTacToe.map
 
- Total ROM usage = 0042A   (1066)
- Total RAM usage = 00400   (1024)
+ Total ROM usage = 009CD   (2509)
+ Total RAM usage = 00408   (1032)
 
  Linkage completed.
 'Finished building: TicTacToe.abs'
@@ -80,10 +83,10 @@ make --no-print-directory post-build
 cd.. && build.bat
 hex2bin v1.0.1, Copyright (C) 1999 Jacques Pelletier
 Lowest address = 00000000
-Highest address = 00000427
+Highest address = 000009CB
         1 file(s) copied.
 Press any key to continue . . . 
 ' '
 
-11:41:56 Build Finished. 0 errors, 9 warnings. (took 1s.180ms)
+18:08:51 Build Finished. 0 errors, 11 warnings. (took 16s.763ms)
 

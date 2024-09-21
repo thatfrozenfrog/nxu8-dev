@@ -1,0 +1,151 @@
+#include "base.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "tictactoe.h"
+typedef unsigned char uint8_t;
+typedef unsigned short uint16_t;
+
+void delay(ushort after_ticks)
+{
+    if ((FCON & 2) != 0)
+        FCON &= 0xfd;
+    __DI();
+    Timer0Interval = after_ticks;
+    Timer0Counter = 0;
+    Timer0Control = 0x0101;
+    InterruptPending_W0 = 0;
+    StopAcceptor = 0x50;
+    StopAcceptor = 0xa0;
+    StopControl = 2;
+    __asm("nop");
+    __asm("nop");
+    __EI();
+}
+
+word getrandom(word max) {
+  return deref(0xF00C) % max;
+}
+
+void set_bits(uint8_t *mem_address, int start_bit, int num_bits, byte color, byte invert) {
+    // Tính byte và bit offset ban đầu và cuối
+    int start_byte = start_bit / 8;
+    int start_offset = start_bit % 8;
+
+    int end_bit = start_bit + num_bits - 1;
+    int end_byte = end_bit / 8;
+    int end_offset = end_bit % 8;
+    int i;
+    byte fill_byte = color * 0xFF;
+    uint8_t end_mask;
+
+    // Trường hợp chỉ nằm trong 1 byte
+    if (start_byte == end_byte) {
+        uint8_t mask = ((1 << num_bits) - 1) << (8 - start_offset - num_bits);
+        if (invert) {
+            *(mem_address + start_byte) ^= mask;  // XOR để invert bit
+        } else {
+            *(mem_address + start_byte) |= mask;  // OR để đặt bit thành 1
+        }
+    } else {
+        // Xử lý byte đầu tiên với mask
+        uint8_t start_mask = fill_byte >> start_offset;
+        if (invert) {
+            *(mem_address + start_byte) ^= start_mask;  // XOR để invert bit
+        } else {
+            *(mem_address + start_byte) |= start_mask;  // OR để đặt bit thành 1
+        }
+
+        // Xử lý các byte ở giữa (toàn bộ bit là 1 hoặc invert)
+        for (i = start_byte + 1; i < end_byte; i++) {
+            if (invert) {
+                *(mem_address + i) ^= fill_byte;  // XOR toàn bộ byte để invert
+            } else {
+                *(mem_address + i) = fill_byte;  // Đặt toàn bộ byte thành 1
+            }
+        }
+
+        // Xử lý byte cuối với mask
+        end_mask = ~(fill_byte >> (end_offset + 1));
+        if (invert) {
+            *(mem_address + end_byte) ^= end_mask;  // XOR để invert bit
+        } else {
+            *(mem_address + end_byte) |= end_mask;  // OR để đặt bit thành 1
+        }
+    }
+}
+
+int main() {
+
+    // Memory addresses and variables
+    uint8_t *mem_address = (uint8_t *)0xF820;
+    int i = 0;
+    uint8_t line = 0;
+    int j = 0;  // Pixel offset within the line
+    uint8_t color = 1;
+
+    // Clear memory (for example, initialize video memory)
+    memset((void *)0xD000, 0x00, 0x15D3);  // Clear some memory region
+    memset((void *)0xf800, 0x00, 0x800);   // Clear another memory region
+    set_bits(0xF840, 0x1, 0x13, 0x0, 0);
+    //while (1) {
+	// Loop through the RLE array
+	for (i = 0; i <= sizeof(cross_r); i++) {
+		if (cross_r[i] == 0xFF) {
+			// Line break: move to the next line
+			line++;
+			j = 0;  // Reset horizontal position to the start of the line
+			color = 1;
+
+
+			*(uint8_t *)0xD180 = line;
+			*(uint8_t *)0xD181 = j;
+			*(uint8_t *)0xD182 = cross_r[i];
+			deref(0xD183) = color;
+
+			deref(0xD170) = j;
+			deref(0xD171) = cross_r[i];
+			deref(0xD172) = j;
+
+		} else {
+
+			// Determine the color (alternates every byte)
+			 // 1 for black, 0 for white (or inverted)
+			if (color == 0){
+				color = 1;
+			} else {
+				color = 0;
+			}
+
+			// Call the function to set the bits on the current line
+			set_bits(mem_address + line * 0x20, j, cross_r[i], color, 0);
+
+
+			// Store diagnostic information
+			*(uint8_t *)0xD180 = line;
+			*(uint8_t *)0xD181 = j;
+			*(uint8_t *)0xD182 = cross_r[i];
+			deref(0xD183) = color;
+
+			deref(0xD170) = j;
+			deref(0xD171) = cross_r[i];
+			j = j + cross_r[i];
+			deref(0xD173) = j;
+			// Advance the horizontal offset by the number of bits drawn
+		}
+		wait_AC();
+	}
+    //}
+
+    return 0;
+}
+
+
+void wait_AC() {
+	while (deref(0xF040) != 0xFB){
+		deref(0xF046) = 0x10;
+
+	}
+	deref(0xF040) = 0xFF;
+	delay(2000);
+}

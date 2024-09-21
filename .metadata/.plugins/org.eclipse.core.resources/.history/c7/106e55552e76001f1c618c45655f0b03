@@ -1,0 +1,147 @@
+#include "base.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "tictactoe.h"
+typedef unsigned char uint8_t;
+typedef unsigned short uint16_t;
+
+void delay(ushort after_ticks)
+{
+    if ((FCON & 2) != 0)
+        FCON &= 0xfd;
+    __DI();
+    Timer0Interval = after_ticks;
+    Timer0Counter = 0;
+    Timer0Control = 0x0101;
+    InterruptPending_W0 = 0;
+    StopAcceptor = 0x50;
+    StopAcceptor = 0xa0;
+    StopControl = 2;
+    __asm("nop");
+    __asm("nop");
+    __EI();
+}
+
+word getrandom(word max) {
+  return deref(0xF00C) % max;
+}
+
+void set_bits(uint8_t *mem_address, int start_bit, int num_bits, byte color, byte invert) {
+    // Tính byte và bit offset ban đầu và cuối
+    int start_byte = start_bit / 8;
+    int start_offset = start_bit % 8;
+
+    int end_bit = start_bit + num_bits - 1;
+    int end_byte = end_bit / 8;
+    int end_offset = end_bit % 8;
+    int i;
+    uint8_t mask, start_mask, end_mask;
+    // Tạo giá trị cho `color_mask` dựa trên `color`
+    // Nếu `color` là 1, mask sẽ là 0xFF, nếu `color` là 0, mask sẽ là 0x00
+    byte color_mask = color ? 0xFF : 0x00;
+
+    // Trường hợp chỉ nằm trong 1 byte
+    if (start_byte == end_byte) {
+        // Tạo mask cho bit trong byte đầu tiên
+        mask = ((1 << num_bits) - 1) << (8 - start_offset - num_bits);
+        if (invert) {
+            *(mem_address + start_byte) ^= mask;  // XOR để invert bit
+        } else {
+            *(mem_address + start_byte) = (*(mem_address + start_byte) & ~mask) | (color_mask & mask);  // OR để đặt bit với màu sắc
+        }
+    } else {
+        // Xử lý byte đầu tiên với mask (các bit từ start_offset đến hết byte)
+        start_mask = 0xFF >> start_offset;
+        if (invert) {
+            *(mem_address + start_byte) ^= start_mask;  // XOR để invert bit
+        } else {
+            *(mem_address + start_byte) = (*(mem_address + start_byte) & ~start_mask) | (color_mask & start_mask);  // OR để đặt bit với màu sắc
+        }
+
+        // Xử lý các byte ở giữa (toàn bộ bit là color hoặc invert)
+        for (i = start_byte + 1; i < end_byte; i++) {
+            if (invert) {
+                *(mem_address + i) ^= 0xFF;  // XOR toàn bộ byte để invert
+            } else {
+                *(mem_address + i) = color_mask;  // Đặt toàn bộ byte thành `color`
+            }
+        }
+
+        // Xử lý byte cuối với mask (các bit từ đầu byte đến end_offset)
+        end_mask = ~(0xFF >> (end_offset + 1));
+        if (invert) {
+            *(mem_address + end_byte) ^= end_mask;  // XOR để invert bit
+        } else {
+            *(mem_address + end_byte) = (*(mem_address + end_byte) & ~end_mask) | (color_mask & end_mask);  // OR để đặt bit với màu sắc
+        }
+    }
+}
+
+int main() {
+
+    // Memory addresses and variables
+
+
+	int k = 0;
+	int r = 0;
+    // Clear memory (for example, initialize video memory)
+    memset((void *)0xD000, 0x00, 0x15D3);  // Clear some memory region
+    memset((void *)0xf800, 0x00, 0x800);   // Clear another memory region
+    set_bits(0xF840, 0x1, 0x13, 0x0, 0);
+    while (1) {
+	// Loop through the RLE array
+    	memset((void *)0xf800, 0x00, 0x800);
+    	renderRLE(cross_r, sizeof(cross_r) + 1, k,r);
+    	k++;
+    	r++;
+    	delay(200);
+	}
+    //}
+
+    return 0;
+}
+
+
+void wait_AC() {
+	while (deref(0xF040) != 0xFB){
+		deref(0xF046) = 0x10;
+
+	}
+	deref(0xF040) = 0xFF;
+	delay(20);
+}
+
+void renderRLE(const byte* ptr, int length, int x, int y){
+	uint8_t *mem_address = (uint8_t *)0xF820 + y * 20;
+    int i = 0;
+    uint8_t line = 0;
+    int j = x;  // Pixel offset within the line
+    uint8_t color = 1;
+	for (i = 0; i <= length; i++) {
+		if (ptr[i] == 0xFF) {
+			// Line break: move to the next line
+			line++;
+			j = x;  // Reset horizontal position to the start of the line
+			color = 1;
+
+		} else {
+
+			// Determine the color (alternates every byte)
+			 // 1 for black, 0 for white (or inverted)
+
+
+			// Call the function to set the bits on the current line
+			set_bits(mem_address + line * 0x20, j, ptr[i], color, 0);
+
+			if (color == 0){
+				color = 1;
+			} else {
+				color = 0;
+			}
+			j = j + ptr[i];
+
+			// Advance the horizontal offset by the number of bits drawn
+		}
+	}
+}
