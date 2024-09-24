@@ -1,4 +1,4 @@
-11:03:10 **** Incremental Build of configuration Debug for project TicTacToe ****
+10:59:21 **** Incremental Build of configuration Debug for project TicTacToe ****
 make all 
 'Building file: ../main.c'
 'Invoking: Compiler'
@@ -7,11 +7,16 @@ CCU8 C Compiler, Ver.3.66
 Copyright (C) 2008-2020 LAPIS Technology Co., Ltd.
 
 ..\main.c
-..\main.c(169) : Warning : W4012 : 'const' ignored on local variable 'pattern'
-..\main.c(188) : Warning : W4020 : Indirection to different types
+..\printlib.h(13) : Warning : W5031 : 'drawbitmap': call to function with no prototype
+..\main.c(268) : Warning : W4002 : 'const' ignored on argument
+..\main.c(292) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(293) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(300) : Warning : W5031 : 'drawstage': call to function with no prototype
+..\main.c(301) : Warning : W5031 : 'flipcell': call to function with no prototype
+..\main.c(411) : Warning : W5031 : 'debugRender': call to function with no prototype
 
 Error(s)     :  0
-Warning(s)   :  2
+Warning(s)   :  7
 
 'Finished building: ../main.c'
 ' '
@@ -24,10 +29,10 @@ Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
 [E:/Lexide/Dcl\ML620906.dcl] loading...
   pass1...
   pass2...
-main.asm(125):125: Warning 25 : illegal access to SFR
+main.asm(573):573: Warning 25 : illegal access to SFR
 	st	er0,	00h:0f014h
-main.asm(1198):1198: Warning 25 : illegal access to SFR
-	st	r0,	00h:0f040h
+main.asm(645):645: Warning 25 : illegal access to SFR
+	st	r0,	00h:0f037h
 
   Print   File : main.prn
   Object  File : .\main.obj
@@ -35,7 +40,7 @@ main.asm(1198):1198: Warning 25 : illegal access to SFR
 
   Errors   : 0
   Warnings : 2  (/Wrpeast)
-  Lines    : 1956
+  Lines    : 8295
   Assembly End.
 
 'Finished building: main.asm'
@@ -48,7 +53,6 @@ Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
  Loading segments and symbols...
 Warning W025: Cannot find segment '$$content_of_init'
 Warning W025: Cannot find segment '$$end_of_init'
-Warning W025: Cannot find segment '$$init_info'
 Warning W025: Cannot find segment '$$init_info_end'
  Allocating segments...
 Warning W011: CODE/TABLE segments overlap
@@ -57,8 +61,8 @@ Warning W011: CODE/TABLE segments overlap
  Absfile: TicTacToe.abs
  Mapfile: TicTacToe.map
 
- Total ROM usage = 004E6   (1254)
- Total RAM usage = 00400   (1024)
+ Total ROM usage = 00D8B   (3467)
+ Total RAM usage = 0040A   (1034)
 
  Linkage completed.
 'Finished building: TicTacToe.abs'
@@ -81,10 +85,10 @@ make --no-print-directory post-build
 cd.. && build.bat
 hex2bin v1.0.1, Copyright (C) 1999 Jacques Pelletier
 Lowest address = 00000000
-Highest address = 000004E3
+Highest address = 00000D89
         1 file(s) copied.
 Press any key to continue . . . 
 ' '
 
-11:03:19 Build Finished. 0 errors, 9 warnings. (took 9s.40ms)
+10:59:22 Build Finished. 0 errors, 13 warnings. (took 1s.405ms)
 

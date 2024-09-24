@@ -1,5 +1,5 @@
 RLU8 Object Linker, Ver.1.60.3 Linkage Information
-[Mon Sep 23 11:03:18 2024]
+[Tue Sep 24 10:59:21 2024]
 
 
                          ------------------
@@ -25,9 +25,9 @@ SIDIVLW               E:/Lexide/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.-- 
 memset_f              E:/Lexide/BuildTools/Ver.20231124/Lib/U16\LU8100LW.LIB -.--     1.04
 SIDIMOLW              E:/Lexide/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
 CIDIMOLW              E:/Lexide/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
-UIMODLW               E:/Lexide/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
 PUSHPOPU8LW           E:/Lexide/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.61
 SIMODLW               E:/Lexide/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
+IMULLW                E:/Lexide/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
 
 
 Number of Modules: 9
@@ -36,11 +36,11 @@ Number of Symbols:
  +---------------------------------------------------------------------------+
  |          | CODE | DATA | BIT  |NVDATA|NVBIT |TABLE |NUMBER| TBIT || total |
  |----------+------+------+------+------+------+------+------+------++-------|
- | SEGMENT  |    17|     1|     0|     0|     0|     3|      |      ||     21|
+ | SEGMENT  |    24|     2|     0|     0|     0|     7|      |      ||     33|
  |----------+------+------+------+------+------+------+------+------++-------|
- | COMMUNAL |     0|     0|     0|     0|     0|     0|      |      ||      0|
+ | COMMUNAL |     0|     2|     0|     0|     0|     0|      |      ||      2|
  |----------+------+------+------+------+------+------+------+------++-------|
- | PUBLIC   |    17|     0|     0|     0|     0|     3|     0|     0||     20|
+ | PUBLIC   |    24|     4|     0|     0|     0|     5|     0|     0||     33|
  +---------------------------------------------------------------------------+
 
 Target:  ML620906 
@@ -74,15 +74,29 @@ Link Map - Program memory space #0 ( ROMWINDOW: 0000 - CFFF )
      -------------------------------------------------------
       S CODE   00:0000    00:01B3    01B4(436)         (absolute)
 *OVL* S CODE   00:0002    00:0003    0002(2)           (absolute)
-      S CODE   00:01B4    00:0231    007E(126)         $$render_pattern$main
+      S CODE   00:01B4    00:0231    007E(126)         $$debugRender$main
       S CODE   00:0232    00:0241    0010(16)          $$pushpopu8lw
       S CODE   00:0242    00:0251    0010(16)          $$simodu8lw
-      S CODE   00:0252    00:03B5    0164(356)         $$set_bits_old$main
-      S CODE   00:03B6    00:03F1    003C(60)          $$XFCODmemset_f
-      S CODE   00:03F2    00:0425    0034(52)          $$sidimou8lw
-      S CODE   00:0426    00:0465    0040(64)          $$cidimou8lw
-      S CODE   00:0466    00:04D5    0070(112)         $$main$main
-      S CODE   00:04D6    00:04E3    000E(14)          $$sidivu8lw
+      S CODE   00:0252    00:0309    00B8(184)         $$drawbitmap$main
+      S CODE   00:030A    00:0345    003C(60)          $$XFCODmemset_f
+      S CODE   00:0346    00:036F    002A(42)          $$imulu8lw
+      S CODE   00:0370    00:03B7    0048(72)          $$flipcell$main
+      S CODE   00:03B8    00:0409    0052(82)          $$render_rect$main
+      S CODE   00:040A    00:043D    0034(52)          $$sidimou8lw
+      S CODE   00:043E    00:047D    0040(64)          $$cidimou8lw
+      S CODE   00:047E    00:06D3    0256(598)         $$main$main
+      S CODE   00:06D4    00:06E1    000E(14)          $$sidivu8lw
+      S CODE   00:06E2    00:0797    00B6(182)         $$renderRLE$main
+      S CODE   00:0798    00:07D5    003E(62)          $$delay$main
+      S CODE   00:07D6    00:08E5    0110(272)         $$drawstage$main
+      S CODE   00:08E6    00:0949    0064(100)         $$CheckButtons$main
+      S CODE   00:094A    00:0AAD    0164(356)         $$set_bits$main
+      S TABLE  00:0AAE    00:0B1C    006F(111)         $$TABcross$main
+>GAP<          00:0B1D    00:0B1D    0001(1)           (ROM)
+      S TABLE  00:0B1E    00:0B25    0008(8)           $$init_info
+      S TABLE  00:0B26    00:0B89    0064(100)         $$TABcircle$main
+      S TABLE  00:0B8A    00:0D81    01F8(504)         $$TABboard1$main
+      S TABLE  00:0D82    00:0D89    0008(8)           $$FINITTABmain
 
 
 Link Map - Data memory space #0
@@ -90,7 +104,10 @@ Link Map - Data memory space #0
       Type     Start      Stop       Size              Name
      -------------------------------------------------------
       Q ROMWIN 00:0000    00:CFFF    D000(53248)       (ROMWIN)
->GAP<          00:D000.0  00:EBFF.7  1C00.0(7168.0)    (RAM)
+>GAP<          00:D000.0  00:EBF5.7  1BF6.0(7158.0)    (RAM)
+      C DATA   00:EBF6    00:EBF6    0001(1)           _oldy
+      C DATA   00:EBF7    00:EBF7    0001(1)           _oldx
+      S DATA   00:EBF8    00:EBFF    0008(8)           $$FINITVARmain
       S DATA   00:EC00    00:EFFF    0400(1024)        $STACK
       Q SFR    00:F000    00:FFFF    1000(4096)        (SFR)
 
@@ -100,26 +117,22 @@ Not Linked segments:
       Module Name         Type       Size              Segment Name 
      --------------------------------------------------------------
       main
-                          TABLE      006F(111)         $$TABcross$main
-                          CODE       001E(30)          $$wait_AC$main
-                          TABLE      0064(100)         $$TABcircle$main
-                          TABLE      01F8(504)         $$TABboard1$main
-                          CODE       0052(82)          $$render_rect$main
-                          CODE       003E(62)          $$delay$main
-                          CODE       0016(22)          $$getrandom$main
-                          CODE       015E(350)         $$set_bits$main
-     --------------------------------------------------------------
-      UIMODLW
-                          CODE       000E(14)          $$uimodu8lw
+                          TABLE      1000(4096)        $$TABimage_raw$main
+                          CODE       00FE(254)         $$checkWin$main
+                          CODE       00AE(174)         $$invertbitmap$main
+                          TABLE      0276(630)         $$TABsuwa$main
+                          CODE       0072(114)         $$print$main
+                          CODE       003A(58)          $$invert_line$main
+                          CODE       0096(150)         $$PrintWord$main
      --------------------------------------------------------------
 
 
-Total size (CODE  ) = 004E6   (1254)
-Total size (DATA  ) = 00400   (1024)
+Total size (CODE  ) = 00AB0   (2736)
+Total size (DATA  ) = 0040A   (1034)
 Total size (BIT   ) = 00000.0 (0.0)
 Total size (NVDATA) = 00000   (0)
 Total size (NVBIT ) = 00000.0 (0.0)
-Total size (TABLE ) = 00000   (0)
+Total size (TABLE ) = 002DB   (731)
 
           -----------------------
            Symbol Table Synopsis
@@ -128,9 +141,23 @@ Total size (TABLE ) = 00000   (0)
 Module         Value     Type         Symbol
 ------         -----     ----------   ------
 main
-               00:0252   Pub CODE     _set_bits_old
-               00:0466   Pub CODE     _main
-               00:01B4   Pub CODE     _render_pattern
+               00:08E6   Pub CODE     _CheckButtons
+               00:047E   Pub CODE     _main
+               00:07D6   Pub CODE     _drawstage
+               00:0252   Pub CODE     _drawbitmap
+               00:01B4   Pub CODE     _debugRender
+               00:0798   Pub CODE     _delay
+               00:094A   Pub CODE     _set_bits
+               00:0370   Pub CODE     _flipcell
+               00:06E2   Pub CODE     _renderRLE
+               00:03B8   Pub CODE     _render_rect
+               00:0B8A   Pub TABLE    _board1
+               00:0AAE   Pub TABLE    _cross
+               00:0B26   Pub TABLE    _circle
+               00:EBFF   Pub DATA     _lastbutton
+               00:EBF8   Pub DATA     _printdwordbuf
+               00:EBFE   Pub DATA     _posx
+               00:EBFD   Pub DATA     _posy
 
 Module         Value     Type         Symbol
 ------         -----     ----------   ------
@@ -161,13 +188,12 @@ Module         Value     Type         Symbol
 memset_f
 
 
-Total ROM usage = 004E6   (1254)
-Total RAM usage = 00400   (1024)
+Total ROM usage = 00D8B   (3467)
+Total RAM usage = 0040A   (1034)
 
 End of mapfile.
 
 Warning W025: Cannot find segment '$$content_of_init'
 Warning W025: Cannot find segment '$$end_of_init'
-Warning W025: Cannot find segment '$$init_info'
 Warning W025: Cannot find segment '$$init_info_end'
 Warning W011: CODE/TABLE segments overlap
