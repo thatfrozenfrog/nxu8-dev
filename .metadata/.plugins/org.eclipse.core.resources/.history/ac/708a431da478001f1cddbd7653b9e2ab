@@ -1,0 +1,154 @@
+#include "base.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "tictactoe.h"
+#include <math.h>
+
+typedef unsigned char uint8_t;
+typedef unsigned short uint16_t;
+
+void delay(ushort after_ticks)
+{
+    if ((FCON & 2) != 0)
+        FCON &= 0xfd;
+    __DI();
+    Timer0Interval = after_ticks;
+    Timer0Counter = 0;
+    Timer0Control = 0x0101;
+    InterruptPending_W0 = 0;
+    StopAcceptor = 0x50;
+    StopAcceptor = 0xa0;
+    StopControl = 2;
+    __asm("nop");
+    __asm("nop");
+    __EI();
+}
+
+word getrandom(word max) {
+  return deref(0xF00C) % max;
+}
+
+void set_bits(uint8_t *mem_address, int start_bit, int num_bits, uint8_t pattern, byte invert) {
+    // Tính byte và bit offset ban đầu và cuối
+    int start_byte = start_bit / 8;
+    int start_offset = start_bit % 8;
+
+    int end_bit = start_bit + num_bits - 1;
+    int end_byte = end_bit / 8;
+    int end_offset = end_bit % 8;
+    int i;
+    uint8_t mask;
+    uint8_t start_mask;
+    uint8_t end_mask;
+    // Trường hợp chỉ nằm trong 1 byte
+    if (start_byte == end_byte) {
+        // Tạo mask cho các bit cần thay đổi trong byte đầu tiên
+        mask = ((1 << num_bits) - 1) << (8 - start_offset - num_bits);
+        if (invert) {
+            *(mem_address + start_byte) ^= mask;  // XOR để invert bit
+        } else {
+            *(mem_address + start_byte) = (*(mem_address + start_byte) & ~mask) | (pattern & mask);  // Đặt các bit theo `pattern`
+        }
+    } else {
+        // Xử lý byte đầu tiên với mask (các bit từ start_offset đến hết byte)
+        start_mask = 0xFF >> start_offset;
+        if (invert) {
+            *(mem_address + start_byte) ^= start_mask;  // XOR để invert bit
+        } else {
+            *(mem_address + start_byte) = (*(mem_address + start_byte) & ~start_mask) | (pattern & start_mask);  // Đặt các bit theo `pattern`
+        }
+
+        // Xử lý các byte ở giữa (toàn bộ bit là `pattern` hoặc invert)
+        for (i = start_byte + 1; i < end_byte; i++) {
+            if (invert) {
+                *(mem_address + i) ^= pattern;  // XOR để invert toàn bộ byte
+            } else {
+                *(mem_address + i) = pattern;  // Đặt toàn bộ byte theo `pattern`
+            }
+        }
+
+        // Xử lý byte cuối với mask (các bit từ đầu byte đến end_offset)
+        end_mask = ~(0xFF >> (end_offset + 1));
+        if (invert) {
+            *(mem_address + end_byte) ^= end_mask;  // XOR để invert các bit
+        } else {
+            *(mem_address + end_byte) = (*(mem_address + end_byte) & ~end_mask) | (pattern & end_mask);  // Đặt các bit theo `pattern`
+        }
+    }
+}
+
+void render_pattern(int x1, int y1, int x2, int y2, const byte* pattern, int size , byte invert) {
+	uint8_t *mem_address = (uint8_t *)0xF820;
+	int i;
+	int y;
+	int sel = 0;
+	for (i = y1; i <= y2; i++) {
+		y = i - y1;
+		set_bits(mem_address + i * 0x20, x1, x2 - x1, pattern[sel], invert);
+		deref(0xD180) = pattern[sel];
+		deref(0xD181) = sel;
+		if (sel == size) {
+			sel = 0;
+		} else {
+			sel++;
+		}
+	}
+
+}
+
+void render_rect(int x1, int y1, int x2, int y2, byte color, byte invert) {
+	uint8_t *mem_address = (uint8_t *)0xF820;
+	int i;
+	int y;
+	color = color * 0xFF;
+	for (i = y1; i <= y2; i++) {
+		y = i - y1;
+		set_bits(mem_address + i * 0x20, x1, x2 - x1, color, invert);
+	}
+
+}
+
+
+int main() {
+
+    // Memory addresses and variables
+
+	const unsigned char pattern[] = {
+			0xCC, 0xCC, 0x33, 0x33
+	};
+	int k = 0;
+	int r = 0;
+    // Clear memory (for example, initialize video memory)
+    memset((void *)0xD000, 0x00, 0x15D3);  // Clear some memory region
+    memset((void *)0xf800, 0x00, 0x800);   // Clear another memory region
+    //set_bits(0xF840, 0x1, 192, 0xAA, 0);
+    /*while (1) {
+	// Loop through the RLE array
+    	memset((void *)0xf800, 0x00, 0x800);
+    	renderRLE(cross_r, sizeof(cross_r) + 1, k,r);
+    	k++;
+    	r++;
+    	delay(1000);
+	}
+    //}
+	*/
+    render_pattern(65, 1, 85*2, 21*2, pattern, 1, 0);
+    while (1){
+    	render_rect(65, 1, 85*2, 21*2, 1, 1);
+    }
+
+    return 0;
+}
+
+
+void wait_AC() {
+	while (deref(0xF040) != 0xFB){
+		deref(0xF046) = 0x10;
+
+	}
+	deref(0xF040) = 0xFF;
+	delay(2000);
+}
+
+
