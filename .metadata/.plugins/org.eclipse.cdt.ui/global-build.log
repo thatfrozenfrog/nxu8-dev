@@ -50046,3 +50046,905 @@ Highest address = 00000D89
         1 file(s) copied.
 Press any key to continue . . . 
 ' '
+09:02:11 **** Incremental Build of configuration Debug for project TicTacToe ****
+make all 
+'Building file: ../main.c'
+'Invoking: Compiler'
+ccu8 -SD -ABW -TML620906 -ML -far -Fa"./" -Om -Zs -Oa -W1 "../main.c"
+CCU8 C Compiler, Ver.3.66
+Copyright (C) 2008-2020 LAPIS Technology Co., Ltd.
+
+..\main.c
+..\printlib.h(13) : Warning : W5031 : 'drawbitmap': call to function with no prototype
+..\main.c(268) : Warning : W4002 : 'const' ignored on argument
+..\main.c(314) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(315) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(322) : Warning : W5031 : 'drawstage': call to function with no prototype
+..\main.c(323) : Warning : W5031 : 'flipcell': call to function with no prototype
+..\main.c(433) : Warning : W5031 : 'debugRender': call to function with no prototype
+
+Error(s)     :  0
+Warning(s)   :  7
+
+'Finished building: ../main.c'
+' '
+'Building file: main.asm'
+'Invoking: Assembler'
+rasu8 -CD -ABW -SD -DF -ML -O"./" -WRPEAST -PR"main.prn" -L -NS -NR -NPL -NPW "main.asm"
+RASU8 Relocatable Assembler, Ver.1.80
+Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
+
+[E:/Lexide/Dcl\ML620906.dcl] loading...
+  pass1...
+  pass2...
+main.asm(577):577: Warning 25 : illegal access to SFR
+	st	er0,	00h:0f014h
+main.asm(649):649: Warning 25 : illegal access to SFR
+	st	r0,	00h:0f037h
+
+  Print   File : main.prn
+  Object  File : .\main.obj
+  Error   File : Console
+
+  Errors   : 0
+  Warnings : 2  (/Wrpeast)
+  Lines    : 8434
+  Assembly End.
+
+'Finished building: main.asm'
+' '
+'Invoking: Linker'
+rlu8 -D -SD -NS -CC -ABW  "./main.obj" "./startup.obj" ,"TicTacToe.abs",,"LU8100LW.LIB";
+RLU8 Object Linker, Ver.1.60
+Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
+
+ Loading segments and symbols...
+Warning W025: Cannot find segment '$$content_of_init'
+Warning W025: Cannot find segment '$$end_of_init'
+Warning W025: Cannot find segment '$$init_info_end'
+ Allocating segments...
+Warning W011: CODE/TABLE segments overlap
+ Writing fixed data...
+
+ Absfile: TicTacToe.abs
+ Mapfile: TicTacToe.map
+
+ Total ROM usage = 00D8B   (3467)
+ Total RAM usage = 0040A   (1034)
+
+ Linkage completed.
+'Finished building: TicTacToe.abs'
+' '
+'Building target: TicTacToe.HEX'
+'Invoking: Object converter'
+CnvOHU8 -H  TicTacToe.abs  "TicTacToe.HEX";
+OHU8 converter shell for LEXIDE-U16 v1.00
+Ohu8.exe "/H" "TicTacToe.abs" "TicTacToe.HEX;"
+OHU8 Object Converter, Ver.1.30
+Copyright (C) 2008-2023 LAPIS Technology Co., Ltd.
+
+Object was created by RLU8
+
+Convert End.
+'Finished building target: TicTacToe.HEX'
+' '
+make --no-print-directory post-build
+'Run it'
+cd.. && build.bat
+hex2bin v1.0.1, Copyright (C) 1999 Jacques Pelletier
+Lowest address = 00000000
+Highest address = 00000D89
+        1 file(s) copied.
+Press any key to continue . . . 
+' '
+09:14:53 **** Incremental Build of configuration Debug for project TicTacToe ****
+make all 
+'Building file: ../main.c'
+'Invoking: Compiler'
+ccu8 -SD -ABW -TML620906 -ML -far -Fa"./" -Om -Zs -Oa -W1 "../main.c"
+CCU8 C Compiler, Ver.3.66
+Copyright (C) 2008-2020 LAPIS Technology Co., Ltd.
+
+..\main.c
+..\printlib.h(13) : Warning : W5031 : 'drawbitmap': call to function with no prototype
+..\main.c(268) : Warning : W4002 : 'const' ignored on argument
+..\main.c(314) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(315) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(322) : Warning : W5031 : 'drawstage': call to function with no prototype
+..\main.c(323) : Warning : W5031 : 'flipcell': call to function with no prototype
+..\main.c(433) : Warning : W5031 : 'debugRender': call to function with no prototype
+
+Error(s)     :  0
+Warning(s)   :  7
+
+'Finished building: ../main.c'
+' '
+'Building file: main.asm'
+'Invoking: Assembler'
+rasu8 -CD -ABW -SD -DF -ML -O"./" -WRPEAST -PR"main.prn" -L -NS -NR -NPL -NPW "main.asm"
+RASU8 Relocatable Assembler, Ver.1.80
+Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
+
+[E:/Lexide/Dcl\ML620906.dcl] loading...
+  pass1...
+  pass2...
+main.asm(577):577: Warning 25 : illegal access to SFR
+	st	er0,	00h:0f014h
+main.asm(649):649: Warning 25 : illegal access to SFR
+	st	r0,	00h:0f037h
+
+  Print   File : main.prn
+  Object  File : .\main.obj
+  Error   File : Console
+
+  Errors   : 0
+  Warnings : 2  (/Wrpeast)
+  Lines    : 8422
+  Assembly End.
+
+'Finished building: main.asm'
+' '
+'Invoking: Linker'
+rlu8 -D -SD -NS -CC -ABW  "./main.obj" "./startup.obj" ,"TicTacToe.abs",,"LU8100LW.LIB";
+RLU8 Object Linker, Ver.1.60
+Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
+
+ Loading segments and symbols...
+Warning W025: Cannot find segment '$$content_of_init'
+Warning W025: Cannot find segment '$$end_of_init'
+Warning W025: Cannot find segment '$$init_info_end'
+ Allocating segments...
+Warning W011: CODE/TABLE segments overlap
+ Writing fixed data...
+
+ Absfile: TicTacToe.abs
+ Mapfile: TicTacToe.map
+
+ Total ROM usage = 00DB5   (3509)
+ Total RAM usage = 0040A   (1034)
+
+ Linkage completed.
+'Finished building: TicTacToe.abs'
+' '
+'Building target: TicTacToe.HEX'
+'Invoking: Object converter'
+CnvOHU8 -H  TicTacToe.abs  "TicTacToe.HEX";
+OHU8 converter shell for LEXIDE-U16 v1.00
+Ohu8.exe "/H" "TicTacToe.abs" "TicTacToe.HEX;"
+OHU8 Object Converter, Ver.1.30
+Copyright (C) 2008-2023 LAPIS Technology Co., Ltd.
+
+Object was created by RLU8
+
+Convert End.
+'Finished building target: TicTacToe.HEX'
+' '
+make --no-print-directory post-build
+'Run it'
+cd.. && build.bat
+hex2bin v1.0.1, Copyright (C) 1999 Jacques Pelletier
+Lowest address = 00000000
+Highest address = 00000DB3
+        1 file(s) copied.
+Press any key to continue . . . 
+' '
+09:15:21 **** Incremental Build of configuration Debug for project TicTacToe ****
+make all 
+'Building file: ../main.c'
+'Invoking: Compiler'
+ccu8 -SD -ABW -TML620906 -ML -far -Fa"./" -Om -Zs -Oa -W1 "../main.c"
+CCU8 C Compiler, Ver.3.66
+Copyright (C) 2008-2020 LAPIS Technology Co., Ltd.
+
+..\main.c
+..\printlib.h(13) : Warning : W5031 : 'drawbitmap': call to function with no prototype
+..\main.c(268) : Warning : W4002 : 'const' ignored on argument
+..\main.c(314) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(315) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(322) : Warning : W5031 : 'drawstage': call to function with no prototype
+..\main.c(323) : Warning : W5031 : 'flipcell': call to function with no prototype
+
+Error(s)     :  0
+Warning(s)   :  6
+
+'Finished building: ../main.c'
+' '
+'Building file: main.asm'
+'Invoking: Assembler'
+rasu8 -CD -ABW -SD -DF -ML -O"./" -WRPEAST -PR"main.prn" -L -NS -NR -NPL -NPW "main.asm"
+RASU8 Relocatable Assembler, Ver.1.80
+Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
+
+[E:/Lexide/Dcl\ML620906.dcl] loading...
+  pass1...
+  pass2...
+main.asm(577):577: Warning 25 : illegal access to SFR
+	st	er0,	00h:0f014h
+main.asm(649):649: Warning 25 : illegal access to SFR
+	st	r0,	00h:0f037h
+
+  Print   File : main.prn
+  Object  File : .\main.obj
+  Error   File : Console
+
+  Errors   : 0
+  Warnings : 2  (/Wrpeast)
+  Lines    : 8414
+  Assembly End.
+
+'Finished building: main.asm'
+' '
+'Invoking: Linker'
+rlu8 -D -SD -NS -CC -ABW  "./main.obj" "./startup.obj" ,"TicTacToe.abs",,"LU8100LW.LIB";
+RLU8 Object Linker, Ver.1.60
+Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
+
+ Loading segments and symbols...
+Warning W025: Cannot find segment '$$content_of_init'
+Warning W025: Cannot find segment '$$end_of_init'
+Warning W025: Cannot find segment '$$init_info_end'
+ Allocating segments...
+Warning W011: CODE/TABLE segments overlap
+ Writing fixed data...
+
+ Absfile: TicTacToe.abs
+ Mapfile: TicTacToe.map
+
+ Total ROM usage = 00D2B   (3371)
+ Total RAM usage = 0040A   (1034)
+
+ Linkage completed.
+'Finished building: TicTacToe.abs'
+' '
+'Building target: TicTacToe.HEX'
+'Invoking: Object converter'
+CnvOHU8 -H  TicTacToe.abs  "TicTacToe.HEX";
+OHU8 converter shell for LEXIDE-U16 v1.00
+Ohu8.exe "/H" "TicTacToe.abs" "TicTacToe.HEX;"
+OHU8 Object Converter, Ver.1.30
+Copyright (C) 2008-2023 LAPIS Technology Co., Ltd.
+
+Object was created by RLU8
+
+Convert End.
+'Finished building target: TicTacToe.HEX'
+' '
+make --no-print-directory post-build
+'Run it'
+cd.. && build.bat
+hex2bin v1.0.1, Copyright (C) 1999 Jacques Pelletier
+Lowest address = 00000000
+Highest address = 00000D29
+        1 file(s) copied.
+Press any key to continue . . . 
+' '
+09:16:51 **** Incremental Build of configuration Debug for project TicTacToe ****
+make all 
+'Building file: ../main.c'
+'Invoking: Compiler'
+ccu8 -SD -ABW -TML620906 -ML -far -Fa"./" -Om -Zs -Oa -W1 "../main.c"
+CCU8 C Compiler, Ver.3.66
+Copyright (C) 2008-2020 LAPIS Technology Co., Ltd.
+
+..\main.c
+..\printlib.h(13) : Warning : W5031 : 'drawbitmap': call to function with no prototype
+..\main.c(268) : Warning : W4002 : 'const' ignored on argument
+..\main.c(314) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(315) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(322) : Warning : W5031 : 'drawstage': call to function with no prototype
+..\main.c(323) : Warning : W5031 : 'flipcell': call to function with no prototype
+
+Error(s)     :  0
+Warning(s)   :  6
+
+'Finished building: ../main.c'
+' '
+'Building file: main.asm'
+'Invoking: Assembler'
+rasu8 -CD -ABW -SD -DF -ML -O"./" -WRPEAST -PR"main.prn" -L -NS -NR -NPL -NPW "main.asm"
+RASU8 Relocatable Assembler, Ver.1.80
+Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
+
+[E:/Lexide/Dcl\ML620906.dcl] loading...
+  pass1...
+  pass2...
+main.asm(577):577: Warning 25 : illegal access to SFR
+	st	er0,	00h:0f014h
+main.asm(649):649: Warning 25 : illegal access to SFR
+	st	r0,	00h:0f037h
+
+  Print   File : main.prn
+  Object  File : .\main.obj
+  Error   File : Console
+
+  Errors   : 0
+  Warnings : 2  (/Wrpeast)
+  Lines    : 8414
+  Assembly End.
+
+'Finished building: main.asm'
+' '
+'Invoking: Linker'
+rlu8 -D -SD -NS -CC -ABW  "./main.obj" "./startup.obj" ,"TicTacToe.abs",,"LU8100LW.LIB";
+RLU8 Object Linker, Ver.1.60
+Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
+
+ Loading segments and symbols...
+Warning W025: Cannot find segment '$$content_of_init'
+Warning W025: Cannot find segment '$$end_of_init'
+Warning W025: Cannot find segment '$$init_info_end'
+ Allocating segments...
+Warning W011: CODE/TABLE segments overlap
+ Writing fixed data...
+
+ Absfile: TicTacToe.abs
+ Mapfile: TicTacToe.map
+
+ Total ROM usage = 00D2B   (3371)
+ Total RAM usage = 0040A   (1034)
+
+ Linkage completed.
+'Finished building: TicTacToe.abs'
+' '
+'Building target: TicTacToe.HEX'
+'Invoking: Object converter'
+CnvOHU8 -H  TicTacToe.abs  "TicTacToe.HEX";
+OHU8 converter shell for LEXIDE-U16 v1.00
+Ohu8.exe "/H" "TicTacToe.abs" "TicTacToe.HEX;"
+OHU8 Object Converter, Ver.1.30
+Copyright (C) 2008-2023 LAPIS Technology Co., Ltd.
+
+Object was created by RLU8
+
+Convert End.
+'Finished building target: TicTacToe.HEX'
+' '
+make --no-print-directory post-build
+'Run it'
+cd.. && build.bat
+hex2bin v1.0.1, Copyright (C) 1999 Jacques Pelletier
+Lowest address = 00000000
+Highest address = 00000D29
+        1 file(s) copied.
+Press any key to continue . . . 
+' '
+09:17:04 **** Incremental Build of configuration Debug for project TicTacToe ****
+make all 
+'Building file: ../main.c'
+'Invoking: Compiler'
+ccu8 -SD -ABW -TML620906 -ML -far -Fa"./" -Om -Zs -Oa -W1 "../main.c"
+CCU8 C Compiler, Ver.3.66
+Copyright (C) 2008-2020 LAPIS Technology Co., Ltd.
+
+..\main.c
+..\printlib.h(13) : Warning : W5031 : 'drawbitmap': call to function with no prototype
+..\main.c(268) : Warning : W4002 : 'const' ignored on argument
+..\main.c(314) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(315) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(322) : Warning : W5031 : 'drawstage': call to function with no prototype
+..\main.c(323) : Warning : W5031 : 'flipcell': call to function with no prototype
+
+Error(s)     :  0
+Warning(s)   :  6
+
+'Finished building: ../main.c'
+' '
+'Building file: main.asm'
+'Invoking: Assembler'
+rasu8 -CD -ABW -SD -DF -ML -O"./" -WRPEAST -PR"main.prn" -L -NS -NR -NPL -NPW "main.asm"
+RASU8 Relocatable Assembler, Ver.1.80
+Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
+
+[E:/Lexide/Dcl\ML620906.dcl] loading...
+  pass1...
+  pass2...
+main.asm(577):577: Warning 25 : illegal access to SFR
+	st	er0,	00h:0f014h
+main.asm(649):649: Warning 25 : illegal access to SFR
+	st	r0,	00h:0f037h
+
+  Print   File : main.prn
+  Object  File : .\main.obj
+  Error   File : Console
+
+  Errors   : 0
+  Warnings : 2  (/Wrpeast)
+  Lines    : 8414
+  Assembly End.
+
+'Finished building: main.asm'
+' '
+'Invoking: Linker'
+rlu8 -D -SD -NS -CC -ABW  "./main.obj" "./startup.obj" ,"TicTacToe.abs",,"LU8100LW.LIB";
+RLU8 Object Linker, Ver.1.60
+Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
+
+ Loading segments and symbols...
+Warning W025: Cannot find segment '$$content_of_init'
+Warning W025: Cannot find segment '$$end_of_init'
+Warning W025: Cannot find segment '$$init_info_end'
+ Allocating segments...
+Warning W011: CODE/TABLE segments overlap
+ Writing fixed data...
+
+ Absfile: TicTacToe.abs
+ Mapfile: TicTacToe.map
+
+ Total ROM usage = 00D2B   (3371)
+ Total RAM usage = 0040A   (1034)
+
+ Linkage completed.
+'Finished building: TicTacToe.abs'
+' '
+'Building target: TicTacToe.HEX'
+'Invoking: Object converter'
+CnvOHU8 -H  TicTacToe.abs  "TicTacToe.HEX";
+OHU8 converter shell for LEXIDE-U16 v1.00
+Ohu8.exe "/H" "TicTacToe.abs" "TicTacToe.HEX;"
+OHU8 Object Converter, Ver.1.30
+Copyright (C) 2008-2023 LAPIS Technology Co., Ltd.
+
+Object was created by RLU8
+
+Convert End.
+'Finished building target: TicTacToe.HEX'
+' '
+make --no-print-directory post-build
+'Run it'
+cd.. && build.bat
+hex2bin v1.0.1, Copyright (C) 1999 Jacques Pelletier
+Lowest address = 00000000
+Highest address = 00000D29
+        1 file(s) copied.
+Press any key to continue . . . 
+' '
+09:57:36 **** Incremental Build of configuration Debug for project TicTacToe ****
+make all 
+'Building file: ../main.c'
+'Invoking: Compiler'
+ccu8 -SD -ABW -TML620906 -ML -far -Fa"./" -Om -Zs -Oa -W1 "../main.c"
+CCU8 C Compiler, Ver.3.66
+Copyright (C) 2008-2020 LAPIS Technology Co., Ltd.
+
+..\main.c
+..\printlib.h(13) : Warning : W5031 : 'drawbitmap': call to function with no prototype
+..\main.c(268) : Warning : W4002 : 'const' ignored on argument
+..\main.c(314) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(315) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(322) : Warning : W5031 : 'drawstage': call to function with no prototype
+..\main.c(323) : Warning : W5031 : 'flipcell': call to function with no prototype
+
+Error(s)     :  0
+Warning(s)   :  6
+
+'Finished building: ../main.c'
+' '
+'Building file: main.asm'
+'Invoking: Assembler'
+rasu8 -CD -ABW -SD -DF -ML -O"./" -WRPEAST -PR"main.prn" -L -NS -NR -NPL -NPW "main.asm"
+RASU8 Relocatable Assembler, Ver.1.80
+Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
+
+[E:/Lexide/Dcl\ML620906.dcl] loading...
+  pass1...
+  pass2...
+main.asm(577):577: Warning 25 : illegal access to SFR
+	st	er0,	00h:0f014h
+main.asm(649):649: Warning 25 : illegal access to SFR
+	st	r0,	00h:0f037h
+
+  Print   File : main.prn
+  Object  File : .\main.obj
+  Error   File : Console
+
+  Errors   : 0
+  Warnings : 2  (/Wrpeast)
+  Lines    : 8401
+  Assembly End.
+
+'Finished building: main.asm'
+' '
+'Invoking: Linker'
+rlu8 -D -SD -NS -CC -ABW  "./main.obj" "./startup.obj" ,"TicTacToe.abs",,"LU8100LW.LIB";
+RLU8 Object Linker, Ver.1.60
+Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
+
+ Loading segments and symbols...
+Warning W025: Cannot find segment '$$content_of_init'
+Warning W025: Cannot find segment '$$end_of_init'
+Warning W025: Cannot find segment '$$init_info_end'
+ Allocating segments...
+Warning W011: CODE/TABLE segments overlap
+ Writing fixed data...
+
+ Absfile: TicTacToe.abs
+ Mapfile: TicTacToe.map
+
+ Total ROM usage = 00D41   (3393)
+ Total RAM usage = 0040A   (1034)
+
+ Linkage completed.
+'Finished building: TicTacToe.abs'
+' '
+'Building target: TicTacToe.HEX'
+'Invoking: Object converter'
+CnvOHU8 -H  TicTacToe.abs  "TicTacToe.HEX";
+OHU8 converter shell for LEXIDE-U16 v1.00
+Ohu8.exe "/H" "TicTacToe.abs" "TicTacToe.HEX;"
+OHU8 Object Converter, Ver.1.30
+Copyright (C) 2008-2023 LAPIS Technology Co., Ltd.
+
+Object was created by RLU8
+
+Convert End.
+'Finished building target: TicTacToe.HEX'
+' '
+make --no-print-directory post-build
+'Run it'
+cd.. && build.bat
+hex2bin v1.0.1, Copyright (C) 1999 Jacques Pelletier
+Lowest address = 00000000
+Highest address = 00000D3F
+        1 file(s) copied.
+Press any key to continue . . . 
+' '
+09:58:46 **** Incremental Build of configuration Debug for project TicTacToe ****
+make all 
+'Building file: ../main.c'
+'Invoking: Compiler'
+ccu8 -SD -ABW -TML620906 -ML -far -Fa"./" -Om -Zs -Oa -W1 "../main.c"
+CCU8 C Compiler, Ver.3.66
+Copyright (C) 2008-2020 LAPIS Technology Co., Ltd.
+
+..\main.c
+..\printlib.h(13) : Warning : W5031 : 'drawbitmap': call to function with no prototype
+..\main.c(268) : Warning : W4002 : 'const' ignored on argument
+..\main.c(314) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(315) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(322) : Warning : W5031 : 'drawstage': call to function with no prototype
+..\main.c(323) : Warning : W5031 : 'flipcell': call to function with no prototype
+
+Error(s)     :  0
+Warning(s)   :  6
+
+'Finished building: ../main.c'
+' '
+'Building file: main.asm'
+'Invoking: Assembler'
+rasu8 -CD -ABW -SD -DF -ML -O"./" -WRPEAST -PR"main.prn" -L -NS -NR -NPL -NPW "main.asm"
+RASU8 Relocatable Assembler, Ver.1.80
+Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
+
+[E:/Lexide/Dcl\ML620906.dcl] loading...
+  pass1...
+  pass2...
+main.asm(577):577: Warning 25 : illegal access to SFR
+	st	er0,	00h:0f014h
+main.asm(649):649: Warning 25 : illegal access to SFR
+	st	r0,	00h:0f037h
+
+  Print   File : main.prn
+  Object  File : .\main.obj
+  Error   File : Console
+
+  Errors   : 0
+  Warnings : 2  (/Wrpeast)
+  Lines    : 8401
+  Assembly End.
+
+'Finished building: main.asm'
+' '
+'Invoking: Linker'
+rlu8 -D -SD -NS -CC -ABW  "./main.obj" "./startup.obj" ,"TicTacToe.abs",,"LU8100LW.LIB";
+RLU8 Object Linker, Ver.1.60
+Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
+
+ Loading segments and symbols...
+Warning W025: Cannot find segment '$$content_of_init'
+Warning W025: Cannot find segment '$$end_of_init'
+Warning W025: Cannot find segment '$$init_info_end'
+ Allocating segments...
+Warning W011: CODE/TABLE segments overlap
+ Writing fixed data...
+
+ Absfile: TicTacToe.abs
+ Mapfile: TicTacToe.map
+
+ Total ROM usage = 00D41   (3393)
+ Total RAM usage = 0040A   (1034)
+
+ Linkage completed.
+'Finished building: TicTacToe.abs'
+' '
+'Building target: TicTacToe.HEX'
+'Invoking: Object converter'
+CnvOHU8 -H  TicTacToe.abs  "TicTacToe.HEX";
+OHU8 converter shell for LEXIDE-U16 v1.00
+Ohu8.exe "/H" "TicTacToe.abs" "TicTacToe.HEX;"
+OHU8 Object Converter, Ver.1.30
+Copyright (C) 2008-2023 LAPIS Technology Co., Ltd.
+
+Object was created by RLU8
+
+Convert End.
+'Finished building target: TicTacToe.HEX'
+' '
+make --no-print-directory post-build
+'Run it'
+cd.. && build.bat
+hex2bin v1.0.1, Copyright (C) 1999 Jacques Pelletier
+Lowest address = 00000000
+Highest address = 00000D3F
+        1 file(s) copied.
+Press any key to continue . . . 
+' '
+11:03:19 **** Incremental Build of configuration Debug for project TicTacToe ****
+make all 
+'Building file: ../main.c'
+'Invoking: Compiler'
+ccu8 -SD -ABW -TML620906 -ML -far -Fa"./" -Om -Zs -Oa -W1 "../main.c"
+CCU8 C Compiler, Ver.3.66
+Copyright (C) 2008-2020 LAPIS Technology Co., Ltd.
+
+..\main.c
+..\printlib.h(13) : Warning : W5031 : 'drawbitmap': call to function with no prototype
+..\main.c(268) : Warning : W4002 : 'const' ignored on argument
+..\main.c(314) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(315) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(322) : Warning : W5031 : 'drawstage': call to function with no prototype
+..\main.c(323) : Warning : W5031 : 'flipcell': call to function with no prototype
+
+Error(s)     :  0
+Warning(s)   :  6
+
+'Finished building: ../main.c'
+' '
+'Building file: main.asm'
+'Invoking: Assembler'
+rasu8 -CD -ABW -SD -DF -ML -O"./" -WRPEAST -PR"main.prn" -L -NS -NR -NPL -NPW "main.asm"
+RASU8 Relocatable Assembler, Ver.1.80
+Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
+
+[E:/Lexide/Dcl\ML620906.dcl] loading...
+  pass1...
+  pass2...
+main.asm(577):577: Warning 25 : illegal access to SFR
+	st	er0,	00h:0f014h
+main.asm(649):649: Warning 25 : illegal access to SFR
+	st	r0,	00h:0f037h
+
+  Print   File : main.prn
+  Object  File : .\main.obj
+  Error   File : Console
+
+  Errors   : 0
+  Warnings : 2  (/Wrpeast)
+  Lines    : 8411
+  Assembly End.
+
+'Finished building: main.asm'
+' '
+'Invoking: Linker'
+rlu8 -D -SD -NS -CC -ABW  "./main.obj" "./startup.obj" ,"TicTacToe.abs",,"LU8100LW.LIB";
+RLU8 Object Linker, Ver.1.60
+Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
+
+ Loading segments and symbols...
+Warning W025: Cannot find segment '$$content_of_init'
+Warning W025: Cannot find segment '$$end_of_init'
+Warning W025: Cannot find segment '$$init_info_end'
+ Allocating segments...
+Warning W011: CODE/TABLE segments overlap
+ Writing fixed data...
+
+ Absfile: TicTacToe.abs
+ Mapfile: TicTacToe.map
+
+ Total ROM usage = 00D55   (3413)
+ Total RAM usage = 0040A   (1034)
+
+ Linkage completed.
+'Finished building: TicTacToe.abs'
+' '
+'Building target: TicTacToe.HEX'
+'Invoking: Object converter'
+CnvOHU8 -H  TicTacToe.abs  "TicTacToe.HEX";
+OHU8 converter shell for LEXIDE-U16 v1.00
+Ohu8.exe "/H" "TicTacToe.abs" "TicTacToe.HEX;"
+OHU8 Object Converter, Ver.1.30
+Copyright (C) 2008-2023 LAPIS Technology Co., Ltd.
+
+Object was created by RLU8
+
+Convert End.
+'Finished building target: TicTacToe.HEX'
+' '
+make --no-print-directory post-build
+'Run it'
+cd.. && build.bat
+hex2bin v1.0.1, Copyright (C) 1999 Jacques Pelletier
+Lowest address = 00000000
+Highest address = 00000D53
+        1 file(s) copied.
+Press any key to continue . . . 
+' '
+11:05:21 **** Incremental Build of configuration Debug for project TicTacToe ****
+make all 
+'Building file: ../main.c'
+'Invoking: Compiler'
+ccu8 -SD -ABW -TML620906 -ML -far -Fa"./" -Om -Zs -Oa -W1 "../main.c"
+CCU8 C Compiler, Ver.3.66
+Copyright (C) 2008-2020 LAPIS Technology Co., Ltd.
+
+..\main.c
+..\printlib.h(13) : Warning : W5031 : 'drawbitmap': call to function with no prototype
+..\main.c(268) : Warning : W4002 : 'const' ignored on argument
+..\main.c(314) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(315) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(322) : Warning : W5031 : 'drawstage': call to function with no prototype
+..\main.c(323) : Warning : W5031 : 'flipcell': call to function with no prototype
+
+Error(s)     :  0
+Warning(s)   :  6
+
+'Finished building: ../main.c'
+' '
+'Building file: main.asm'
+'Invoking: Assembler'
+rasu8 -CD -ABW -SD -DF -ML -O"./" -WRPEAST -PR"main.prn" -L -NS -NR -NPL -NPW "main.asm"
+RASU8 Relocatable Assembler, Ver.1.80
+Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
+
+[E:/Lexide/Dcl\ML620906.dcl] loading...
+  pass1...
+  pass2...
+main.asm(577):577: Warning 25 : illegal access to SFR
+	st	er0,	00h:0f014h
+main.asm(649):649: Warning 25 : illegal access to SFR
+	st	r0,	00h:0f037h
+
+  Print   File : main.prn
+  Object  File : .\main.obj
+  Error   File : Console
+
+  Errors   : 0
+  Warnings : 2  (/Wrpeast)
+  Lines    : 8418
+  Assembly End.
+
+'Finished building: main.asm'
+' '
+'Invoking: Linker'
+rlu8 -D -SD -NS -CC -ABW  "./main.obj" "./startup.obj" ,"TicTacToe.abs",,"LU8100LW.LIB";
+RLU8 Object Linker, Ver.1.60
+Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
+
+ Loading segments and symbols...
+Warning W025: Cannot find segment '$$content_of_init'
+Warning W025: Cannot find segment '$$end_of_init'
+Warning W025: Cannot find segment '$$init_info_end'
+ Allocating segments...
+Warning W011: CODE/TABLE segments overlap
+ Writing fixed data...
+
+ Absfile: TicTacToe.abs
+ Mapfile: TicTacToe.map
+
+ Total ROM usage = 00D5D   (3421)
+ Total RAM usage = 0040A   (1034)
+
+ Linkage completed.
+'Finished building: TicTacToe.abs'
+' '
+'Building target: TicTacToe.HEX'
+'Invoking: Object converter'
+CnvOHU8 -H  TicTacToe.abs  "TicTacToe.HEX";
+OHU8 converter shell for LEXIDE-U16 v1.00
+Ohu8.exe "/H" "TicTacToe.abs" "TicTacToe.HEX;"
+OHU8 Object Converter, Ver.1.30
+Copyright (C) 2008-2023 LAPIS Technology Co., Ltd.
+
+Object was created by RLU8
+
+Convert End.
+'Finished building target: TicTacToe.HEX'
+' '
+make --no-print-directory post-build
+'Run it'
+cd.. && build.bat
+hex2bin v1.0.1, Copyright (C) 1999 Jacques Pelletier
+Lowest address = 00000000
+Highest address = 00000D5B
+        1 file(s) copied.
+Press any key to continue . . . 
+' '
+11:15:11 **** Incremental Build of configuration Debug for project TicTacToe ****
+make all 
+'Building file: ../main.c'
+'Invoking: Compiler'
+ccu8 -SD -ABW -TML620906 -ML -far -Fa"./" -Om -Zs -Oa -W1 "../main.c"
+CCU8 C Compiler, Ver.3.66
+Copyright (C) 2008-2020 LAPIS Technology Co., Ltd.
+
+..\main.c
+..\printlib.h(13) : Warning : W5031 : 'drawbitmap': call to function with no prototype
+..\main.c(269) : Warning : W4002 : 'const' ignored on argument
+..\main.c(315) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(316) : Warning : W5002 : 'argument' : different levels of indirection
+..\main.c(323) : Warning : W5031 : 'drawstage': call to function with no prototype
+..\main.c(324) : Warning : W5031 : 'flipcell': call to function with no prototype
+
+Error(s)     :  0
+Warning(s)   :  6
+
+'Finished building: ../main.c'
+' '
+'Building file: main.asm'
+'Invoking: Assembler'
+rasu8 -CD -ABW -SD -DF -ML -O"./" -WRPEAST -PR"main.prn" -L -NS -NR -NPL -NPW "main.asm"
+RASU8 Relocatable Assembler, Ver.1.80
+Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
+
+[E:/Lexide/Dcl\ML620906.dcl] loading...
+  pass1...
+  pass2...
+main.asm(577):577: Warning 25 : illegal access to SFR
+	st	er0,	00h:0f014h
+main.asm(649):649: Warning 25 : illegal access to SFR
+	st	r0,	00h:0f037h
+
+  Print   File : main.prn
+  Object  File : .\main.obj
+  Error   File : Console
+
+  Errors   : 0
+  Warnings : 2  (/Wrpeast)
+  Lines    : 8424
+  Assembly End.
+
+'Finished building: main.asm'
+' '
+'Invoking: Linker'
+rlu8 -D -SD -NS -CC -ABW  "./main.obj" "./startup.obj" ,"TicTacToe.abs",,"LU8100LW.LIB";
+RLU8 Object Linker, Ver.1.60
+Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
+
+ Loading segments and symbols...
+Warning W025: Cannot find segment '$$content_of_init'
+Warning W025: Cannot find segment '$$end_of_init'
+Warning W025: Cannot find segment '$$init_info_end'
+ Allocating segments...
+Warning W011: CODE/TABLE segments overlap
+ Writing fixed data...
+
+ Absfile: TicTacToe.abs
+ Mapfile: TicTacToe.map
+
+ Total ROM usage = 00D65   (3429)
+ Total RAM usage = 0040A   (1034)
+
+ Linkage completed.
+'Finished building: TicTacToe.abs'
+' '
+'Building target: TicTacToe.HEX'
+'Invoking: Object converter'
+CnvOHU8 -H  TicTacToe.abs  "TicTacToe.HEX";
+OHU8 converter shell for LEXIDE-U16 v1.00
+Ohu8.exe "/H" "TicTacToe.abs" "TicTacToe.HEX;"
+OHU8 Object Converter, Ver.1.30
+Copyright (C) 2008-2023 LAPIS Technology Co., Ltd.
+
+Object was created by RLU8
+
+Convert End.
+'Finished building target: TicTacToe.HEX'
+' '
+make --no-print-directory post-build
+'Run it'
+cd.. && build.bat
+hex2bin v1.0.1, Copyright (C) 1999 Jacques Pelletier
+Lowest address = 00000000
+Highest address = 00000D63
+        1 file(s) copied.
+Press any key to continue . . . 
+' '

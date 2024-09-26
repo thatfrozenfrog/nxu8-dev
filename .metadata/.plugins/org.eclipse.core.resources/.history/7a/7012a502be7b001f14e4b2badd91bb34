@@ -260,6 +260,7 @@ void render_rect(int x1, int y1, int x2, int y2, byte color, byte invert) {
 	for (i = y1; i <= y2; i++) {
 		y = i - y1;
 		set_bits(mem_address + i * 0x20, x1, x2 - x1, color, invert);
+		delay(100);
 	}
 
 }

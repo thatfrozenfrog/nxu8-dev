@@ -1,5 +1,5 @@
 RLU8 Object Linker, Ver.1.60.3 Linkage Information
-[Tue Sep 24 10:59:21 2024]
+[Thu Sep 26 11:15:11 2024]
 
 
                          ------------------
@@ -36,11 +36,11 @@ Number of Symbols:
  +---------------------------------------------------------------------------+
  |          | CODE | DATA | BIT  |NVDATA|NVBIT |TABLE |NUMBER| TBIT || total |
  |----------+------+------+------+------+------+------+------+------++-------|
- | SEGMENT  |    24|     2|     0|     0|     0|     7|      |      ||     33|
+ | SEGMENT  |    26|     2|     0|     0|     0|     7|      |      ||     35|
  |----------+------+------+------+------+------+------+------+------++-------|
  | COMMUNAL |     0|     2|     0|     0|     0|     0|      |      ||      2|
  |----------+------+------+------+------+------+------+------+------++-------|
- | PUBLIC   |    24|     4|     0|     0|     0|     5|     0|     0||     33|
+ | PUBLIC   |    26|     4|     0|     0|     0|     5|     0|     0||     35|
  +---------------------------------------------------------------------------+
 
 Target:  ML620906 
@@ -74,29 +74,30 @@ Link Map - Program memory space #0 ( ROMWINDOW: 0000 - CFFF )
      -------------------------------------------------------
       S CODE   00:0000    00:01B3    01B4(436)         (absolute)
 *OVL* S CODE   00:0002    00:0003    0002(2)           (absolute)
-      S CODE   00:01B4    00:0231    007E(126)         $$debugRender$main
-      S CODE   00:0232    00:0241    0010(16)          $$pushpopu8lw
-      S CODE   00:0242    00:0251    0010(16)          $$simodu8lw
-      S CODE   00:0252    00:0309    00B8(184)         $$drawbitmap$main
-      S CODE   00:030A    00:0345    003C(60)          $$XFCODmemset_f
-      S CODE   00:0346    00:036F    002A(42)          $$imulu8lw
-      S CODE   00:0370    00:03B7    0048(72)          $$flipcell$main
-      S CODE   00:03B8    00:0409    0052(82)          $$render_rect$main
-      S CODE   00:040A    00:043D    0034(52)          $$sidimou8lw
-      S CODE   00:043E    00:047D    0040(64)          $$cidimou8lw
-      S CODE   00:047E    00:06D3    0256(598)         $$main$main
-      S CODE   00:06D4    00:06E1    000E(14)          $$sidivu8lw
-      S CODE   00:06E2    00:0797    00B6(182)         $$renderRLE$main
-      S CODE   00:0798    00:07D5    003E(62)          $$delay$main
-      S CODE   00:07D6    00:08E5    0110(272)         $$drawstage$main
-      S CODE   00:08E6    00:0949    0064(100)         $$CheckButtons$main
-      S CODE   00:094A    00:0AAD    0164(356)         $$set_bits$main
-      S TABLE  00:0AAE    00:0B1C    006F(111)         $$TABcross$main
->GAP<          00:0B1D    00:0B1D    0001(1)           (ROM)
-      S TABLE  00:0B1E    00:0B25    0008(8)           $$init_info
-      S TABLE  00:0B26    00:0B89    0064(100)         $$TABcircle$main
-      S TABLE  00:0B8A    00:0D81    01F8(504)         $$TABboard1$main
-      S TABLE  00:0D82    00:0D89    0008(8)           $$FINITTABmain
+      S CODE   00:01B4    00:01C3    0010(16)          $$pushpopu8lw
+      S CODE   00:01C4    00:01D3    0010(16)          $$simodu8lw
+      S CODE   00:01D4    00:0203    0030(48)          $$set_tile$main
+      S CODE   00:0204    00:02BB    00B8(184)         $$drawbitmap$main
+      S CODE   00:02BC    00:02F7    003C(60)          $$XFCODmemset_f
+      S CODE   00:02F8    00:0321    002A(42)          $$imulu8lw
+      S CODE   00:0322    00:0369    0048(72)          $$flipcell$main
+      S CODE   00:036A    00:03A5    003C(60)          $$get_tile$main
+      S CODE   00:03A6    00:03FF    005A(90)          $$render_rect$main
+      S CODE   00:0400    00:0433    0034(52)          $$sidimou8lw
+      S CODE   00:0434    00:0473    0040(64)          $$cidimou8lw
+      S CODE   00:0474    00:06C3    0250(592)         $$main$main
+      S CODE   00:06C4    00:06D1    000E(14)          $$sidivu8lw
+      S CODE   00:06D2    00:0787    00B6(182)         $$renderRLE$main
+      S CODE   00:0788    00:07C5    003E(62)          $$delay$main
+      S CODE   00:07C6    00:08BF    00FA(250)         $$drawstage$main
+      S CODE   00:08C0    00:0923    0064(100)         $$CheckButtons$main
+      S CODE   00:0924    00:0A87    0164(356)         $$set_bits$main
+      S TABLE  00:0A88    00:0AF6    006F(111)         $$TABcross$main
+>GAP<          00:0AF7    00:0AF7    0001(1)           (ROM)
+      S TABLE  00:0AF8    00:0AFF    0008(8)           $$init_info
+      S TABLE  00:0B00    00:0B63    0064(100)         $$TABcircle$main
+      S TABLE  00:0B64    00:0D5B    01F8(504)         $$TABboard1$main
+      S TABLE  00:0D5C    00:0D63    0008(8)           $$FINITTABmain
 
 
 Link Map - Data memory space #0
@@ -117,6 +118,7 @@ Not Linked segments:
       Module Name         Type       Size              Segment Name 
      --------------------------------------------------------------
       main
+                          CODE       007E(126)         $$debugRender$main
                           TABLE      1000(4096)        $$TABimage_raw$main
                           CODE       00FE(254)         $$checkWin$main
                           CODE       00AE(174)         $$invertbitmap$main
@@ -127,7 +129,7 @@ Not Linked segments:
      --------------------------------------------------------------
 
 
-Total size (CODE  ) = 00AB0   (2736)
+Total size (CODE  ) = 00A8A   (2698)
 Total size (DATA  ) = 0040A   (1034)
 Total size (BIT   ) = 00000.0 (0.0)
 Total size (NVDATA) = 00000   (0)
@@ -141,19 +143,20 @@ Total size (TABLE ) = 002DB   (731)
 Module         Value     Type         Symbol
 ------         -----     ----------   ------
 main
-               00:08E6   Pub CODE     _CheckButtons
-               00:047E   Pub CODE     _main
-               00:07D6   Pub CODE     _drawstage
-               00:0252   Pub CODE     _drawbitmap
-               00:01B4   Pub CODE     _debugRender
-               00:0798   Pub CODE     _delay
-               00:094A   Pub CODE     _set_bits
-               00:0370   Pub CODE     _flipcell
-               00:06E2   Pub CODE     _renderRLE
-               00:03B8   Pub CODE     _render_rect
-               00:0B8A   Pub TABLE    _board1
-               00:0AAE   Pub TABLE    _cross
-               00:0B26   Pub TABLE    _circle
+               00:08C0   Pub CODE     _CheckButtons
+               00:0474   Pub CODE     _main
+               00:07C6   Pub CODE     _drawstage
+               00:0204   Pub CODE     _drawbitmap
+               00:0788   Pub CODE     _delay
+               00:0924   Pub CODE     _set_bits
+               00:036A   Pub CODE     _get_tile
+               00:01D4   Pub CODE     _set_tile
+               00:0322   Pub CODE     _flipcell
+               00:06D2   Pub CODE     _renderRLE
+               00:03A6   Pub CODE     _render_rect
+               00:0B64   Pub TABLE    _board1
+               00:0A88   Pub TABLE    _cross
+               00:0B00   Pub TABLE    _circle
                00:EBFF   Pub DATA     _lastbutton
                00:EBF8   Pub DATA     _printdwordbuf
                00:EBFE   Pub DATA     _posx
@@ -188,7 +191,7 @@ Module         Value     Type         Symbol
 memset_f
 
 
-Total ROM usage = 00D8B   (3467)
+Total ROM usage = 00D65   (3429)
 Total RAM usage = 0040A   (1034)
 
 End of mapfile.

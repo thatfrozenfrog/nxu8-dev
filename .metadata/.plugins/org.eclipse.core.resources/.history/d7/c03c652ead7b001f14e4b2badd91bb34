@@ -283,7 +283,7 @@ byte get_tile(byte x, byte y)
 	y -= 1;
 	if(x >= 0 && x <= 2 && y >= 0 && y <= 2)
 	{
-		tile = deref(0xD200 + x + (y*0x10));
+		tile = deref(0xD820 + x + (y*0x10));
 	}
 	return tile;
 }
@@ -294,7 +294,7 @@ void set_tile(byte x, byte y,byte tile)
 	y -= 1;
 	if(x >= 0 && x <= 2 && y >= 0 && y <= 2)
 	{
-		deref(0xD200 + x + (y*0x10)) = tile;
+		deref(0xD820 + x + (y*0x10)) = tile;
 	}
 }
 
@@ -357,16 +357,16 @@ void main() {
 				break;
 
 			case SP_EQU:
-				if (get_tile(posx,posy) != 0x00) {
+				if (board[posy-1][posx-1] != 0x00) {
 					//print(invalid,0,1); // Placeholder function
 					deref(0xD180) = 0x40;
 
 					drawstage(board);
 
 				} else {
-					deref(0xD185) = posx;
-					deref(0xD186) = posy;
-					set_tile(posx, posy, player);
+
+					board[posy-1][posx-1] = player;
+
 
 					deref(0xD270) = player;
 					drawstage(board);
@@ -423,13 +423,14 @@ void drawstage(char board[3][3]){
 	}
     for (i = 0; i < 3; i++) {
         for (j = 0; j < 3; j++) {
-        	if (get_tile(i+1,j+1) == 0x01) {
-        		renderRLE(cross, sizeof(cross), 66 + (i) * 20 + (i), 2 + (j) * 21 );
-        	} else if (get_tile(i+1,j+1) == 0x02) {
-        		renderRLE(circle, sizeof(circle), 66 + (i) * 20 + (i), 2 + (j) * 21 );
+        	if (get_tile(i,j) == 0x01) {
+        		renderRLE(cross, sizeof(cross), 66 + (j) * 20 + (j), 2 + (i) * 21 );
+        	} else if (get_tile(i,j) == 0x02) {
+        		renderRLE(circle, sizeof(circle), 66 + (j) * 20 + (j), 2 + (i) * 21 );
         	}
         }
     }
+    debugRender(board);
 	delay(400);
 
 }

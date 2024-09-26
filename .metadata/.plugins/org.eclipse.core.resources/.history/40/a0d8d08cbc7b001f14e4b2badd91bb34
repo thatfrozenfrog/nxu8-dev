@@ -421,11 +421,11 @@ void drawstage(char board[3][3]){
 	} else if (posy < 1) {
 		posy = 3;
 	}
-    for (i = 0; i < 3; i++) {
-        for (j = 0; j < 3; j++) {
-        	if (get_tile(i+1,j+1) == 0x01) {
+    for (i = 1; i < 4; i++) {
+        for (j = 1; j < 4; j++) {
+        	if (get_tile(i,j) == 0x01) {
         		renderRLE(cross, sizeof(cross), 66 + (i) * 20 + (i), 2 + (j) * 21 );
-        	} else if (get_tile(i+1,j+1) == 0x02) {
+        	} else if (get_tile(i,j) == 0x02) {
         		renderRLE(circle, sizeof(circle), 66 + (i) * 20 + (i), 2 + (j) * 21 );
         	}
         }

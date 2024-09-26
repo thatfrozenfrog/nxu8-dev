@@ -20,6 +20,7 @@
 	$$drawbitmap$main segment code 2h any
 	$$drawstage$main segment code 2h any
 	$$flipcell$main segment code 2h any
+	$$get_tile$main segment code 2h any
 	$$invert_line$main segment code 2h any
 	$$invertbitmap$main segment code 2h any
 	$$main$main segment code 2h any
@@ -27,21 +28,24 @@
 	$$renderRLE$main segment code 2h any
 	$$render_rect$main segment code 2h any
 	$$set_bits$main segment code 2h any
+	$$set_tile$main segment code 2h any
 	STACKSEG 0400h
 CVERSION 3.66.2
 CGLOBAL 01H 03H 0000H "PrintWord" 08H 02H 02H 00H 83H 16H 00H 00H 07H
 CGLOBAL 01H 02H 0000H "CheckButtons" 08H 02H 75H 00H 82H 06H 00H 00H 00H
-CGLOBAL 01H 02H 0000H "checkWin" 08H 02H 85H 00H 83H 0cH 00H 00H 00H
-CGLOBAL 01H 03H 0000H "main" 08H 02H 7FH 00H 82H 2aH 00H 00H 07H
-CGLOBAL 01H 03H 0000H "drawstage" 08H 02H 83H 00H 83H 16H 00H 00H 07H
+CGLOBAL 01H 02H 0000H "checkWin" 08H 02H 86H 00H 83H 0cH 00H 00H 00H
+CGLOBAL 01H 03H 0000H "main" 08H 02H 81H 00H 82H 2aH 00H 00H 07H
+CGLOBAL 01H 03H 0000H "drawstage" 08H 02H 85H 00H 83H 14H 00H 00H 07H
 CGLOBAL 01H 03H 0000H "invert_line" 08H 02H 7EH 00H 83H 08H 00H 00H 07H
 CGLOBAL 01H 03H 0000H "drawbitmap" 08H 02H 79H 00H 83H 10H 00H 00H 07H
 CGLOBAL 01H 02H 0000H "print" 08H 02H 00H 00H 83H 1aH 00H 00H 08H
-CGLOBAL 01H 03H 0000H "debugRender" 08H 02H 86H 00H 83H 0aH 00H 00H 07H
+CGLOBAL 01H 03H 0000H "debugRender" 08H 02H 87H 00H 83H 0aH 00H 00H 07H
 CGLOBAL 01H 03H 0000H "delay" 08H 02H 76H 00H 80H 00H 00H 00H 07H
 CGLOBAL 01H 03H 0000H "invertbitmap" 08H 02H 7AH 00H 83H 0eH 00H 00H 07H
 CGLOBAL 01H 03H 0000H "set_bits" 08H 02H 7BH 00H 83H 20H 00H 00H 07H
-CGLOBAL 01H 03H 0000H "flipcell" 08H 02H 82H 00H 81H 10H 00H 00H 07H
+CGLOBAL 01H 02H 0000H "get_tile" 08H 02H 7FH 00H 83H 06H 00H 00H 00H
+CGLOBAL 01H 03H 0000H "set_tile" 08H 02H 80H 00H 80H 04H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "flipcell" 08H 02H 84H 00H 81H 10H 00H 00H 07H
 CGLOBAL 01H 03H 0000H "renderRLE" 08H 02H 7CH 00H 83H 22H 00H 00H 07H
 CGLOBAL 01H 03H 0000H "render_rect" 08H 02H 7DH 00H 83H 16H 00H 00H 07H
 CSTRUCTTAG 0000H 0000H 0001H 000CH 00000024H "_Notag"
@@ -111,7 +115,7 @@ CFILE 0005H 00000105H "E:\\Lexide\\BuildTools\\Ver.20231124\\Inc\\U16\\stdio.h"
 CFILE 0006H 0000007AH "E:\\Lexide\\BuildTools\\Ver.20231124\\Inc\\U16\\yvals.h"
 CFILE 0007H 000000C9H "E:\\Lexide\\BuildTools\\Ver.20231124\\Inc\\U16\\string.h"
 CFILE 0008H 00000066H "..\\tictactoe.h"
-CFILE 0000H 000001C8H "..\\main.c"
+CFILE 0000H 000001DEH "..\\main.c"
 
 	rseg $$print$main
 CFUNCTION 0
@@ -1632,7 +1636,13 @@ CLINEA 0000H 0001H 0106H 0003H 003FH
 	mov	r2,	#00h
 	bl	_set_bits
 	add	sp,	#6 
-CBLOCKEND 125 3 263
+
+;;		delay(100);
+CLINEA 0000H 0001H 0107H 0003H 000DH
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_delay
+CBLOCKEND 125 3 264
 
 ;;	for (i = y1; i <= y2; i++) {
 CLINEA 0000H 0000H 0104H 0002H 001DH
@@ -1655,12 +1665,12 @@ CLINEA 0000H 0000H 0104H 0022H 002EH
 	l	er2,	18[fp]
 	cmp	er0,	er2
 	bles	_$L134
-CBLOCKEND 125 2 265
+CBLOCKEND 125 2 266
 
 ;;}
-CLINEA 0000H 0001H 0109H 0001H 0001H
+CLINEA 0000H 0001H 010AH 0001H 0001H
 	b	__regpopu8lw
-CBLOCKEND 125 1 265
+CBLOCKEND 125 1 266
 CFUNCTIONEND 125
 
 
@@ -1668,15 +1678,15 @@ CFUNCTIONEND 125
 CFUNCTION 126
 
 _invert_line	:
-CBLOCK 126 1 269
+CBLOCK 126 1 270
 
 ;;{
-CLINEA 0000H 0001H 010DH 0001H 0001H
+CLINEA 0000H 0001H 010EH 0001H 0001H
 	push	lr
 	bl	__regpushu8lw
 	add	sp,	#-04
 	mov	er8,	er0
-CBLOCK 126 2 269
+CBLOCK 126 2 270
 CRET 0010H
 CARGUMENT 46H 0002H 0028H "line" 02H 00H 01H
 CLOCAL 42H 0002H 0004H 0002H "i" 02H 00H 08H
@@ -1684,21 +1694,21 @@ CLOCAL 4AH 0002H 0000H 0002H "j" 02H 00H 08H
 CLOCAL 42H 0002H 0002H 0002H "offset" 02H 00H 08H
 
 ;;	word offset = (line<<9);
-CLINEA 0000H 0001H 0110H 0002H 0019H
+CLINEA 0000H 0001H 0111H 0002H 0019H
 	mov	r1,	r8
 	sll	r1,	#01h
 	mov	r0,	#00h
 	st	er0,	-2[fp]
 
 ;;	for(i = 0; i < 512; i++) //used to be 512
-CLINEA 0000H 0001H 0111H 0002H 002AH
+CLINEA 0000H 0001H 0112H 0002H 002AH
 	mov	er0,	#0 
 	st	er0,	-4[fp]
 _$L141 :
-CBLOCK 126 3 274
+CBLOCK 126 3 275
 
 ;;		deref(0xF820+i+offset) = (~deref(0xF820+i+offset));
-CLINEA 0000H 0001H 0113H 0003H 0035H
+CLINEA 0000H 0001H 0114H 0003H 0035H
 	l	er2,	-2[fp]
 	add	er0,	er2
 	add	r0,	#020h
@@ -1707,39 +1717,172 @@ CLINEA 0000H 0001H 0113H 0003H 0035H
 	l	r2,	r2:[er0]
 	xor	r2,	#0ffh
 	st	r2,	DSR:[er0]
-CBLOCKEND 126 3 276
+CBLOCKEND 126 3 277
 
 ;;	for(i = 0; i < 512; i++) //used to be 512
-CLINEA 0000H 0000H 0111H 0002H 002AH
+CLINEA 0000H 0000H 0112H 0002H 002AH
 	l	er0,	-4[fp]
 	add	er0,	#1 
 	st	er0,	-4[fp]
 
 ;;	for(i = 0; i < 512; i++) //used to be 512
-CLINEA 0000H 0000H 0111H 0022H 002EH
+CLINEA 0000H 0000H 0112H 0022H 002EH
 	cmp	r0,	#00h
 	cmpc	r1,	#02h
 	blt	_$L141
-CBLOCKEND 126 2 277
+CBLOCKEND 126 2 278
 
 ;;}
-CLINEA 0000H 0001H 0115H 0001H 0001H
+CLINEA 0000H 0001H 0116H 0001H 0001H
 	b	__regpopu8lw
-CBLOCKEND 126 1 277
+CBLOCKEND 126 1 278
 CFUNCTIONEND 126
 
 
-	rseg $$main$main
+	rseg $$get_tile$main
 CFUNCTION 127
 
-_main	:
+_get_tile	:
 CBLOCK 127 1 281
 
+;;{
+CLINEA 0000H 0001H 0119H 0001H 0001H
+	push	lr
+	bl	__regpushu8lw
+	add	sp,	#-02
+	mov	r8,	r0
+CBLOCK 127 2 281
+CRET 000EH
+CARGUMENT 46H 0001H 001CH "x" 02H 00H 00H
+CARGUMENT 46H 0001H 0015H "y" 02H 00H 00H
+CLOCAL 42H 0001H 0001H 0002H "tile" 02H 00H 00H
+
+;;	byte tile = 0;
+CLINEA 0000H 0001H 011AH 0002H 000FH
+	mov	r0,	#00h
+	st	r0,	-1[fp]
+
+;;	x -= 1;
+CLINEA 0000H 0001H 011BH 0002H 0008H
+	add	r8,	#0ffh
+
+;;	y -= 1;
+CLINEA 0000H 0001H 011CH 0002H 0008H
+	mov	r0,	r1
+	add	r0,	#0ffh
+
+;;	if(x >= 0 && x <= 2 && y >= 0 && y <= 2)
+CLINEA 0000H 0000H 011DH 0002H 0029H
+	cmp	r8,	#02h
+	bgt	_$L146
+	cmp	r0,	#02h
+	bgt	_$L146
+CBLOCK 127 3 286
+
+;;		tile = deref(0xD200 + x + (y*0x10));
+CLINEA 0000H 0001H 011FH 0003H 0026H
+	mov	r1,	#00h
+	sllc	r1,	#04h
+	sll	r0,	#04h
+	mov	er2,	er0
+	mov	r0,	r8
+	mov	r1,	#00h
+	add	er0,	er2
+	add	r0,	#00h
+	addc	r1,	#0d2h
+	mov	r2,	#00h
+	l	r0,	r2:[er0]
+	st	r0,	-1[fp]
+CBLOCKEND 127 3 288
+
+;;	}
+CLINEA 0000H 0000H 0120H 0002H 0002H
+_$L146 :
+
+;;	return tile;
+CLINEA 0000H 0001H 0121H 0002H 000DH
+	l	r0,	-1[fp]
+CBLOCKEND 127 2 290
+
+;;}
+CLINEA 0000H 0000H 0122H 0001H 0001H
+	b	__regpopu8lw
+CBLOCKEND 127 1 290
+CFUNCTIONEND 127
+
+
+	rseg $$set_tile$main
+CFUNCTION 128
+
+_set_tile	:
+CBLOCK 128 1 293
+
+;;{
+CLINEA 0000H 0001H 0125H 0001H 0001H
+	push	xr8
+	mov	r10,	r2
+CBLOCK 128 2 293
+CARGUMENT 46H 0001H 0014H "x" 02H 00H 00H
+CARGUMENT 46H 0001H 0015H "y" 02H 00H 00H
+CARGUMENT 46H 0001H 001EH "tile" 02H 00H 00H
+
+;;	x -= 1;
+CLINEA 0000H 0001H 0126H 0002H 0008H
+	add	r0,	#0ffh
+	mov	r8,	r0
+
+;;	y -= 1;
+CLINEA 0000H 0001H 0127H 0002H 0008H
+	mov	r0,	r1
+	add	r0,	#0ffh
+
+;;	if(x >= 0 && x <= 2 && y >= 0 && y <= 2)
+CLINEA 0000H 0000H 0128H 0002H 0029H
+	cmp	r8,	#02h
+	bgt	_$L160
+	cmp	r0,	#02h
+	bgt	_$L160
+CBLOCK 128 3 297
+
+;;		deref(0xD200 + x + (y*0x10)) = tile;
+CLINEA 0000H 0001H 012AH 0003H 0026H
+	mov	r1,	#00h
+	sllc	r1,	#04h
+	sll	r0,	#04h
+	mov	er2,	er0
+	mov	r0,	r8
+	mov	r1,	#00h
+	add	er0,	er2
+	add	r0,	#00h
+	addc	r1,	#0d2h
+	mov	r2,	#00h
+	st	r10,	r2:[er0]
+CBLOCKEND 128 3 299
+
+;;	}
+CLINEA 0000H 0000H 012BH 0002H 0002H
+_$L160 :
+CBLOCKEND 128 2 300
+
+;;}
+CLINEA 0000H 0001H 012CH 0001H 0001H
+	pop	xr8
+	rt
+CBLOCKEND 128 1 300
+CFUNCTIONEND 128
+
+
+	rseg $$main$main
+CFUNCTION 129
+
+_main	:
+CBLOCK 129 1 304
+
 ;;void main() {
-CLINEA 0000H 0001H 0119H 0001H 000DH
+CLINEA 0000H 0001H 0130H 0001H 000DH
 	mov	fp,	sp
 	add	sp,	#-038
-CBLOCK 127 2 281
+CBLOCK 129 2 304
 CLOCAL 43H 000CH 000CH 0002H "screen" 05H 01H 0CH 00H 00H 00H
 CLOCAL 43H 000EH 001AH 0002H "invalid" 05H 01H 0EH 00H 00H 00H
 CLOCAL 42H 0009H 0024H 0002H "board" 08H 01H 03H 00H 01H 03H 00H 00H 00H
@@ -1751,7 +1894,7 @@ CLOCAL 42H 0001H 0025H 0002H "player" 02H 00H 00H
 CLOCAL 6AH 0003H 0000H 0002H "mem_address" 04H 03H 00H 00H 00H
 
 ;;	char screen[] = "Tic Tac Toe";
-CLINEA 0000H 0001H 011AH 0002H 001FH
+CLINEA 0000H 0001H 0131H 0002H 001FH
 	mov	r0,	#054h
 	st	r0,	-12[fp]
 	mov	r0,	#069h
@@ -1778,7 +1921,7 @@ CLINEA 0000H 0001H 011AH 0002H 001FH
 	st	r0,	-1[fp]
 
 ;;	char invalid[] = "Invalid move.";
-CLINEA 0000H 0001H 011BH 0002H 0022H
+CLINEA 0000H 0001H 0132H 0002H 0022H
 	mov	r0,	#049h
 	st	r0,	-26[fp]
 	mov	r0,	#06eh
@@ -1809,7 +1952,7 @@ CLINEA 0000H 0001H 011BH 0002H 0022H
 	st	r0,	-13[fp]
 
 ;;	byte board[3][3] = {{0x00, 0x00, 0x00}, {0x00, 0x00, 0x00}, {0x00, 0x00, 0x00}};
-CLINEA 0000H 0001H 011CH 0002H 0051H
+CLINEA 0000H 0001H 0133H 0002H 0051H
 	st	r0,	-36[fp]
 	st	r0,	-35[fp]
 	st	r0,	-34[fp]
@@ -1821,17 +1964,17 @@ CLINEA 0000H 0001H 011CH 0002H 0051H
 	st	r0,	-28[fp]
 
 ;;	byte player = 0x01;
-CLINEA 0000H 0001H 0121H 0002H 0014H
+CLINEA 0000H 0001H 0138H 0002H 0014H
 	mov	r0,	#01h
 	st	r0,	-37[fp]
 
 ;;	posx = 1; posy = 1;
-CLINEA 0000H 0001H 0123H 0002H 0014H
+CLINEA 0000H 0001H 013AH 0002H 0014H
 	st	r0,	FAR _posx
 	st	r0,	FAR _posy
 
 ;;	memset(0xD000,0x00,0x15D3);
-CLINEA 0000H 0001H 0124H 0002H 001CH
+CLINEA 0000H 0001H 013BH 0002H 001CH
 	mov	r0,	#0d3h
 	mov	r1,	#015h
 	push	er0
@@ -1843,7 +1986,7 @@ CLINEA 0000H 0001H 0124H 0002H 001CH
 	add	sp,	#4 
 
 ;;	memset(0xf800,0x00,0x800);
-CLINEA 0000H 0001H 0125H 0002H 001BH
+CLINEA 0000H 0001H 013CH 0002H 001BH
 	mov	r0,	#00h
 	mov	r1,	#08h
 	push	er0
@@ -1855,7 +1998,7 @@ CLINEA 0000H 0001H 0125H 0002H 001BH
 	add	sp,	#4 
 
 ;;	drawbitmap(board1,0x08,0x8,0x3F);
-CLINEA 0000H 0001H 012BH 0002H 0022H
+CLINEA 0000H 0001H 0142H 0002H 0022H
 	mov	r0,	#03fh
 	push	r0
 	mov	er0,	#8 
@@ -1868,106 +2011,106 @@ CLINEA 0000H 0001H 012BH 0002H 0022H
 	add	sp,	#4 
 
 ;;	drawstage(board);
-CLINEA 0000H 0001H 012CH 0002H 0012H
+CLINEA 0000H 0001H 0143H 0002H 0012H
 	mov	er0,	fp
 	add	er0,	#-36
 	bl	_drawstage
 
 ;;	flipcell();
-CLINEA 0000H 0001H 012DH 0002H 000CH
+CLINEA 0000H 0001H 0144H 0002H 000CH
 	bl	_flipcell
 
 ;;	while (!gameEnd) {
-CLINEA 0000H 0000H 012EH 0002H 0013H
-_$L150 :
-CBLOCK 127 3 302
+CLINEA 0000H 0000H 0145H 0002H 0013H
+_$L178 :
+CBLOCK 129 3 325
 CLOCAL 42H 0001H 0026H 0003H "pressedbutton" 02H 00H 00H
 
 ;;		byte pressedbutton = CheckButtons();
-CLINEA 0000H 0001H 0130H 0003H 0026H
+CLINEA 0000H 0001H 0147H 0003H 0026H
 	bl	_CheckButtons
 	st	r0,	-38[fp]
 
 ;;		if (pressedbutton != 0xFF){
-CLINEA 0000H 0001H 0131H 0003H 001DH
+CLINEA 0000H 0001H 0148H 0003H 001DH
 	cmp	r0,	#0ffh
-	beq	_$L154
-CBLOCK 127 4 305
+	beq	_$L182
+CBLOCK 129 4 328
 
 ;;			deref(0xD170) = pressedbutton;
-CLINEA 0000H 0001H 0132H 0004H 0021H
+CLINEA 0000H 0001H 0149H 0004H 0021H
 	st	r0,	00h:0d170h
-CBLOCKEND 127 4 307
+CBLOCKEND 129 4 330
 
 ;;		}
-CLINEA 0000H 0000H 0133H 0003H 0003H
-_$L154 :
+CLINEA 0000H 0000H 014AH 0003H 0003H
+_$L182 :
 
 ;;		switch (pressedbutton) {
-CLINEA 0000H 0001H 0134H 0003H 001AH
-CBLOCK 127 5 308
+CLINEA 0000H 0001H 014BH 0003H 001AH
+CBLOCK 129 5 331
 	cmp	r0,	#0fh
-	bne	_$M19
-	b	_$L166
-_$M19 :
+	bne	_$M21
+	b	_$L194
+_$M21 :
 
 ;;		switch (pressedbutton) {
-CLINEA 0000H 0000H 0134H 0003H 001AH
+CLINEA 0000H 0000H 014BH 0003H 001AH
 	cmp	r0,	#020h
-	beq	_$L162
+	beq	_$L190
 
 ;;		switch (pressedbutton) {
-CLINEA 0000H 0000H 0134H 0003H 001AH
+CLINEA 0000H 0000H 014BH 0003H 001AH
 	cmp	r0,	#021h
-	bne	_$M20
-	b	_$L165
-_$M20 :
+	bne	_$M22
+	b	_$L193
+_$M22 :
 
 ;;		switch (pressedbutton) {
-CLINEA 0000H 0000H 0134H 0003H 001AH
+CLINEA 0000H 0000H 014BH 0003H 001AH
 	cmp	r0,	#028h
-	beq	_$L164
+	beq	_$L192
 
 ;;		switch (pressedbutton) {
-CLINEA 0000H 0000H 0134H 0003H 001AH
+CLINEA 0000H 0000H 014BH 0003H 001AH
 	cmp	r0,	#029h
-	beq	_$L163
+	beq	_$L191
 
 ;;		switch (pressedbutton) {
-CLINEA 0000H 0000H 0134H 0003H 001AH
+CLINEA 0000H 0000H 014BH 0003H 001AH
 	cmp	r0,	#0ffh
-	beq	_$L161
+	beq	_$L189
 
 ;;		}
-CLINEA 0000H 0000H 017AH 0003H 0003H
-_$L159 :
-CBLOCKEND 127 3 381
+CLINEA 0000H 0000H 0191H 0003H 0003H
+_$L187 :
+CBLOCKEND 129 3 404
 
 ;;	while (!gameEnd) {
-CLINEA 0000H 0000H 012EH 0022H 002EH
-	bal	_$L150
-CBLOCKEND 127 2 382
+CLINEA 0000H 0000H 0145H 0022H 002EH
+	bal	_$L178
+CBLOCKEND 129 2 405
 
 ;;			case 0xFF:
-CLINEA 0000H 0001H 0135H 0004H 000DH
-_$L161 :
+CLINEA 0000H 0001H 014CH 0004H 000DH
+_$L189 :
 
 ;;				delay(100);
-CLINEA 0000H 0001H 0136H 0005H 000FH
+CLINEA 0000H 0001H 014DH 0005H 000FH
 	mov	r0,	#064h
 	mov	r1,	#00h
 	bl	_delay
 
 ;;				break;
-CLINEA 0000H 0001H 0137H 0005H 000AH
-	bal	_$L159
+CLINEA 0000H 0001H 014EH 0005H 000AH
+	bal	_$L187
 
 ;;			case SP_RIGHT:
-CLINEA 0000H 0001H 0138H 0004H 0011H
-_$L162 :
+CLINEA 0000H 0001H 014FH 0004H 0011H
+_$L190 :
 
 ;;				drawbitmap(board1,0x08,0x8,0x3F);
-CLINEA 0000H 0001H 0139H 0005H 0025H
+CLINEA 0000H 0001H 0150H 0005H 0025H
 	mov	r0,	#03fh
 	push	r0
 	mov	er0,	#8 
@@ -1980,30 +2123,30 @@ CLINEA 0000H 0001H 0139H 0005H 0025H
 	add	sp,	#4 
 
 ;;				posx++;
-CLINEA 0000H 0000H 013AH 0005H 000BH
+CLINEA 0000H 0000H 0151H 0005H 000BH
 	lea	OFFSET _posx
 	inc	seg _posx:[ea]
 
 ;;				drawstage(board);
-CLINEA 0000H 0001H 013BH 0005H 0015H
+CLINEA 0000H 0001H 0152H 0005H 0015H
 	mov	er0,	fp
 	add	er0,	#-36
 	bl	_drawstage
 
 ;;				flipcell();
-CLINEA 0000H 0001H 013CH 0005H 000FH
+CLINEA 0000H 0001H 0153H 0005H 000FH
 	bl	_flipcell
 
 ;;				break;
-CLINEA 0000H 0001H 013DH 0005H 000AH
-	bal	_$L159
+CLINEA 0000H 0001H 0154H 0005H 000AH
+	bal	_$L187
 
 ;;			case SP_LEFT:
-CLINEA 0000H 0001H 013EH 0004H 0010H
-_$L163 :
+CLINEA 0000H 0001H 0155H 0004H 0010H
+_$L191 :
 
 ;;				drawbitmap(board1,0x08,0x8,0x3F);
-CLINEA 0000H 0001H 013FH 0005H 0025H
+CLINEA 0000H 0001H 0156H 0005H 0025H
 	mov	r0,	#03fh
 	push	r0
 	mov	er0,	#8 
@@ -2016,30 +2159,30 @@ CLINEA 0000H 0001H 013FH 0005H 0025H
 	add	sp,	#4 
 
 ;;				posx--;
-CLINEA 0000H 0000H 0140H 0005H 000BH
+CLINEA 0000H 0000H 0157H 0005H 000BH
 	lea	OFFSET _posx
 	dec	seg _posx:[ea]
 
 ;;				drawstage(board);
-CLINEA 0000H 0001H 0141H 0005H 0015H
+CLINEA 0000H 0001H 0158H 0005H 0015H
 	mov	er0,	fp
 	add	er0,	#-36
 	bl	_drawstage
 
 ;;				flipcell();
-CLINEA 0000H 0001H 0142H 0005H 000FH
+CLINEA 0000H 0001H 0159H 0005H 000FH
 	bl	_flipcell
 
 ;;				break;
-CLINEA 0000H 0001H 0143H 0005H 000AH
-	bal	_$L159
+CLINEA 0000H 0001H 015AH 0005H 000AH
+	bal	_$L187
 
 ;;			case SP_UP:
-CLINEA 0000H 0001H 0144H 0004H 000EH
-_$L164 :
+CLINEA 0000H 0001H 015BH 0004H 000EH
+_$L192 :
 
 ;;				drawbitmap(board1,0x08,0x8,0x3F);
-CLINEA 0000H 0001H 0145H 0005H 0025H
+CLINEA 0000H 0001H 015CH 0005H 0025H
 	mov	r0,	#03fh
 	push	r0
 	mov	er0,	#8 
@@ -2052,30 +2195,30 @@ CLINEA 0000H 0001H 0145H 0005H 0025H
 	add	sp,	#4 
 
 ;;				posy--;
-CLINEA 0000H 0000H 0146H 0005H 000BH
+CLINEA 0000H 0000H 015DH 0005H 000BH
 	lea	OFFSET _posy
 	dec	seg _posy:[ea]
 
 ;;				drawstage(board);
-CLINEA 0000H 0001H 0147H 0005H 0015H
+CLINEA 0000H 0001H 015EH 0005H 0015H
 	mov	er0,	fp
 	add	er0,	#-36
 	bl	_drawstage
 
 ;;				flipcell();
-CLINEA 0000H 0001H 0148H 0005H 000FH
+CLINEA 0000H 0001H 015FH 0005H 000FH
 	bl	_flipcell
 
 ;;				break;
-CLINEA 0000H 0001H 0149H 0005H 000AH
-	b	_$L159
+CLINEA 0000H 0001H 0160H 0005H 000AH
+	b	_$L187
 
 ;;			case SP_DOWN:
-CLINEA 0000H 0001H 014AH 0004H 0010H
-_$L165 :
+CLINEA 0000H 0001H 0161H 0004H 0010H
+_$L193 :
 
 ;;				drawbitmap(board1,0x08,0x8,0x3F);
-CLINEA 0000H 0001H 014BH 0005H 0025H
+CLINEA 0000H 0001H 0162H 0005H 0025H
 	mov	r0,	#03fh
 	push	r0
 	mov	er0,	#8 
@@ -2088,136 +2231,133 @@ CLINEA 0000H 0001H 014BH 0005H 0025H
 	add	sp,	#4 
 
 ;;				posy++;
-CLINEA 0000H 0000H 014CH 0005H 000BH
+CLINEA 0000H 0000H 0163H 0005H 000BH
 	lea	OFFSET _posy
 	inc	seg _posy:[ea]
 
 ;;				drawstage(board);
-CLINEA 0000H 0001H 014DH 0005H 0015H
+CLINEA 0000H 0001H 0164H 0005H 0015H
 	mov	er0,	fp
 	add	er0,	#-36
 	bl	_drawstage
 
 ;;				flipcell();
-CLINEA 0000H 0001H 014EH 0005H 000FH
+CLINEA 0000H 0001H 0165H 0005H 000FH
 	bl	_flipcell
 
 ;;				break;
-CLINEA 0000H 0001H 014FH 0005H 000AH
-	b	_$L159
+CLINEA 0000H 0001H 0166H 0005H 000AH
+	b	_$L187
 
 ;;			case SP_EQU:
-CLINEA 0000H 0001H 0151H 0004H 000FH
-_$L166 :
+CLINEA 0000H 0001H 0168H 0004H 000FH
+_$L194 :
 
-;;				if (board[posy-1][posx-1] != 0x00) {
-CLINEA 0000H 0001H 0152H 0005H 0028H
-	l	r12,	FAR _posy
-	mov	r13,	#00h
-	mov	er0,	bp
-	add	bp,	bp
-	add	bp,	er0
-	add	bp,	fp
+;;				if (get_tile(posx,posy) != 0x00) {
+CLINEA 0000H 0001H 0169H 0005H 0026H
+	l	r1,	FAR _posy
 	l	r0,	FAR _posx
-	mov	r1,	#00h
-	add	bp,	er0
-	l	r0,	-40[bp]
-	beq	_$L167
-CBLOCK 127 6 338
+	bl	_get_tile
+	cmp	r0,	#00h
+	beq	_$L195
+CBLOCK 129 6 361
 
 ;;					deref(0xD180) = 0x40;
-CLINEA 0000H 0001H 0154H 0006H 001AH
+CLINEA 0000H 0001H 016BH 0006H 001AH
 	mov	r0,	#040h
 	st	r0,	00h:0d180h
 
 ;;					drawstage(board);
-CLINEA 0000H 0001H 0156H 0006H 0016H
+CLINEA 0000H 0001H 016DH 0006H 0016H
 	mov	er0,	fp
 	add	er0,	#-36
 	bl	_drawstage
-CBLOCKEND 127 6 344
-	bal	_$L169
-_$L167 :
+CBLOCKEND 129 6 367
+	bal	_$L197
+_$L195 :
 
 ;;				} else {
-CLINEA 0000H 0000H 0158H 0005H 000CH
-CBLOCK 127 7 344
+CLINEA 0000H 0000H 016FH 0005H 000CH
+CBLOCK 129 7 367
 
-;;					board[posy-1][posx-1] = player;
-CLINEA 0000H 0001H 015AH 0006H 0024H
-	l	r12,	FAR _posy
-	mov	r13,	#00h
-	mov	er0,	bp
-	add	bp,	bp
-	add	bp,	er0
-	add	bp,	fp
+;;					deref(0xD185) = posx;
+CLINEA 0000H 0001H 0170H 0006H 001AH
 	l	r0,	FAR _posx
-	mov	r1,	#00h
-	add	bp,	er0
-	l	r0,	-37[fp]
-	st	r0,	-40[bp]
+	st	r0,	00h:0d185h
+
+;;					deref(0xD186) = posy;
+CLINEA 0000H 0001H 0171H 0006H 001AH
+	l	r0,	FAR _posy
+	st	r0,	00h:0d186h
+
+;;					set_tile(posx, posy, player);
+CLINEA 0000H 0001H 0172H 0006H 0022H
+	l	r2,	-37[fp]
+	l	r1,	FAR _posy
+	l	r0,	FAR _posx
+	bl	_set_tile
 
 ;;					deref(0xD270) = player;
-CLINEA 0000H 0001H 015DH 0006H 001CH
+CLINEA 0000H 0001H 0174H 0006H 001CH
 	l	r0,	-37[fp]
 	st	r0,	00h:0d270h
 
 ;;					drawstage(board);
-CLINEA 0000H 0001H 015EH 0006H 0016H
+CLINEA 0000H 0001H 0175H 0006H 0016H
 	mov	er0,	fp
 	add	er0,	#-36
 	bl	_drawstage
 
 ;;					flipcell();
-CLINEA 0000H 0001H 015FH 0006H 0010H
+CLINEA 0000H 0001H 0176H 0006H 0010H
 	bl	_flipcell
 
 ;;					player = ( player == 0x01 ) ? 0x02 : 0x01;
-CLINEA 0000H 0000H 016EH 0006H 002FH
+CLINEA 0000H 0000H 0185H 0006H 002FH
 	l	r0,	-37[fp]
 	cmp	r0,	#01h
-	bne	_$L170
+	bne	_$L198
 	mov	er0,	#2 
-	bal	_$L172
-_$L170 :
+	bal	_$L200
+_$L198 :
 	mov	er0,	#1 
-_$L172 :
+_$L200 :
 	st	r0,	-37[fp]
-CBLOCKEND 127 7 374
+CBLOCKEND 129 7 397
 
 ;;				}
-CLINEA 0000H 0000H 0176H 0005H 0005H
-_$L169 :
+CLINEA 0000H 0000H 018DH 0005H 0005H
+_$L197 :
 
 ;;				delay(100);
-CLINEA 0000H 0001H 0177H 0005H 000FH
+CLINEA 0000H 0001H 018EH 0005H 000FH
 	mov	r0,	#064h
 	mov	r1,	#00h
 	bl	_delay
 
 ;;				break;
-CLINEA 0000H 0001H 0178H 0005H 000AH
-	b	_$L159
-CBLOCKEND 127 5 378
-CBLOCKEND 127 1 382
-CFUNCTIONEND 127
+CLINEA 0000H 0001H 018FH 0005H 000AH
+	b	_$L187
+CBLOCKEND 129 5 401
+CBLOCKEND 129 1 405
+CFUNCTIONEND 129
 
 
 	rseg $$flipcell$main
-CFUNCTION 130
+CFUNCTION 132
 
 _flipcell	:
-CBLOCK 130 1 385
+CBLOCK 132 1 408
 
 ;;void flipcell(){
-CLINEA 0000H 0001H 0181H 0001H 0010H
+CLINEA 0000H 0001H 0198H 0001H 0010H
 	push	lr
 	push	xr4
-CBLOCK 130 2 385
+CBLOCK 132 2 408
 CRET 0004H
 
 ;;	render_rect(45 + posx * 20, 1 + (posy - 1) * 21, 66 + posx*20, 20 + (posy-1) * 21, 1, 1);
-CLINEA 0000H 0001H 0182H 0002H 005AH
+CLINEA 0000H 0001H 0199H 0002H 005AH
 	mov	r0,	#01h
 	push	r0
 	push	r0
@@ -2243,146 +2383,144 @@ CLINEA 0000H 0001H 0182H 0002H 005AH
 	mov	er0,	er6
 	bl	_render_rect
 	add	sp,	#8 
-CBLOCKEND 130 2 387
+CBLOCKEND 132 2 410
 
 ;;}
-CLINEA 0000H 0001H 0183H 0001H 0001H
+CLINEA 0000H 0001H 019AH 0001H 0001H
 	pop	xr4
 	pop	pc
-CBLOCKEND 130 1 387
-CFUNCTIONEND 130
+CBLOCKEND 132 1 410
+CFUNCTIONEND 132
 
 
 	rseg $$drawstage$main
-CFUNCTION 131
+CFUNCTION 133
 
 _drawstage	:
-CBLOCK 131 1 390
+CBLOCK 133 1 413
 
 ;;void drawstage(char board[3][3]){
-CLINEA 0000H 0001H 0186H 0001H 0021H
+CLINEA 0000H 0001H 019DH 0001H 0021H
 	push	lr
 	bl	__regpushu8lw
 	add	sp,	#-04
-	mov	er8,	er0
-	mov	r10,	r2
-CBLOCK 131 2 390
+CBLOCK 133 2 413
 CRET 0010H
-CARGUMENT 67H 0003H 1E28H "board" 07H 03H 00H 01H 03H 00H 00H 00H
+CARGUMENT 67H 0003H 000AH "board" 07H 03H 00H 01H 03H 00H 00H 00H
 CLOCAL 43H 0002H 0002H 0002H "i" 02H 00H 01H
 CLOCAL 43H 0002H 0004H 0002H "j" 02H 00H 01H
 
 ;;	if (posx > 3) {
-CLINEA 0000H 0001H 0188H 0002H 0010H
+CLINEA 0000H 0001H 019FH 0002H 0010H
 	l	r0,	FAR _posx
 	cmp	r0,	#03h
-	ble	_$L175
-CBLOCK 131 3 392
+	ble	_$L203
+CBLOCK 133 3 415
 
 ;;		posx = 1;
-CLINEA 0000H 0001H 0189H 0003H 000BH
+CLINEA 0000H 0001H 01A0H 0003H 000BH
 	mov	r0,	#01h
 	st	r0,	FAR _posx
-CBLOCKEND 131 3 394
-	bal	_$L178
-_$L175 :
+CBLOCKEND 133 3 417
+	bal	_$L206
+_$L203 :
 
 ;;	} else if (posx < 1) {
-CLINEA 0000H 0000H 018AH 0002H 0017H
+CLINEA 0000H 0000H 01A1H 0002H 0017H
 	cmp	r0,	#01h
-	bge	_$L178
-CBLOCK 131 4 394
+	bge	_$L206
+CBLOCK 133 4 417
 
 ;;		posx = 3;
-CLINEA 0000H 0001H 018BH 0003H 000BH
+CLINEA 0000H 0001H 01A2H 0003H 000BH
 	mov	r0,	#03h
 	st	r0,	FAR _posx
-CBLOCKEND 131 4 396
+CBLOCKEND 133 4 419
 
 ;;	}
-CLINEA 0000H 0000H 018CH 0002H 0002H
-_$L178 :
+CLINEA 0000H 0000H 01A3H 0002H 0002H
+_$L206 :
 
 ;;	if (posy > 3) {
-CLINEA 0000H 0001H 018DH 0002H 0010H
+CLINEA 0000H 0001H 01A4H 0002H 0010H
 	l	r0,	FAR _posy
 	cmp	r0,	#03h
-	ble	_$L180
-CBLOCK 131 5 397
+	ble	_$L208
+CBLOCK 133 5 420
 
 ;;		posy = 1;
-CLINEA 0000H 0001H 018EH 0003H 000BH
+CLINEA 0000H 0001H 01A5H 0003H 000BH
 	mov	r0,	#01h
 	st	r0,	FAR _posy
-CBLOCKEND 131 5 399
-	bal	_$L183
-_$L180 :
+CBLOCKEND 133 5 422
+	bal	_$L211
+_$L208 :
 
 ;;	} else if (posy < 1) {
-CLINEA 0000H 0000H 018FH 0002H 0017H
+CLINEA 0000H 0000H 01A6H 0002H 0017H
 	cmp	r0,	#01h
-	bge	_$L183
-CBLOCK 131 6 399
+	bge	_$L211
+CBLOCK 133 6 422
 
 ;;		posy = 3;
-CLINEA 0000H 0001H 0190H 0003H 000BH
+CLINEA 0000H 0001H 01A7H 0003H 000BH
 	mov	r0,	#03h
 	st	r0,	FAR _posy
-CBLOCKEND 131 6 401
+CBLOCKEND 133 6 424
 
 ;;	}
-CLINEA 0000H 0000H 0191H 0002H 0002H
-_$L183 :
+CLINEA 0000H 0000H 01A8H 0002H 0002H
+_$L211 :
 
 ;;    for (i = 0; i < 3; i++) {
-CLINEA 0000H 0001H 0192H 000AH 000FH
+CLINEA 0000H 0001H 01A9H 000AH 000FH
 	mov	er0,	#0 
 	st	er0,	-2[fp]
 
 ;;    for (i = 0; i < 3; i++) {
-CLINEA 0000H 0000H 0192H 0018H 001AH
-_$L187 :
-CBLOCK 131 7 402
+CLINEA 0000H 0000H 01A9H 0018H 001AH
+_$L215 :
+CBLOCK 133 7 425
 
 ;;        for (j = 0; j < 3; j++) {
-CLINEA 0000H 0001H 0193H 000EH 0013H
+CLINEA 0000H 0001H 01AAH 000EH 0013H
 	mov	er0,	#0 
 	st	er0,	-4[fp]
 
 ;;        for (j = 0; j < 3; j++) {
-CLINEA 0000H 0000H 0193H 001CH 001EH
-_$L193 :
-CBLOCK 131 8 403
+CLINEA 0000H 0000H 01AAH 001CH 001EH
+_$L221 :
+CBLOCK 133 8 426
 
-;;        	if (board[i][j] == 0x01) {
-CLINEA 0000H 0000H 0194H 0000H 0000H
-	l	er0,	-2[fp]
-	mov	er2,	er0
-	add	er0,	er0
-	add	er0,	er2
-	mov	er6,	er0
+;;        	if (get_tile(i+1,j+1) == 0x01) {
+CLINEA 0000H 0000H 01ABH 0000H 0000H
+	l	er0,	-4[fp]
+	add	er0,	#1 
+	mov	er4,	er0
 
-;;        	if (board[i][j] == 0x01) {
-CLINEA 0000H 0001H 0194H 000AH 0023H
-	l	er2,	-4[fp]
-	add	er0,	er8
-	add	er0,	er2
-	l	r0,	r10:[er0]
+;;        	if (get_tile(i+1,j+1) == 0x01) {
+CLINEA 0000H 0001H 01ABH 000AH 0029H
+	mov	r1,	r0
+	l	er2,	-2[fp]
+	add	er2,	#1 
+	mov	er6,	er2
+	mov	r0,	r2
+	bl	_get_tile
 	cmp	r0,	#01h
-	bne	_$L197
-CBLOCK 131 9 404
+	bne	_$L225
+CBLOCK 133 9 427
 
-;;        		renderRLE(cross, sizeof(cross), 66 + (j) * 20 + (j), 2 + (i) * 21 );
-CLINEA 0000H 0001H 0195H 000BH 004EH
-	l	er0,	-2[fp]
+;;        		renderRLE(cross, sizeof(cross), 66 + (i) * 20 + (i), 2 + (j) * 21 );
+CLINEA 0000H 0001H 01ACH 000BH 004EH
+	l	er0,	-4[fp]
 	mov	er2,	#21
 	bl	__imulu8lw
 	add	er0,	#2 
 	push	er0
-	l	er0,	-4[fp]
+	l	er0,	-2[fp]
 	mov	er2,	#20
 	bl	__imulu8lw
-	l	er2,	-4[fp]
+	l	er2,	-2[fp]
 	add	er0,	er2
 	add	r0,	#042h
 	addc	r1,	#00h
@@ -2395,31 +2533,30 @@ CLINEA 0000H 0001H 0195H 000BH 004EH
 	mov	r2,	#SEG _cross
 	bl	_renderRLE
 	add	sp,	#6 
-CBLOCKEND 131 9 406
-	bal	_$L200
-_$L197 :
+CBLOCKEND 133 9 429
+	bal	_$L228
+_$L225 :
 
-;;        	} else if (board[i][j] == 0x02) {
-CLINEA 0000H 0000H 0196H 000AH 002AH
-	mov	er0,	er6
-	add	er0,	er8
-	add	er0,	er2
-	l	r0,	r10:[er0]
+;;        	} else if (get_tile(i+1,j+1) == 0x02) {
+CLINEA 0000H 0000H 01ADH 000AH 0030H
+	mov	r1,	r4
+	mov	r0,	r6
+	bl	_get_tile
 	cmp	r0,	#02h
-	bne	_$L200
-CBLOCK 131 10 406
+	bne	_$L228
+CBLOCK 133 10 429
 
-;;        		renderRLE(circle, sizeof(circle), 66 + (j) * 20 + (j), 2 + (i) * 21 );
-CLINEA 0000H 0001H 0197H 000BH 0050H
-	l	er0,	-2[fp]
+;;        		renderRLE(circle, sizeof(circle), 66 + (i) * 20 + (i), 2 + (j) * 21 );
+CLINEA 0000H 0001H 01AEH 000BH 0050H
+	l	er0,	-4[fp]
 	mov	er2,	#21
 	bl	__imulu8lw
 	add	er0,	#2 
 	push	er0
-	l	er0,	-4[fp]
+	l	er0,	-2[fp]
 	mov	er2,	#20
 	bl	__imulu8lw
-	l	er2,	-4[fp]
+	l	er2,	-2[fp]
 	add	er0,	er2
 	add	r0,	#042h
 	addc	r1,	#00h
@@ -2432,291 +2569,281 @@ CLINEA 0000H 0001H 0197H 000BH 0050H
 	mov	r2,	#SEG _circle
 	bl	_renderRLE
 	add	sp,	#6 
-CBLOCKEND 131 10 408
+CBLOCKEND 133 10 431
 
 ;;        	}
-CLINEA 0000H 0000H 0198H 000AH 000AH
-_$L200 :
-CBLOCKEND 131 8 409
+CLINEA 0000H 0000H 01AFH 000AH 000AH
+_$L228 :
+CBLOCKEND 133 8 432
 
 ;;        for (j = 0; j < 3; j++) {
-CLINEA 0000H 0000H 0193H 001CH 001EH
-	l	er0,	-4[fp]
-	add	er0,	#1 
-	st	er0,	-4[fp]
+CLINEA 0000H 0000H 01AAH 001CH 001EH
+	st	er4,	-4[fp]
 
 ;;        for (j = 0; j < 3; j++) {
-CLINEA 0000H 0000H 0193H 0015H 001AH
-	cmp	r0,	#03h
-	cmpc	r1,	#00h
-	bges	_$M23
-	b	_$L193
-_$M23 :
-CBLOCKEND 131 7 410
+CLINEA 0000H 0000H 01AAH 0015H 001AH
+	cmp	r4,	#03h
+	cmpc	r5,	#00h
+	bges	_$M25
+	b	_$L221
+_$M25 :
+CBLOCKEND 133 7 433
 
 ;;    for (i = 0; i < 3; i++) {
-CLINEA 0000H 0000H 0192H 0018H 001AH
-	l	er0,	-2[fp]
-	add	er0,	#1 
-	st	er0,	-2[fp]
+CLINEA 0000H 0000H 01A9H 0018H 001AH
+	st	er6,	-2[fp]
 
 ;;    for (i = 0; i < 3; i++) {
-CLINEA 0000H 0000H 0192H 0015H 001AH
-	cmp	r0,	#03h
-	cmpc	r1,	#00h
-	bges	_$M24
-	b	_$L187
-_$M24 :
-
-;;    debugRender(board);
-CLINEA 0000H 0001H 019BH 0005H 0017H
-	mov	er0,	er8
-	mov	r2,	r10
-	bl	_debugRender
+CLINEA 0000H 0000H 01A9H 0015H 001AH
+	cmp	r6,	#03h
+	cmpc	r7,	#00h
+	bges	_$M26
+	b	_$L215
+_$M26 :
 
 ;;	delay(400);
-CLINEA 0000H 0001H 019CH 0002H 000CH
+CLINEA 0000H 0001H 01B2H 0002H 000CH
 	mov	r0,	#090h
 	mov	r1,	#01h
 	bl	_delay
-CBLOCKEND 131 2 414
+CBLOCKEND 133 2 436
 
 ;;}
-CLINEA 0000H 0001H 019EH 0001H 0001H
+CLINEA 0000H 0001H 01B4H 0001H 0001H
 	b	__regpopu8lw
-CBLOCKEND 131 1 414
-CFUNCTIONEND 131
+CBLOCKEND 133 1 436
+CFUNCTIONEND 133
 
 
 	rseg $$checkWin$main
-CFUNCTION 133
+CFUNCTION 134
 
 _checkWin	:
-CBLOCK 133 1 417
+CBLOCK 134 1 439
 
 ;;{
-CLINEA 0000H 0001H 01A1H 0001H 0001H
+CLINEA 0000H 0001H 01B7H 0001H 0001H
 	push	lr
 	bl	__regpushu8lw
 	add	sp,	#-02
 	mov	r11,	r3
 	mov	er8,	er0
 	mov	r10,	r2
-CBLOCK 133 2 417
+CBLOCK 134 2 439
 CRET 000EH
 CARGUMENT 67H 0003H 1E28H "board" 07H 03H 00H 01H 03H 00H 00H 00H
 CARGUMENT 46H 0001H 001FH "player" 02H 00H 00H
 CLOCAL 43H 0002H 0002H 0002H "i" 02H 00H 01H
 
 ;;    deref(0xD270) = player;
-CLINEA 0000H 0001H 01A4H 0005H 001BH
+CLINEA 0000H 0001H 01BAH 0005H 001BH
 	st	r3,	00h:0d270h
 
 ;;	for (i = 0; i < 3; i++) {
-CLINEA 0000H 0001H 01A5H 0002H 001AH
+CLINEA 0000H 0001H 01BBH 0002H 001AH
 	mov	er0,	#0 
 	st	er0,	-2[fp]
-_$L205 :
-CBLOCK 133 3 421
+_$L233 :
+CBLOCK 134 3 443
 
 ;;            && board[i][2] == player) {
-CLINEA 0000H 0000H 01A7H 0000H 0000H
+CLINEA 0000H 0000H 01BDH 0000H 0000H
 	mov	er2,	er0
 	add	er0,	er0
 	add	er0,	er2
 	mov	er4,	er0
 
 ;;            && board[i][2] == player) {
-CLINEA 0000H 0001H 01A7H 000DH 0027H
+CLINEA 0000H 0001H 01BDH 000DH 0027H
 	add	er0,	er8
 	l	r0,	r10:[er0]
 	extbw	er0
 	mov	r2,	r11
 	mov	r3,	#00h
 	cmp	er0,	er2
-	bne	_$L209
+	bne	_$L237
 	mov	bp,	er4
 	add	bp,	er8
 	l	r0,	r10:1[bp]
 	extbw	er0
 	cmp	er2,	er0
-	bne	_$L209
+	bne	_$L237
 	mov	bp,	er4
 	add	bp,	er8
 	l	r0,	r10:2[bp]
 	extbw	er0
 	cmp	er2,	er0
-	bne	_$L209
-CBLOCK 133 4 423
+	bne	_$L237
+CBLOCK 134 4 445
 
 ;;        	deref(0xD181) = 0x01;
-CLINEA 0000H 0001H 01A8H 000AH 001EH
+CLINEA 0000H 0001H 01BEH 000AH 001EH
 	mov	r0,	#01h
 	st	r0,	00h:0d181h
 
 ;;            return 1;
-CLINEA 0000H 0001H 01A9H 000DH 0015H
-CBLOCKEND 133 4 426
-CBLOCKEND 133 2 444
+CLINEA 0000H 0001H 01BFH 000DH 0015H
+CBLOCKEND 134 4 448
+CBLOCKEND 134 2 466
 
 ;;}
-CLINEA 0000H 0001H 01BCH 0001H 0001H
-_$L202 :
+CLINEA 0000H 0001H 01D2H 0001H 0001H
+_$L230 :
 	b	__regpopu8lw
 
 ;;        }
-CLINEA 0000H 0000H 01AAH 0009H 0009H
-_$L209 :
+CLINEA 0000H 0000H 01C0H 0009H 0009H
+_$L237 :
 
 ;;            && board[2][i] == player) {
-CLINEA 0000H 0001H 01ACH 000DH 0027H
+CLINEA 0000H 0001H 01C2H 000DH 0027H
 	l	er0,	-2[fp]
 	add	er0,	er8
 	l	r0,	r10:[er0]
 	extbw	er0
 	mov	r3,	#00h
 	cmp	er2,	er0
-	bne	_$L219
+	bne	_$L247
 	l	bp,	-2[fp]
 	add	bp,	er8
 	l	r0,	r10:3[bp]
 	extbw	er0
 	cmp	er2,	er0
-	bne	_$L219
+	bne	_$L247
 	l	bp,	-2[fp]
 	add	bp,	er8
 	l	r0,	r10:6[bp]
 	extbw	er0
 	cmp	er2,	er0
-	bne	_$L219
-CBLOCK 133 5 428
+	bne	_$L247
+CBLOCK 134 5 450
 
 ;;        	deref(0xD181) = 0x02;
-CLINEA 0000H 0001H 01ADH 000AH 001EH
+CLINEA 0000H 0001H 01C3H 000AH 001EH
 	mov	r0,	#02h
 	st	r0,	00h:0d181h
 
 ;;            return 1;
-CLINEA 0000H 0001H 01AEH 000DH 0015H
+CLINEA 0000H 0001H 01C4H 000DH 0015H
 	mov	r0,	#01h
-	bal	_$L202
-CBLOCKEND 133 5 431
+	bal	_$L230
+CBLOCKEND 134 5 453
 
 ;;        }
-CLINEA 0000H 0000H 01AFH 0009H 0009H
-_$L219 :
-CBLOCKEND 133 3 432
+CLINEA 0000H 0000H 01C5H 0009H 0009H
+_$L247 :
+CBLOCKEND 134 3 454
 
 ;;	for (i = 0; i < 3; i++) {
-CLINEA 0000H 0000H 01A5H 0002H 001AH
+CLINEA 0000H 0000H 01BBH 0002H 001AH
 	l	er0,	-2[fp]
 	add	er0,	#1 
 	st	er0,	-2[fp]
 
 ;;	for (i = 0; i < 3; i++) {
-CLINEA 0000H 0000H 01A5H 0015H 001AH
+CLINEA 0000H 0000H 01BBH 0015H 001AH
 	cmp	r0,	#03h
 	cmpc	r1,	#00h
-	blts	_$L205
+	blts	_$L233
 
 ;;        && board[2][2] == player) {
-CLINEA 0000H 0001H 01B2H 0009H 0023H
+CLINEA 0000H 0001H 01C8H 0009H 0023H
 	l	r0,	r10:[er8]
 	extbw	er0
 	mov	r2,	r11
 	mov	r3,	#00h
 	cmp	er2,	er0
-	bne	_$L229
+	bne	_$L257
 	l	r0,	r10:04h[er8]
 	extbw	er0
 	cmp	er2,	er0
-	bne	_$L229
+	bne	_$L257
 	l	r0,	r10:08h[er8]
 	extbw	er0
 	cmp	er2,	er0
-	bne	_$L229
-CBLOCK 133 6 434
+	bne	_$L257
+CBLOCK 134 6 456
 
 ;;    	deref(0xD181) = 0x03;
-CLINEA 0000H 0001H 01B3H 0006H 001AH
+CLINEA 0000H 0001H 01C9H 0006H 001AH
 	mov	r0,	#03h
 	st	r0,	00h:0d181h
 
 ;;        return 1;
-CLINEA 0000H 0001H 01B4H 0009H 0011H
+CLINEA 0000H 0001H 01CAH 0009H 0011H
 	mov	r0,	#01h
-	bal	_$L202
-CBLOCKEND 133 6 437
+	bal	_$L230
+CBLOCKEND 134 6 459
 
 ;;    }
-CLINEA 0000H 0000H 01B5H 0005H 0005H
-_$L229 :
+CLINEA 0000H 0000H 01CBH 0005H 0005H
+_$L257 :
 
 ;;        && board[2][0] == player) {
-CLINEA 0000H 0001H 01B7H 0009H 0023H
+CLINEA 0000H 0001H 01CDH 0009H 0023H
 	l	r0,	r10:02h[er8]
 	extbw	er0
 	mov	r3,	#00h
 	cmp	er2,	er0
-	bne	_$L239
+	bne	_$L267
 	l	r0,	r10:04h[er8]
 	extbw	er0
 	cmp	er2,	er0
-	bne	_$L239
+	bne	_$L267
 	l	r0,	r10:06h[er8]
 	extbw	er0
 	cmp	er2,	er0
-	bne	_$L239
-CBLOCK 133 7 439
+	bne	_$L267
+CBLOCK 134 7 461
 
 ;;    	deref(0xD181) = 0x04;
-CLINEA 0000H 0001H 01B8H 0006H 001AH
+CLINEA 0000H 0001H 01CEH 0006H 001AH
 	mov	r0,	#04h
 	st	r0,	00h:0d181h
 
 ;;        return 1;
-CLINEA 0000H 0001H 01B9H 0009H 0011H
+CLINEA 0000H 0001H 01CFH 0009H 0011H
 	mov	r0,	#01h
-	b	_$L202
-CBLOCKEND 133 7 442
+	b	_$L230
+CBLOCKEND 134 7 464
 
 ;;    }
-CLINEA 0000H 0000H 01BAH 0005H 0005H
-_$L239 :
+CLINEA 0000H 0000H 01D0H 0005H 0005H
+_$L267 :
 
 ;;    return 0;
-CLINEA 0000H 0001H 01BBH 0005H 000DH
+CLINEA 0000H 0001H 01D1H 0005H 000DH
 	mov	r0,	#00h
-	b	_$L202
-CBLOCKEND 133 1 444
-CFUNCTIONEND 133
+	b	_$L230
+CBLOCKEND 134 1 466
+CFUNCTIONEND 134
 
 
 	rseg $$debugRender$main
-CFUNCTION 134
+CFUNCTION 135
 
 _debugRender	:
-CBLOCK 134 1 446
+CBLOCK 135 1 468
 
 ;;void debugRender(char board[3][3]) {
-CLINEA 0000H 0001H 01BEH 0001H 0024H
+CLINEA 0000H 0001H 01D4H 0001H 0024H
 	push	lr
 	bl	__regpushu8lw
 	add	sp,	#-02
 	mov	er8,	er0
 	mov	r10,	r2
-CBLOCK 134 2 446
+CBLOCK 135 2 468
 CRET 000EH
 CARGUMENT 67H 0003H 1E28H "board" 07H 03H 00H 01H 03H 00H 00H 00H
 CLOCAL 43H 0002H 0002H 0002H "i" 02H 00H 01H
 CLOCAL 4BH 0002H 0000H 0002H "j" 02H 00H 01H
 
 ;;    for (i = 0; i < 3; i++) {
-CLINEA 0000H 0001H 01C0H 0005H 001DH
+CLINEA 0000H 0001H 01D6H 0005H 001DH
 	mov	er0,	#0 
 	st	er0,	-2[fp]
-_$L252 :
-CBLOCK 134 3 448
+_$L280 :
+CBLOCK 135 3 470
 	mov	er2,	er0
 	add	er0,	er0
 	add	er0,	er2
@@ -2758,23 +2885,23 @@ CBLOCK 134 3 448
 	mov	r3,	#00h
 	l	r2,	r10:2[bp]
 	st	r2,	r3:[er0]
-CBLOCKEND 134 3 452
+CBLOCKEND 135 3 474
 	l	er0,	-2[fp]
 	add	er0,	#1 
 	st	er0,	-2[fp]
 
 ;;    for (i = 0; i < 3; i++) {
-CLINEA 0000H 0000H 01C0H 0015H 001AH
+CLINEA 0000H 0000H 01D6H 0015H 001AH
 	cmp	r0,	#03h
 	cmpc	r1,	#00h
-	blts	_$L252
-CBLOCKEND 134 2 453
+	blts	_$L280
+CBLOCKEND 135 2 475
 
 ;;}
-CLINEA 0000H 0001H 01C5H 0001H 0001H
+CLINEA 0000H 0001H 01DBH 0001H 0001H
 	b	__regpopu8lw
-CBLOCKEND 134 1 453
-CFUNCTIONEND 134
+CBLOCKEND 135 1 475
+CFUNCTIONEND 135
 
 	public _board1
 	public _PrintWord
@@ -2797,6 +2924,8 @@ CFUNCTIONEND 134
 	public _suwa
 	public _invertbitmap
 	public _set_bits
+	public _get_tile
+	public _set_tile
 	public _flipcell
 	public _renderRLE
 	public _render_rect
