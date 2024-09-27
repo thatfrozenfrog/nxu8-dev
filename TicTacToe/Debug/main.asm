@@ -13,9 +13,10 @@
 	$$TABcircle$main segment table 2h any
 	$$TABcross$main segment table 2h any
 	$$TABimage_raw$main segment table 2h any
+	$$TABplayerx$main segment table 2h any
+	$$TABplayery$main segment table 2h any
 	$$TABsuwa$main segment table 2h any
 	$$checkWin$main segment code 2h any
-	$$debugRender$main segment code 2h any
 	$$delay$main segment code 2h any
 	$$drawbitmap$main segment code 2h any
 	$$drawstage$main segment code 2h any
@@ -33,19 +34,18 @@
 CVERSION 3.66.2
 CGLOBAL 01H 03H 0000H "PrintWord" 08H 02H 02H 00H 83H 16H 00H 00H 07H
 CGLOBAL 01H 02H 0000H "CheckButtons" 08H 02H 75H 00H 82H 06H 00H 00H 00H
-CGLOBAL 01H 02H 0000H "checkWin" 08H 02H 86H 00H 83H 0cH 00H 00H 00H
-CGLOBAL 01H 03H 0000H "main" 08H 02H 81H 00H 82H 2aH 00H 00H 07H
-CGLOBAL 01H 03H 0000H "drawstage" 08H 02H 85H 00H 83H 14H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "checkWin" 08H 02H 87H 00H 83H 0aH 00H 00H 01H
+CGLOBAL 01H 03H 0000H "main" 08H 02H 81H 00H 82H 32H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "drawstage" 08H 02H 86H 00H 83H 14H 00H 00H 07H
 CGLOBAL 01H 03H 0000H "invert_line" 08H 02H 7EH 00H 83H 08H 00H 00H 07H
 CGLOBAL 01H 03H 0000H "drawbitmap" 08H 02H 79H 00H 83H 10H 00H 00H 07H
 CGLOBAL 01H 02H 0000H "print" 08H 02H 00H 00H 83H 1aH 00H 00H 08H
-CGLOBAL 01H 03H 0000H "debugRender" 08H 02H 87H 00H 83H 0aH 00H 00H 07H
 CGLOBAL 01H 03H 0000H "delay" 08H 02H 76H 00H 80H 00H 00H 00H 07H
 CGLOBAL 01H 03H 0000H "invertbitmap" 08H 02H 7AH 00H 83H 0eH 00H 00H 07H
 CGLOBAL 01H 03H 0000H "set_bits" 08H 02H 7BH 00H 83H 20H 00H 00H 07H
 CGLOBAL 01H 02H 0000H "get_tile" 08H 02H 7FH 00H 83H 06H 00H 00H 00H
 CGLOBAL 01H 03H 0000H "set_tile" 08H 02H 80H 00H 80H 04H 00H 00H 07H
-CGLOBAL 01H 03H 0000H "flipcell" 08H 02H 84H 00H 81H 10H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "flipcell" 08H 02H 85H 00H 81H 10H 00H 00H 07H
 CGLOBAL 01H 03H 0000H "renderRLE" 08H 02H 7CH 00H 83H 22H 00H 00H 07H
 CGLOBAL 01H 03H 0000H "render_rect" 08H 02H 7DH 00H 83H 16H 00H 00H 07H
 CSTRUCTTAG 0000H 0000H 0001H 000CH 00000024H "_Notag"
@@ -106,16 +106,19 @@ CGLOBAL 00H 62H 0001H "oldx" 02H 00H 00H
 CGLOBAL 00H 62H 0001H "oldy" 02H 00H 00H
 CGLOBAL 01H 62H 0001H "posx" 02H 00H 00H
 CGLOBAL 01H 62H 0001H "posy" 02H 00H 00H
-CGLOBAL 01H 20H 0276H "suwa" 05H 01H 76H 02H 00H 00H
+CGLOBAL 01H 20H 025CH "suwa" 05H 01H 5CH 02H 00H 00H
+CGLOBAL 01H 20H 01DBH "playerx" 05H 01H 0DBH 01H 00H 00H
+CGLOBAL 01H 20H 01DDH "playery" 05H 01H 0DDH 01H 00H 00H
 CFILE 0001H 00000070H "..\\base.h"
-CFILE 0002H 00000052H "..\\suwa.h"
+CFILE 0002H 0000004FH "..\\suwa.h"
 CFILE 0003H 00000038H "..\\printlib.h"
 CFILE 0004H 00000403H "..\\thefont.h"
-CFILE 0005H 00000105H "E:\\Lexide\\BuildTools\\Ver.20231124\\Inc\\U16\\stdio.h"
-CFILE 0006H 0000007AH "E:\\Lexide\\BuildTools\\Ver.20231124\\Inc\\U16\\yvals.h"
-CFILE 0007H 000000C9H "E:\\Lexide\\BuildTools\\Ver.20231124\\Inc\\U16\\string.h"
+CFILE 0005H 00000105H "E:\\LAPIS\\LEXIDE\\BuildTools\\Ver.20231124\\Inc\\U16\\stdio.h"
+CFILE 0006H 0000007AH "E:\\LAPIS\\LEXIDE\\BuildTools\\Ver.20231124\\Inc\\U16\\yvals.h"
+CFILE 0007H 000000C9H "E:\\LAPIS\\LEXIDE\\BuildTools\\Ver.20231124\\Inc\\U16\\string.h"
 CFILE 0008H 00000066H "..\\tictactoe.h"
-CFILE 0000H 000001DEH "..\\main.c"
+CFILE 0009H 0000008AH "..\\screen.h"
+CFILE 0000H 000001E2H "..\\main.c"
 
 	rseg $$print$main
 CFUNCTION 0
@@ -1636,13 +1639,7 @@ CLINEA 0000H 0001H 0106H 0003H 003FH
 	mov	r2,	#00h
 	bl	_set_bits
 	add	sp,	#6 
-
-;;		delay(100);
-CLINEA 0000H 0001H 0107H 0003H 000DH
-	mov	r0,	#064h
-	mov	r1,	#00h
-	bl	_delay
-CBLOCKEND 125 3 264
+CBLOCKEND 125 3 263
 
 ;;	for (i = y1; i <= y2; i++) {
 CLINEA 0000H 0000H 0104H 0002H 001DH
@@ -1665,12 +1662,12 @@ CLINEA 0000H 0000H 0104H 0022H 002EH
 	l	er2,	18[fp]
 	cmp	er0,	er2
 	bles	_$L134
-CBLOCKEND 125 2 266
+CBLOCKEND 125 2 265
 
 ;;}
-CLINEA 0000H 0001H 010AH 0001H 0001H
+CLINEA 0000H 0001H 0109H 0001H 0001H
 	b	__regpopu8lw
-CBLOCKEND 125 1 266
+CBLOCKEND 125 1 265
 CFUNCTIONEND 125
 
 
@@ -1678,15 +1675,15 @@ CFUNCTIONEND 125
 CFUNCTION 126
 
 _invert_line	:
-CBLOCK 126 1 270
+CBLOCK 126 1 269
 
 ;;{
-CLINEA 0000H 0001H 010EH 0001H 0001H
+CLINEA 0000H 0001H 010DH 0001H 0001H
 	push	lr
 	bl	__regpushu8lw
 	add	sp,	#-04
 	mov	er8,	er0
-CBLOCK 126 2 270
+CBLOCK 126 2 269
 CRET 0010H
 CARGUMENT 46H 0002H 0028H "line" 02H 00H 01H
 CLOCAL 42H 0002H 0004H 0002H "i" 02H 00H 08H
@@ -1694,21 +1691,21 @@ CLOCAL 4AH 0002H 0000H 0002H "j" 02H 00H 08H
 CLOCAL 42H 0002H 0002H 0002H "offset" 02H 00H 08H
 
 ;;	word offset = (line<<9);
-CLINEA 0000H 0001H 0111H 0002H 0019H
+CLINEA 0000H 0001H 0110H 0002H 0019H
 	mov	r1,	r8
 	sll	r1,	#01h
 	mov	r0,	#00h
 	st	er0,	-2[fp]
 
 ;;	for(i = 0; i < 512; i++) //used to be 512
-CLINEA 0000H 0001H 0112H 0002H 002AH
+CLINEA 0000H 0001H 0111H 0002H 002AH
 	mov	er0,	#0 
 	st	er0,	-4[fp]
 _$L141 :
-CBLOCK 126 3 275
+CBLOCK 126 3 274
 
 ;;		deref(0xF820+i+offset) = (~deref(0xF820+i+offset));
-CLINEA 0000H 0001H 0114H 0003H 0035H
+CLINEA 0000H 0001H 0113H 0003H 0035H
 	l	er2,	-2[fp]
 	add	er0,	er2
 	add	r0,	#020h
@@ -1717,25 +1714,25 @@ CLINEA 0000H 0001H 0114H 0003H 0035H
 	l	r2,	r2:[er0]
 	xor	r2,	#0ffh
 	st	r2,	DSR:[er0]
-CBLOCKEND 126 3 277
+CBLOCKEND 126 3 276
 
 ;;	for(i = 0; i < 512; i++) //used to be 512
-CLINEA 0000H 0000H 0112H 0002H 002AH
+CLINEA 0000H 0000H 0111H 0002H 002AH
 	l	er0,	-4[fp]
 	add	er0,	#1 
 	st	er0,	-4[fp]
 
 ;;	for(i = 0; i < 512; i++) //used to be 512
-CLINEA 0000H 0000H 0112H 0022H 002EH
+CLINEA 0000H 0000H 0111H 0022H 002EH
 	cmp	r0,	#00h
 	cmpc	r1,	#02h
 	blt	_$L141
-CBLOCKEND 126 2 278
+CBLOCKEND 126 2 277
 
 ;;}
-CLINEA 0000H 0001H 0116H 0001H 0001H
+CLINEA 0000H 0001H 0115H 0001H 0001H
 	b	__regpopu8lw
-CBLOCKEND 126 1 278
+CBLOCKEND 126 1 277
 CFUNCTIONEND 126
 
 
@@ -1743,44 +1740,44 @@ CFUNCTIONEND 126
 CFUNCTION 127
 
 _get_tile	:
-CBLOCK 127 1 281
+CBLOCK 127 1 280
 
 ;;{
-CLINEA 0000H 0001H 0119H 0001H 0001H
+CLINEA 0000H 0001H 0118H 0001H 0001H
 	push	lr
 	bl	__regpushu8lw
 	add	sp,	#-02
 	mov	r8,	r0
-CBLOCK 127 2 281
+CBLOCK 127 2 280
 CRET 000EH
 CARGUMENT 46H 0001H 001CH "x" 02H 00H 00H
 CARGUMENT 46H 0001H 0015H "y" 02H 00H 00H
 CLOCAL 42H 0001H 0001H 0002H "tile" 02H 00H 00H
 
 ;;	byte tile = 0;
-CLINEA 0000H 0001H 011AH 0002H 000FH
+CLINEA 0000H 0001H 0119H 0002H 000FH
 	mov	r0,	#00h
 	st	r0,	-1[fp]
 
 ;;	x -= 1;
-CLINEA 0000H 0001H 011BH 0002H 0008H
+CLINEA 0000H 0001H 011AH 0002H 0008H
 	add	r8,	#0ffh
 
 ;;	y -= 1;
-CLINEA 0000H 0001H 011CH 0002H 0008H
+CLINEA 0000H 0001H 011BH 0002H 0008H
 	mov	r0,	r1
 	add	r0,	#0ffh
 
 ;;	if(x >= 0 && x <= 2 && y >= 0 && y <= 2)
-CLINEA 0000H 0000H 011DH 0002H 0029H
+CLINEA 0000H 0000H 011CH 0002H 0029H
 	cmp	r8,	#02h
 	bgt	_$L146
 	cmp	r0,	#02h
 	bgt	_$L146
-CBLOCK 127 3 286
+CBLOCK 127 3 285
 
 ;;		tile = deref(0xD200 + x + (y*0x10));
-CLINEA 0000H 0001H 011FH 0003H 0026H
+CLINEA 0000H 0001H 011EH 0003H 0026H
 	mov	r1,	#00h
 	sllc	r1,	#04h
 	sll	r0,	#04h
@@ -1793,21 +1790,21 @@ CLINEA 0000H 0001H 011FH 0003H 0026H
 	mov	r2,	#00h
 	l	r0,	r2:[er0]
 	st	r0,	-1[fp]
-CBLOCKEND 127 3 288
+CBLOCKEND 127 3 287
 
 ;;	}
-CLINEA 0000H 0000H 0120H 0002H 0002H
+CLINEA 0000H 0000H 011FH 0002H 0002H
 _$L146 :
 
 ;;	return tile;
-CLINEA 0000H 0001H 0121H 0002H 000DH
+CLINEA 0000H 0001H 0120H 0002H 000DH
 	l	r0,	-1[fp]
-CBLOCKEND 127 2 290
+CBLOCKEND 127 2 289
 
 ;;}
-CLINEA 0000H 0000H 0122H 0001H 0001H
+CLINEA 0000H 0000H 0121H 0001H 0001H
 	b	__regpopu8lw
-CBLOCKEND 127 1 290
+CBLOCKEND 127 1 289
 CFUNCTIONEND 127
 
 
@@ -1815,37 +1812,37 @@ CFUNCTIONEND 127
 CFUNCTION 128
 
 _set_tile	:
-CBLOCK 128 1 293
+CBLOCK 128 1 292
 
 ;;{
-CLINEA 0000H 0001H 0125H 0001H 0001H
+CLINEA 0000H 0001H 0124H 0001H 0001H
 	push	xr8
 	mov	r10,	r2
-CBLOCK 128 2 293
+CBLOCK 128 2 292
 CARGUMENT 46H 0001H 0014H "x" 02H 00H 00H
 CARGUMENT 46H 0001H 0015H "y" 02H 00H 00H
 CARGUMENT 46H 0001H 001EH "tile" 02H 00H 00H
 
 ;;	x -= 1;
-CLINEA 0000H 0001H 0126H 0002H 0008H
+CLINEA 0000H 0001H 0125H 0002H 0008H
 	add	r0,	#0ffh
 	mov	r8,	r0
 
 ;;	y -= 1;
-CLINEA 0000H 0001H 0127H 0002H 0008H
+CLINEA 0000H 0001H 0126H 0002H 0008H
 	mov	r0,	r1
 	add	r0,	#0ffh
 
 ;;	if(x >= 0 && x <= 2 && y >= 0 && y <= 2)
-CLINEA 0000H 0000H 0128H 0002H 0029H
+CLINEA 0000H 0000H 0127H 0002H 0029H
 	cmp	r8,	#02h
 	bgt	_$L160
 	cmp	r0,	#02h
 	bgt	_$L160
-CBLOCK 128 3 297
+CBLOCK 128 3 296
 
 ;;		deref(0xD200 + x + (y*0x10)) = tile;
-CLINEA 0000H 0001H 012AH 0003H 0026H
+CLINEA 0000H 0001H 0129H 0003H 0026H
 	mov	r1,	#00h
 	sllc	r1,	#04h
 	sll	r0,	#04h
@@ -1857,18 +1854,18 @@ CLINEA 0000H 0001H 012AH 0003H 0026H
 	addc	r1,	#0d2h
 	mov	r2,	#00h
 	st	r10,	r2:[er0]
-CBLOCKEND 128 3 299
+CBLOCKEND 128 3 298
 
 ;;	}
-CLINEA 0000H 0000H 012BH 0002H 0002H
+CLINEA 0000H 0000H 012AH 0002H 0002H
 _$L160 :
-CBLOCKEND 128 2 300
+CBLOCKEND 128 2 299
 
 ;;}
-CLINEA 0000H 0001H 012CH 0001H 0001H
+CLINEA 0000H 0001H 012BH 0001H 0001H
 	pop	xr8
 	rt
-CBLOCKEND 128 1 300
+CBLOCKEND 128 1 299
 CFUNCTIONEND 128
 
 
@@ -1876,25 +1873,25 @@ CFUNCTIONEND 128
 CFUNCTION 129
 
 _main	:
-CBLOCK 129 1 304
+CBLOCK 129 1 303
 
 ;;void main() {
-CLINEA 0000H 0001H 0130H 0001H 000DH
+CLINEA 0000H 0001H 012FH 0001H 000DH
 	mov	fp,	sp
-	add	sp,	#-038
-CBLOCK 129 2 304
+	add	sp,	#-042
+CBLOCK 129 2 303
 CLOCAL 43H 000CH 000CH 0002H "screen" 05H 01H 0CH 00H 00H 00H
 CLOCAL 43H 000EH 001AH 0002H "invalid" 05H 01H 0EH 00H 00H 00H
 CLOCAL 42H 0009H 0024H 0002H "board" 08H 01H 03H 00H 01H 03H 00H 00H 00H
-CLOCAL 4BH 0002H 0000H 0002H "turn" 02H 00H 01H
-CLOCAL 4BH 0002H 0000H 0002H "gameEnd" 02H 00H 01H
+CLOCAL 43H 0002H 0026H 0002H "turn" 02H 00H 01H
+CLOCAL 43H 0002H 0028H 0002H "gameEnd" 02H 00H 01H
 CLOCAL 4BH 0002H 0000H 0002H "l" 02H 00H 01H
 CLOCAL 4BH 0002H 0000H 0002H "i" 02H 00H 01H
-CLOCAL 42H 0001H 0025H 0002H "player" 02H 00H 00H
+CLOCAL 42H 0001H 0029H 0002H "player" 02H 00H 00H
 CLOCAL 6AH 0003H 0000H 0002H "mem_address" 04H 03H 00H 00H 00H
 
 ;;	char screen[] = "Tic Tac Toe";
-CLINEA 0000H 0001H 0131H 0002H 001FH
+CLINEA 0000H 0001H 0130H 0002H 001FH
 	mov	r0,	#054h
 	st	r0,	-12[fp]
 	mov	r0,	#069h
@@ -1921,7 +1918,7 @@ CLINEA 0000H 0001H 0131H 0002H 001FH
 	st	r0,	-1[fp]
 
 ;;	char invalid[] = "Invalid move.";
-CLINEA 0000H 0001H 0132H 0002H 0022H
+CLINEA 0000H 0001H 0131H 0002H 0022H
 	mov	r0,	#049h
 	st	r0,	-26[fp]
 	mov	r0,	#06eh
@@ -1952,7 +1949,7 @@ CLINEA 0000H 0001H 0132H 0002H 0022H
 	st	r0,	-13[fp]
 
 ;;	byte board[3][3] = {{0x00, 0x00, 0x00}, {0x00, 0x00, 0x00}, {0x00, 0x00, 0x00}};
-CLINEA 0000H 0001H 0133H 0002H 0051H
+CLINEA 0000H 0001H 0132H 0002H 0051H
 	st	r0,	-36[fp]
 	st	r0,	-35[fp]
 	st	r0,	-34[fp]
@@ -1963,18 +1960,27 @@ CLINEA 0000H 0001H 0133H 0002H 0051H
 	st	r0,	-29[fp]
 	st	r0,	-28[fp]
 
+;;	int turn = 0;
+CLINEA 0000H 0001H 0134H 0002H 000EH
+	mov	er0,	#0 
+	st	er0,	-38[fp]
+
+;;	int gameEnd = 0;
+CLINEA 0000H 0001H 0135H 0002H 0011H
+	st	er0,	-40[fp]
+
 ;;	byte player = 0x01;
-CLINEA 0000H 0001H 0138H 0002H 0014H
+CLINEA 0000H 0001H 0137H 0002H 0014H
 	mov	r0,	#01h
-	st	r0,	-37[fp]
+	st	r0,	-41[fp]
 
 ;;	posx = 1; posy = 1;
-CLINEA 0000H 0001H 013AH 0002H 0014H
+CLINEA 0000H 0001H 0139H 0002H 0014H
 	st	r0,	FAR _posx
 	st	r0,	FAR _posy
 
 ;;	memset(0xD000,0x00,0x15D3);
-CLINEA 0000H 0001H 013BH 0002H 001CH
+CLINEA 0000H 0001H 013AH 0002H 001CH
 	mov	r0,	#0d3h
 	mov	r1,	#015h
 	push	er0
@@ -1986,7 +1992,7 @@ CLINEA 0000H 0001H 013BH 0002H 001CH
 	add	sp,	#4 
 
 ;;	memset(0xf800,0x00,0x800);
-CLINEA 0000H 0001H 013CH 0002H 001BH
+CLINEA 0000H 0001H 013BH 0002H 001BH
 	mov	r0,	#00h
 	mov	r1,	#08h
 	push	er0
@@ -1998,7 +2004,7 @@ CLINEA 0000H 0001H 013CH 0002H 001BH
 	add	sp,	#4 
 
 ;;	drawbitmap(board1,0x08,0x8,0x3F);
-CLINEA 0000H 0001H 0142H 0002H 0022H
+CLINEA 0000H 0001H 0141H 0002H 0022H
 	mov	r0,	#03fh
 	push	r0
 	mov	er0,	#8 
@@ -2010,26 +2016,39 @@ CLINEA 0000H 0001H 0142H 0002H 0022H
 	bl	_drawbitmap
 	add	sp,	#4 
 
-;;	drawstage(board);
-CLINEA 0000H 0001H 0143H 0002H 0012H
-	mov	er0,	fp
-	add	er0,	#-36
+;;	drawstage();
+CLINEA 0000H 0001H 0142H 0002H 000DH
 	bl	_drawstage
 
 ;;	flipcell();
-CLINEA 0000H 0001H 0144H 0002H 000CH
+CLINEA 0000H 0001H 0143H 0002H 000CH
 	bl	_flipcell
+
+;;	renderRLE(suwa,sizeof(suwa)-1,0x0E,0x0F);
+CLINEA 0000H 0001H 0144H 0002H 002AH
+	mov	er0,	#15
+	push	er0
+	mov	er0,	#14
+	push	er0
+	mov	r0,	#05bh
+	mov	r1,	#02h
+	push	er0
+	mov	r0,	#BYTE1 OFFSET _suwa
+	mov	r1,	#BYTE2 OFFSET _suwa
+	mov	r2,	#SEG _suwa
+	bl	_renderRLE
+	add	sp,	#6 
 
 ;;	while (!gameEnd) {
 CLINEA 0000H 0000H 0145H 0002H 0013H
 _$L178 :
 CBLOCK 129 3 325
-CLOCAL 42H 0001H 0026H 0003H "pressedbutton" 02H 00H 00H
+CLOCAL 42H 0001H 002AH 0003H "pressedbutton" 02H 00H 00H
 
 ;;		byte pressedbutton = CheckButtons();
 CLINEA 0000H 0001H 0147H 0003H 0026H
 	bl	_CheckButtons
-	st	r0,	-38[fp]
+	st	r0,	-42[fp]
 
 ;;		if (pressedbutton != 0xFF){
 CLINEA 0000H 0001H 0148H 0003H 001DH
@@ -2069,7 +2088,9 @@ _$M22 :
 ;;		switch (pressedbutton) {
 CLINEA 0000H 0000H 014BH 0003H 001AH
 	cmp	r0,	#028h
-	beq	_$L192
+	bne	_$M23
+	b	_$L192
+_$M23 :
 
 ;;		switch (pressedbutton) {
 CLINEA 0000H 0000H 014BH 0003H 001AH
@@ -2082,14 +2103,50 @@ CLINEA 0000H 0000H 014BH 0003H 001AH
 	beq	_$L189
 
 ;;		}
-CLINEA 0000H 0000H 0191H 0003H 0003H
+CLINEA 0000H 0000H 0192H 0003H 0003H
 _$L187 :
 CBLOCKEND 129 3 404
 
 ;;	while (!gameEnd) {
 CLINEA 0000H 0000H 0145H 0022H 002EH
-	bal	_$L178
-CBLOCKEND 129 2 405
+	l	er0,	-40[fp]
+	beq	_$L178
+
+;;	renderRLE(playerx,sizeof(playerx)-1,22,24);
+CLINEA 0000H 0001H 0196H 0002H 002CH
+	mov	er0,	#24
+	push	er0
+	mov	er0,	#22
+	push	er0
+	mov	r0,	#0dah
+	mov	r1,	#01h
+	push	er0
+	mov	r0,	#BYTE1 OFFSET _playerx
+	mov	r1,	#BYTE2 OFFSET _playerx
+	mov	r2,	#SEG _playerx
+	bl	_renderRLE
+	add	sp,	#6 
+
+;;	render_rect(22,24,22+148,24+14,0,1);
+CLINEA 0000H 0001H 0197H 0002H 0025H
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#00h
+	push	r0
+	mov	er0,	#38
+	push	er0
+	mov	r0,	#0aah
+	push	er0
+	mov	er2,	#24
+	mov	er0,	#22
+	bl	_render_rect
+	add	sp,	#8 
+CBLOCKEND 129 2 408
+
+;;}
+CLINEA 0000H 0001H 0198H 0001H 0001H
+_$$end_of_main :
+	bal	$
 
 ;;			case 0xFF:
 CLINEA 0000H 0001H 014CH 0004H 000DH
@@ -2127,10 +2184,8 @@ CLINEA 0000H 0000H 0151H 0005H 000BH
 	lea	OFFSET _posx
 	inc	seg _posx:[ea]
 
-;;				drawstage(board);
-CLINEA 0000H 0001H 0152H 0005H 0015H
-	mov	er0,	fp
-	add	er0,	#-36
+;;				drawstage();
+CLINEA 0000H 0001H 0152H 0005H 0010H
 	bl	_drawstage
 
 ;;				flipcell();
@@ -2163,10 +2218,8 @@ CLINEA 0000H 0000H 0157H 0005H 000BH
 	lea	OFFSET _posx
 	dec	seg _posx:[ea]
 
-;;				drawstage(board);
-CLINEA 0000H 0001H 0158H 0005H 0015H
-	mov	er0,	fp
-	add	er0,	#-36
+;;				drawstage();
+CLINEA 0000H 0001H 0158H 0005H 0010H
 	bl	_drawstage
 
 ;;				flipcell();
@@ -2175,7 +2228,7 @@ CLINEA 0000H 0001H 0159H 0005H 000FH
 
 ;;				break;
 CLINEA 0000H 0001H 015AH 0005H 000AH
-	bal	_$L187
+	b	_$L187
 
 ;;			case SP_UP:
 CLINEA 0000H 0001H 015BH 0004H 000EH
@@ -2199,10 +2252,8 @@ CLINEA 0000H 0000H 015DH 0005H 000BH
 	lea	OFFSET _posy
 	dec	seg _posy:[ea]
 
-;;				drawstage(board);
-CLINEA 0000H 0001H 015EH 0005H 0015H
-	mov	er0,	fp
-	add	er0,	#-36
+;;				drawstage();
+CLINEA 0000H 0001H 015EH 0005H 0010H
 	bl	_drawstage
 
 ;;				flipcell();
@@ -2235,10 +2286,8 @@ CLINEA 0000H 0000H 0163H 0005H 000BH
 	lea	OFFSET _posy
 	inc	seg _posy:[ea]
 
-;;				drawstage(board);
-CLINEA 0000H 0001H 0164H 0005H 0015H
-	mov	er0,	fp
-	add	er0,	#-36
+;;				drawstage();
+CLINEA 0000H 0001H 0164H 0005H 0010H
 	bl	_drawstage
 
 ;;				flipcell();
@@ -2266,98 +2315,170 @@ CBLOCK 129 6 361
 CLINEA 0000H 0001H 016BH 0006H 001AH
 	mov	r0,	#040h
 	st	r0,	00h:0d180h
-
-;;					drawstage(board);
-CLINEA 0000H 0001H 016DH 0006H 0016H
-	mov	er0,	fp
-	add	er0,	#-36
-	bl	_drawstage
-CBLOCKEND 129 6 367
-	bal	_$L197
+CBLOCKEND 129 6 366
+	b	_$L203
 _$L195 :
 
 ;;				} else {
-CLINEA 0000H 0000H 016FH 0005H 000CH
-CBLOCK 129 7 367
+CLINEA 0000H 0000H 016EH 0005H 000CH
+CBLOCK 129 7 366
 
 ;;					deref(0xD185) = posx;
-CLINEA 0000H 0001H 0170H 0006H 001AH
+CLINEA 0000H 0001H 016FH 0006H 001AH
 	l	r0,	FAR _posx
 	st	r0,	00h:0d185h
 
 ;;					deref(0xD186) = posy;
-CLINEA 0000H 0001H 0171H 0006H 001AH
+CLINEA 0000H 0001H 0170H 0006H 001AH
 	l	r0,	FAR _posy
 	st	r0,	00h:0d186h
 
 ;;					set_tile(posx, posy, player);
-CLINEA 0000H 0001H 0172H 0006H 0022H
-	l	r2,	-37[fp]
+CLINEA 0000H 0001H 0171H 0006H 0022H
+	l	r2,	-41[fp]
 	l	r1,	FAR _posy
 	l	r0,	FAR _posx
 	bl	_set_tile
 
+;;					deref(0xD180) = 0x00;
+CLINEA 0000H 0001H 0172H 0006H 001AH
+	mov	r0,	#00h
+	st	r0,	00h:0d180h
+
 ;;					deref(0xD270) = player;
-CLINEA 0000H 0001H 0174H 0006H 001CH
-	l	r0,	-37[fp]
+CLINEA 0000H 0001H 0173H 0006H 001CH
+	l	r0,	-41[fp]
 	st	r0,	00h:0d270h
 
-;;					drawstage(board);
-CLINEA 0000H 0001H 0175H 0006H 0016H
-	mov	er0,	fp
-	add	er0,	#-36
+;;					drawstage();
+CLINEA 0000H 0001H 0174H 0006H 0011H
 	bl	_drawstage
 
 ;;					flipcell();
-CLINEA 0000H 0001H 0176H 0006H 0010H
+CLINEA 0000H 0001H 0175H 0006H 0010H
 	bl	_flipcell
 
-;;					player = ( player == 0x01 ) ? 0x02 : 0x01;
-CLINEA 0000H 0000H 0185H 0006H 002FH
-	l	r0,	-37[fp]
+;;					if (checkWin(player) == 0x01) {
+CLINEA 0000H 0001H 0178H 0006H 0024H
+	l	r0,	-41[fp]
+	mov	r1,	#00h
+	bl	_checkWin
 	cmp	r0,	#01h
+	cmpc	r1,	#00h
 	bne	_$L198
-	mov	er0,	#2 
-	bal	_$L200
-_$L198 :
-	mov	er0,	#1 
-_$L200 :
-	st	r0,	-37[fp]
-CBLOCKEND 129 7 397
+CBLOCK 129 8 376
 
-;;				}
-CLINEA 0000H 0000H 018DH 0005H 0005H
-_$L197 :
+;;						drawstage(); //Later
+CLINEA 0000H 0001H 017AH 0007H 001AH
+	bl	_drawstage
+
+;;						flipcell();
+CLINEA 0000H 0001H 017BH 0007H 0011H
+	bl	_flipcell
+
+;;						deref(0xD180) = 0x69;
+CLINEA 0000H 0001H 017CH 0007H 001BH
+	mov	r0,	#069h
+	st	r0,	00h:0d180h
+
+;;						gameEnd = 1;
+CLINEA 0000H 0001H 017DH 0007H 0012H
+	mov	er0,	#1 
+	st	er0,	-40[fp]
+
+;;						break;
+CLINEA 0000H 0001H 017EH 0007H 000CH
+	b	_$L187
+CBLOCKEND 129 8 383
+
+;;					}
+CLINEA 0000H 0000H 017FH 0006H 0006H
+_$L198 :
+
+;;					player = ( player == 0x01 ) ? 0x02 : 0x01;
+CLINEA 0000H 0000H 0184H 0006H 002FH
+	l	r0,	-41[fp]
+	cmp	r0,	#01h
+	bne	_$L200
+	mov	er0,	#2 
+	bal	_$L202
+_$L200 :
+	mov	er0,	#1 
+_$L202 :
+	st	r0,	-41[fp]
+
+;;					turn += 1;
+CLINEA 0000H 0001H 0185H 0006H 000FH
+	l	er0,	-38[fp]
+	add	er0,	#1 
+	st	er0,	-38[fp]
+
+;;				        && checkWin(0x02) == 0) {
+CLINEA 0000H 0000H 0187H 000DH 0025H
+	cmp	r0,	#09h
+	cmpc	r1,	#00h
+	bne	_$L203
+
+;;				    if (turn == 9 && checkWin(0x01) == 0
+CLINEA 0000H 0001H 0186H 0009H 002CH
+	mov	er0,	#1 
+	bl	_checkWin
+
+;;				        && checkWin(0x02) == 0) {
+CLINEA 0000H 0000H 0187H 000DH 0025H
+	mov	er0,	er0
+	bne	_$L203
+	mov	er0,	#2 
+	bl	_checkWin
+	mov	er0,	er0
+	bne	_$L203
+CBLOCK 129 9 391
+
+;;				    	deref(0xD180) = 0xFF;
+CLINEA 0000H 0001H 0189H 000AH 001EH
+	mov	r0,	#0ffh
+	st	r0,	00h:0d180h
+
+;;				    	gameEnd = 1;
+CLINEA 0000H 0001H 018AH 000AH 0015H
+	mov	er0,	#1 
+	st	er0,	-40[fp]
+CBLOCKEND 129 9 395
+
+;;				    }
+CLINEA 0000H 0000H 018BH 0009H 0009H
+_$L203 :
+CBLOCKEND 129 7 398
 
 ;;				delay(100);
-CLINEA 0000H 0001H 018EH 0005H 000FH
+CLINEA 0000H 0001H 018FH 0005H 000FH
 	mov	r0,	#064h
 	mov	r1,	#00h
 	bl	_delay
 
 ;;				break;
-CLINEA 0000H 0001H 018FH 0005H 000AH
+CLINEA 0000H 0001H 0190H 0005H 000AH
 	b	_$L187
-CBLOCKEND 129 5 401
-CBLOCKEND 129 1 405
+CBLOCKEND 129 5 402
+CBLOCKEND 129 1 408
 CFUNCTIONEND 129
 
 
 	rseg $$flipcell$main
-CFUNCTION 132
+CFUNCTION 133
 
 _flipcell	:
-CBLOCK 132 1 408
+CBLOCK 133 1 411
 
 ;;void flipcell(){
-CLINEA 0000H 0001H 0198H 0001H 0010H
+CLINEA 0000H 0001H 019BH 0001H 0010H
 	push	lr
 	push	xr4
-CBLOCK 132 2 408
+CBLOCK 133 2 411
 CRET 0004H
 
 ;;	render_rect(45 + posx * 20, 1 + (posy - 1) * 21, 66 + posx*20, 20 + (posy-1) * 21, 1, 1);
-CLINEA 0000H 0001H 0199H 0002H 005AH
+CLINEA 0000H 0001H 019CH 0002H 005AH
 	mov	r0,	#01h
 	push	r0
 	push	r0
@@ -2383,123 +2504,122 @@ CLINEA 0000H 0001H 0199H 0002H 005AH
 	mov	er0,	er6
 	bl	_render_rect
 	add	sp,	#8 
-CBLOCKEND 132 2 410
+CBLOCKEND 133 2 413
 
 ;;}
-CLINEA 0000H 0001H 019AH 0001H 0001H
+CLINEA 0000H 0001H 019DH 0001H 0001H
 	pop	xr4
 	pop	pc
-CBLOCKEND 132 1 410
-CFUNCTIONEND 132
+CBLOCKEND 133 1 413
+CFUNCTIONEND 133
 
 
 	rseg $$drawstage$main
-CFUNCTION 133
+CFUNCTION 134
 
 _drawstage	:
-CBLOCK 133 1 413
+CBLOCK 134 1 416
 
-;;void drawstage(char board[3][3]){
-CLINEA 0000H 0001H 019DH 0001H 0021H
+;;void drawstage(){
+CLINEA 0000H 0001H 01A0H 0001H 0011H
 	push	lr
 	bl	__regpushu8lw
 	add	sp,	#-04
-CBLOCK 133 2 413
+CBLOCK 134 2 416
 CRET 0010H
-CARGUMENT 67H 0003H 000AH "board" 07H 03H 00H 01H 03H 00H 00H 00H
 CLOCAL 43H 0002H 0002H 0002H "i" 02H 00H 01H
 CLOCAL 43H 0002H 0004H 0002H "j" 02H 00H 01H
 
 ;;	if (posx > 3) {
-CLINEA 0000H 0001H 019FH 0002H 0010H
+CLINEA 0000H 0001H 01A2H 0002H 0010H
 	l	r0,	FAR _posx
 	cmp	r0,	#03h
-	ble	_$L203
-CBLOCK 133 3 415
+	ble	_$L215
+CBLOCK 134 3 418
 
 ;;		posx = 1;
-CLINEA 0000H 0001H 01A0H 0003H 000BH
+CLINEA 0000H 0001H 01A3H 0003H 000BH
 	mov	r0,	#01h
 	st	r0,	FAR _posx
-CBLOCKEND 133 3 417
-	bal	_$L206
-_$L203 :
+CBLOCKEND 134 3 420
+	bal	_$L218
+_$L215 :
 
 ;;	} else if (posx < 1) {
-CLINEA 0000H 0000H 01A1H 0002H 0017H
+CLINEA 0000H 0000H 01A4H 0002H 0017H
 	cmp	r0,	#01h
-	bge	_$L206
-CBLOCK 133 4 417
+	bge	_$L218
+CBLOCK 134 4 420
 
 ;;		posx = 3;
-CLINEA 0000H 0001H 01A2H 0003H 000BH
+CLINEA 0000H 0001H 01A5H 0003H 000BH
 	mov	r0,	#03h
 	st	r0,	FAR _posx
-CBLOCKEND 133 4 419
+CBLOCKEND 134 4 422
 
 ;;	}
-CLINEA 0000H 0000H 01A3H 0002H 0002H
-_$L206 :
+CLINEA 0000H 0000H 01A6H 0002H 0002H
+_$L218 :
 
 ;;	if (posy > 3) {
-CLINEA 0000H 0001H 01A4H 0002H 0010H
+CLINEA 0000H 0001H 01A7H 0002H 0010H
 	l	r0,	FAR _posy
 	cmp	r0,	#03h
-	ble	_$L208
-CBLOCK 133 5 420
+	ble	_$L220
+CBLOCK 134 5 423
 
 ;;		posy = 1;
-CLINEA 0000H 0001H 01A5H 0003H 000BH
+CLINEA 0000H 0001H 01A8H 0003H 000BH
 	mov	r0,	#01h
 	st	r0,	FAR _posy
-CBLOCKEND 133 5 422
-	bal	_$L211
-_$L208 :
+CBLOCKEND 134 5 425
+	bal	_$L223
+_$L220 :
 
 ;;	} else if (posy < 1) {
-CLINEA 0000H 0000H 01A6H 0002H 0017H
+CLINEA 0000H 0000H 01A9H 0002H 0017H
 	cmp	r0,	#01h
-	bge	_$L211
-CBLOCK 133 6 422
+	bge	_$L223
+CBLOCK 134 6 425
 
 ;;		posy = 3;
-CLINEA 0000H 0001H 01A7H 0003H 000BH
+CLINEA 0000H 0001H 01AAH 0003H 000BH
 	mov	r0,	#03h
 	st	r0,	FAR _posy
-CBLOCKEND 133 6 424
+CBLOCKEND 134 6 427
 
 ;;	}
-CLINEA 0000H 0000H 01A8H 0002H 0002H
-_$L211 :
+CLINEA 0000H 0000H 01ABH 0002H 0002H
+_$L223 :
 
 ;;    for (i = 0; i < 3; i++) {
-CLINEA 0000H 0001H 01A9H 000AH 000FH
+CLINEA 0000H 0001H 01ACH 000AH 000FH
 	mov	er0,	#0 
 	st	er0,	-2[fp]
 
 ;;    for (i = 0; i < 3; i++) {
-CLINEA 0000H 0000H 01A9H 0018H 001AH
-_$L215 :
-CBLOCK 133 7 425
+CLINEA 0000H 0000H 01ACH 0018H 001AH
+_$L227 :
+CBLOCK 134 7 428
 
 ;;        for (j = 0; j < 3; j++) {
-CLINEA 0000H 0001H 01AAH 000EH 0013H
+CLINEA 0000H 0001H 01ADH 000EH 0013H
 	mov	er0,	#0 
 	st	er0,	-4[fp]
 
 ;;        for (j = 0; j < 3; j++) {
-CLINEA 0000H 0000H 01AAH 001CH 001EH
-_$L221 :
-CBLOCK 133 8 426
+CLINEA 0000H 0000H 01ADH 001CH 001EH
+_$L233 :
+CBLOCK 134 8 429
 
 ;;        	if (get_tile(i+1,j+1) == 0x01) {
-CLINEA 0000H 0000H 01ABH 0000H 0000H
+CLINEA 0000H 0000H 01AEH 0000H 0000H
 	l	er0,	-4[fp]
 	add	er0,	#1 
 	mov	er4,	er0
 
 ;;        	if (get_tile(i+1,j+1) == 0x01) {
-CLINEA 0000H 0001H 01ABH 000AH 0029H
+CLINEA 0000H 0001H 01AEH 000AH 0029H
 	mov	r1,	r0
 	l	er2,	-2[fp]
 	add	er2,	#1 
@@ -2507,11 +2627,11 @@ CLINEA 0000H 0001H 01ABH 000AH 0029H
 	mov	r0,	r2
 	bl	_get_tile
 	cmp	r0,	#01h
-	bne	_$L225
-CBLOCK 133 9 427
+	bne	_$L237
+CBLOCK 134 9 430
 
 ;;        		renderRLE(cross, sizeof(cross), 66 + (i) * 20 + (i), 2 + (j) * 21 );
-CLINEA 0000H 0001H 01ACH 000BH 004EH
+CLINEA 0000H 0001H 01AFH 000BH 004EH
 	l	er0,	-4[fp]
 	mov	er2,	#21
 	bl	__imulu8lw
@@ -2533,21 +2653,21 @@ CLINEA 0000H 0001H 01ACH 000BH 004EH
 	mov	r2,	#SEG _cross
 	bl	_renderRLE
 	add	sp,	#6 
-CBLOCKEND 133 9 429
-	bal	_$L228
-_$L225 :
+CBLOCKEND 134 9 432
+	bal	_$L240
+_$L237 :
 
 ;;        	} else if (get_tile(i+1,j+1) == 0x02) {
-CLINEA 0000H 0000H 01ADH 000AH 0030H
+CLINEA 0000H 0000H 01B0H 000AH 0030H
 	mov	r1,	r4
 	mov	r0,	r6
 	bl	_get_tile
 	cmp	r0,	#02h
-	bne	_$L228
-CBLOCK 133 10 429
+	bne	_$L240
+CBLOCK 134 10 432
 
 ;;        		renderRLE(circle, sizeof(circle), 66 + (i) * 20 + (i), 2 + (j) * 21 );
-CLINEA 0000H 0001H 01AEH 000BH 0050H
+CLINEA 0000H 0001H 01B1H 000BH 0050H
 	l	er0,	-4[fp]
 	mov	er2,	#21
 	bl	__imulu8lw
@@ -2569,338 +2689,276 @@ CLINEA 0000H 0001H 01AEH 000BH 0050H
 	mov	r2,	#SEG _circle
 	bl	_renderRLE
 	add	sp,	#6 
-CBLOCKEND 133 10 431
+CBLOCKEND 134 10 434
 
 ;;        	}
-CLINEA 0000H 0000H 01AFH 000AH 000AH
-_$L228 :
-CBLOCKEND 133 8 432
+CLINEA 0000H 0000H 01B2H 000AH 000AH
+_$L240 :
+CBLOCKEND 134 8 435
 
 ;;        for (j = 0; j < 3; j++) {
-CLINEA 0000H 0000H 01AAH 001CH 001EH
+CLINEA 0000H 0000H 01ADH 001CH 001EH
 	st	er4,	-4[fp]
 
 ;;        for (j = 0; j < 3; j++) {
-CLINEA 0000H 0000H 01AAH 0015H 001AH
+CLINEA 0000H 0000H 01ADH 0015H 001AH
 	cmp	r4,	#03h
 	cmpc	r5,	#00h
-	bges	_$M25
-	b	_$L221
-_$M25 :
-CBLOCKEND 133 7 433
+	bges	_$M26
+	b	_$L233
+_$M26 :
+CBLOCKEND 134 7 436
 
 ;;    for (i = 0; i < 3; i++) {
-CLINEA 0000H 0000H 01A9H 0018H 001AH
+CLINEA 0000H 0000H 01ACH 0018H 001AH
 	st	er6,	-2[fp]
 
 ;;    for (i = 0; i < 3; i++) {
-CLINEA 0000H 0000H 01A9H 0015H 001AH
+CLINEA 0000H 0000H 01ACH 0015H 001AH
 	cmp	r6,	#03h
 	cmpc	r7,	#00h
-	bges	_$M26
-	b	_$L215
-_$M26 :
+	bges	_$M27
+	b	_$L227
+_$M27 :
 
 ;;	delay(400);
-CLINEA 0000H 0001H 01B2H 0002H 000CH
+CLINEA 0000H 0001H 01B5H 0002H 000CH
 	mov	r0,	#090h
 	mov	r1,	#01h
 	bl	_delay
-CBLOCKEND 133 2 436
+CBLOCKEND 134 2 439
 
 ;;}
-CLINEA 0000H 0001H 01B4H 0001H 0001H
-	b	__regpopu8lw
-CBLOCKEND 133 1 436
-CFUNCTIONEND 133
-
-
-	rseg $$checkWin$main
-CFUNCTION 134
-
-_checkWin	:
-CBLOCK 134 1 439
-
-;;{
 CLINEA 0000H 0001H 01B7H 0001H 0001H
-	push	lr
-	bl	__regpushu8lw
-	add	sp,	#-02
-	mov	r11,	r3
-	mov	er8,	er0
-	mov	r10,	r2
-CBLOCK 134 2 439
-CRET 000EH
-CARGUMENT 67H 0003H 1E28H "board" 07H 03H 00H 01H 03H 00H 00H 00H
-CARGUMENT 46H 0001H 001FH "player" 02H 00H 00H
-CLOCAL 43H 0002H 0002H 0002H "i" 02H 00H 01H
-
-;;    deref(0xD270) = player;
-CLINEA 0000H 0001H 01BAH 0005H 001BH
-	st	r3,	00h:0d270h
-
-;;	for (i = 0; i < 3; i++) {
-CLINEA 0000H 0001H 01BBH 0002H 001AH
-	mov	er0,	#0 
-	st	er0,	-2[fp]
-_$L233 :
-CBLOCK 134 3 443
-
-;;            && board[i][2] == player) {
-CLINEA 0000H 0000H 01BDH 0000H 0000H
-	mov	er2,	er0
-	add	er0,	er0
-	add	er0,	er2
-	mov	er4,	er0
-
-;;            && board[i][2] == player) {
-CLINEA 0000H 0001H 01BDH 000DH 0027H
-	add	er0,	er8
-	l	r0,	r10:[er0]
-	extbw	er0
-	mov	r2,	r11
-	mov	r3,	#00h
-	cmp	er0,	er2
-	bne	_$L237
-	mov	bp,	er4
-	add	bp,	er8
-	l	r0,	r10:1[bp]
-	extbw	er0
-	cmp	er2,	er0
-	bne	_$L237
-	mov	bp,	er4
-	add	bp,	er8
-	l	r0,	r10:2[bp]
-	extbw	er0
-	cmp	er2,	er0
-	bne	_$L237
-CBLOCK 134 4 445
-
-;;        	deref(0xD181) = 0x01;
-CLINEA 0000H 0001H 01BEH 000AH 001EH
-	mov	r0,	#01h
-	st	r0,	00h:0d181h
-
-;;            return 1;
-CLINEA 0000H 0001H 01BFH 000DH 0015H
-CBLOCKEND 134 4 448
-CBLOCKEND 134 2 466
-
-;;}
-CLINEA 0000H 0001H 01D2H 0001H 0001H
-_$L230 :
 	b	__regpopu8lw
-
-;;        }
-CLINEA 0000H 0000H 01C0H 0009H 0009H
-_$L237 :
-
-;;            && board[2][i] == player) {
-CLINEA 0000H 0001H 01C2H 000DH 0027H
-	l	er0,	-2[fp]
-	add	er0,	er8
-	l	r0,	r10:[er0]
-	extbw	er0
-	mov	r3,	#00h
-	cmp	er2,	er0
-	bne	_$L247
-	l	bp,	-2[fp]
-	add	bp,	er8
-	l	r0,	r10:3[bp]
-	extbw	er0
-	cmp	er2,	er0
-	bne	_$L247
-	l	bp,	-2[fp]
-	add	bp,	er8
-	l	r0,	r10:6[bp]
-	extbw	er0
-	cmp	er2,	er0
-	bne	_$L247
-CBLOCK 134 5 450
-
-;;        	deref(0xD181) = 0x02;
-CLINEA 0000H 0001H 01C3H 000AH 001EH
-	mov	r0,	#02h
-	st	r0,	00h:0d181h
-
-;;            return 1;
-CLINEA 0000H 0001H 01C4H 000DH 0015H
-	mov	r0,	#01h
-	bal	_$L230
-CBLOCKEND 134 5 453
-
-;;        }
-CLINEA 0000H 0000H 01C5H 0009H 0009H
-_$L247 :
-CBLOCKEND 134 3 454
-
-;;	for (i = 0; i < 3; i++) {
-CLINEA 0000H 0000H 01BBH 0002H 001AH
-	l	er0,	-2[fp]
-	add	er0,	#1 
-	st	er0,	-2[fp]
-
-;;	for (i = 0; i < 3; i++) {
-CLINEA 0000H 0000H 01BBH 0015H 001AH
-	cmp	r0,	#03h
-	cmpc	r1,	#00h
-	blts	_$L233
-
-;;        && board[2][2] == player) {
-CLINEA 0000H 0001H 01C8H 0009H 0023H
-	l	r0,	r10:[er8]
-	extbw	er0
-	mov	r2,	r11
-	mov	r3,	#00h
-	cmp	er2,	er0
-	bne	_$L257
-	l	r0,	r10:04h[er8]
-	extbw	er0
-	cmp	er2,	er0
-	bne	_$L257
-	l	r0,	r10:08h[er8]
-	extbw	er0
-	cmp	er2,	er0
-	bne	_$L257
-CBLOCK 134 6 456
-
-;;    	deref(0xD181) = 0x03;
-CLINEA 0000H 0001H 01C9H 0006H 001AH
-	mov	r0,	#03h
-	st	r0,	00h:0d181h
-
-;;        return 1;
-CLINEA 0000H 0001H 01CAH 0009H 0011H
-	mov	r0,	#01h
-	bal	_$L230
-CBLOCKEND 134 6 459
-
-;;    }
-CLINEA 0000H 0000H 01CBH 0005H 0005H
-_$L257 :
-
-;;        && board[2][0] == player) {
-CLINEA 0000H 0001H 01CDH 0009H 0023H
-	l	r0,	r10:02h[er8]
-	extbw	er0
-	mov	r3,	#00h
-	cmp	er2,	er0
-	bne	_$L267
-	l	r0,	r10:04h[er8]
-	extbw	er0
-	cmp	er2,	er0
-	bne	_$L267
-	l	r0,	r10:06h[er8]
-	extbw	er0
-	cmp	er2,	er0
-	bne	_$L267
-CBLOCK 134 7 461
-
-;;    	deref(0xD181) = 0x04;
-CLINEA 0000H 0001H 01CEH 0006H 001AH
-	mov	r0,	#04h
-	st	r0,	00h:0d181h
-
-;;        return 1;
-CLINEA 0000H 0001H 01CFH 0009H 0011H
-	mov	r0,	#01h
-	b	_$L230
-CBLOCKEND 134 7 464
-
-;;    }
-CLINEA 0000H 0000H 01D0H 0005H 0005H
-_$L267 :
-
-;;    return 0;
-CLINEA 0000H 0001H 01D1H 0005H 000DH
-	mov	r0,	#00h
-	b	_$L230
-CBLOCKEND 134 1 466
+CBLOCKEND 134 1 439
 CFUNCTIONEND 134
 
 
-	rseg $$debugRender$main
+	rseg $$checkWin$main
 CFUNCTION 135
 
-_debugRender	:
-CBLOCK 135 1 468
+_checkWin	:
+CBLOCK 135 1 442
 
-;;void debugRender(char board[3][3]) {
-CLINEA 0000H 0001H 01D4H 0001H 0024H
+;;{
+CLINEA 0000H 0001H 01BAH 0001H 0001H
 	push	lr
 	bl	__regpushu8lw
 	add	sp,	#-02
-	mov	er8,	er0
-	mov	r10,	r2
-CBLOCK 135 2 468
+	mov	r8,	r0
+CBLOCK 135 2 442
 CRET 000EH
-CARGUMENT 67H 0003H 1E28H "board" 07H 03H 00H 01H 03H 00H 00H 00H
+CARGUMENT 46H 0001H 001CH "player" 02H 00H 00H
 CLOCAL 43H 0002H 0002H 0002H "i" 02H 00H 01H
-CLOCAL 4BH 0002H 0000H 0002H "j" 02H 00H 01H
+CLOCAL 4BH 0002H 0000H 0002H "state" 02H 00H 01H
 
-;;    for (i = 0; i < 3; i++) {
-CLINEA 0000H 0001H 01D6H 0005H 001DH
-	mov	er0,	#0 
+;;    deref(0xD271) = player;
+CLINEA 0000H 0001H 01BFH 0005H 001BH
+	st	r0,	00h:0d271h
+
+;;	for (i = 1; i < 4; i++) {
+CLINEA 0000H 0001H 01C0H 0002H 001AH
+	mov	er0,	#1 
 	st	er0,	-2[fp]
-_$L280 :
-CBLOCK 135 3 470
-	mov	er2,	er0
-	add	er0,	er0
-	add	er0,	er2
-	mov	bp,	er0
-	add	bp,	er8
-	l	er0,	-2[fp]
-	sllc	r1,	#04h
-	sll	r0,	#04h
-	add	r0,	#080h
-	addc	r1,	#0d2h
-	mov	r3,	#00h
-	l	r2,	r10:[bp]
-	st	r2,	r3:[er0]
-	l	er0,	-2[fp]
-	mov	er2,	er0
-	add	er0,	er0
-	add	er0,	er2
-	mov	bp,	er0
-	add	bp,	er8
-	l	er0,	-2[fp]
-	sllc	r1,	#04h
-	sll	r0,	#04h
-	add	r0,	#081h
-	addc	r1,	#0d2h
-	mov	r3,	#00h
-	l	r2,	r10:1[bp]
-	st	r2,	r3:[er0]
-	l	er0,	-2[fp]
-	mov	er2,	er0
-	add	er0,	er0
-	add	er0,	er2
-	mov	bp,	er0
-	add	bp,	er8
-	l	er0,	-2[fp]
-	sllc	r1,	#04h
-	sll	r0,	#04h
-	add	r0,	#082h
-	addc	r1,	#0d2h
-	mov	r3,	#00h
-	l	r2,	r10:2[bp]
-	st	r2,	r3:[er0]
-CBLOCKEND 135 3 474
+_$L245 :
+CBLOCK 135 3 448
+
+;;        if (get_tile(i,1) == player && get_tile(i,2) == player
+CLINEA 0000H 0001H 01C1H 0009H 003EH
+	mov	r1,	#01h
+	l	r0,	-2[fp]
+	bl	_get_tile
+
+;;            && get_tile(i,3) == player) {
+CLINEA 0000H 0000H 01C2H 000DH 0029H
+	cmp	r8,	r0
+	bne	_$L249
+
+;;        if (get_tile(i,1) == player && get_tile(i,2) == player
+CLINEA 0000H 0000H 01C1H 0009H 003EH
+	mov	r1,	#02h
+	l	r0,	-2[fp]
+	bl	_get_tile
+
+;;            && get_tile(i,3) == player) {
+CLINEA 0000H 0000H 01C2H 000DH 0029H
+	cmp	r8,	r0
+	bne	_$L249
+	mov	r1,	#03h
+	l	r0,	-2[fp]
+	bl	_get_tile
+	cmp	r8,	r0
+	bne	_$L249
+CBLOCK 135 4 450
+
+;;        	deref(0xD181) = 0x01;
+CLINEA 0000H 0001H 01C3H 000AH 001EH
+	mov	r0,	#01h
+	st	r0,	00h:0d181h
+
+;;        	return state;
+CLINEA 0000H 0001H 01C5H 000AH 0016H
+	mov	er0,	#1 
+CBLOCKEND 135 4 454
+CBLOCKEND 135 2 476
+
+;;}
+CLINEA 0000H 0001H 01DCH 0001H 0001H
+_$L242 :
+	b	__regpopu8lw
+
+;;        }
+CLINEA 0000H 0000H 01C6H 0009H 0009H
+_$L249 :
+
+;;        if (get_tile(1,i) == player && get_tile(2,i) == player
+CLINEA 0000H 0001H 01C7H 0009H 003EH
+	l	r1,	-2[fp]
+	mov	r0,	#01h
+	bl	_get_tile
+
+;;            && get_tile(3,i) == player) {
+CLINEA 0000H 0000H 01C8H 000DH 0029H
+	cmp	r8,	r0
+	bne	_$L259
+
+;;        if (get_tile(1,i) == player && get_tile(2,i) == player
+CLINEA 0000H 0000H 01C7H 0009H 003EH
+	l	r1,	-2[fp]
+	mov	r0,	#02h
+	bl	_get_tile
+
+;;            && get_tile(3,i) == player) {
+CLINEA 0000H 0000H 01C8H 000DH 0029H
+	cmp	r8,	r0
+	bne	_$L259
+	l	r1,	-2[fp]
+	mov	r0,	#03h
+	bl	_get_tile
+	cmp	r8,	r0
+	bne	_$L259
+CBLOCK 135 5 456
+
+;;        	deref(0xD181) = 0x02;
+CLINEA 0000H 0001H 01C9H 000AH 001EH
+	mov	r0,	#02h
+	st	r0,	00h:0d181h
+
+;;        	return state;
+CLINEA 0000H 0001H 01CBH 000AH 0016H
+	mov	er0,	#1 
+	bal	_$L242
+CBLOCKEND 135 5 460
+
+;;        }
+CLINEA 0000H 0000H 01CCH 0009H 0009H
+_$L259 :
+CBLOCKEND 135 3 461
+
+;;	for (i = 1; i < 4; i++) {
+CLINEA 0000H 0000H 01C0H 0002H 001AH
 	l	er0,	-2[fp]
 	add	er0,	#1 
 	st	er0,	-2[fp]
 
-;;    for (i = 0; i < 3; i++) {
-CLINEA 0000H 0000H 01D6H 0015H 001AH
-	cmp	r0,	#03h
+;;	for (i = 1; i < 4; i++) {
+CLINEA 0000H 0000H 01C0H 0015H 001AH
+	cmp	r0,	#04h
 	cmpc	r1,	#00h
-	blts	_$L280
-CBLOCKEND 135 2 475
+	blts	_$L245
 
-;;}
-CLINEA 0000H 0001H 01DBH 0001H 0001H
-	b	__regpopu8lw
-CBLOCKEND 135 1 475
+;;    if (get_tile(1,1) == player && get_tile(2,2) == player
+CLINEA 0000H 0001H 01CEH 0005H 003AH
+	mov	r1,	#01h
+	mov	r0,	#01h
+	bl	_get_tile
+
+;;        && get_tile(3,3) == player) {
+CLINEA 0000H 0000H 01CFH 0009H 0025H
+	cmp	r8,	r0
+	bne	_$L269
+
+;;    if (get_tile(1,1) == player && get_tile(2,2) == player
+CLINEA 0000H 0000H 01CEH 0005H 003AH
+	mov	r1,	#02h
+	mov	r0,	#02h
+	bl	_get_tile
+
+;;        && get_tile(3,3) == player) {
+CLINEA 0000H 0000H 01CFH 0009H 0025H
+	cmp	r8,	r0
+	bne	_$L269
+	mov	r1,	#03h
+	mov	r0,	#03h
+	bl	_get_tile
+	cmp	r8,	r0
+	bne	_$L269
+CBLOCK 135 6 463
+
+;;    	deref(0xD181) = 0x03;
+CLINEA 0000H 0001H 01D0H 0006H 001AH
+	mov	r0,	#03h
+	st	r0,	00h:0d181h
+
+;;    	return state;
+CLINEA 0000H 0001H 01D2H 0006H 0012H
+	mov	er0,	#1 
+	bal	_$L242
+CBLOCKEND 135 6 467
+
+;;    }
+CLINEA 0000H 0000H 01D3H 0005H 0005H
+_$L269 :
+
+;;    if (get_tile(1,3) == player && get_tile(2,2) == player
+CLINEA 0000H 0001H 01D4H 0005H 003AH
+	mov	r1,	#03h
+	mov	r0,	#01h
+	bl	_get_tile
+
+;;        && get_tile(3,1) == player) {
+CLINEA 0000H 0000H 01D5H 0009H 0025H
+	cmp	r8,	r0
+	bne	_$L279
+
+;;    if (get_tile(1,3) == player && get_tile(2,2) == player
+CLINEA 0000H 0000H 01D4H 0005H 003AH
+	mov	r1,	#02h
+	mov	r0,	#02h
+	bl	_get_tile
+
+;;        && get_tile(3,1) == player) {
+CLINEA 0000H 0000H 01D5H 0009H 0025H
+	cmp	r8,	r0
+	bne	_$L279
+	mov	r1,	#01h
+	mov	r0,	#03h
+	bl	_get_tile
+	cmp	r8,	r0
+	bne	_$L279
+CBLOCK 135 7 469
+
+;;    	deref(0xD181) = 0x04;
+CLINEA 0000H 0001H 01D6H 0006H 001AH
+	mov	r0,	#04h
+	st	r0,	00h:0d181h
+
+;;    	return state;
+CLINEA 0000H 0001H 01D8H 0006H 0012H
+	mov	er0,	#1 
+	b	_$L242
+CBLOCKEND 135 7 473
+
+;;    }
+CLINEA 0000H 0000H 01D9H 0005H 0005H
+_$L279 :
+
+;;    return state;
+CLINEA 0000H 0001H 01DBH 0005H 0011H
+	mov	er0,	#0 
+	b	_$L242
+CBLOCKEND 135 1 476
 CFUNCTIONEND 135
 
 	public _board1
@@ -2919,13 +2977,14 @@ CFUNCTIONEND 135
 	public _posx
 	public _print
 	public _posy
-	public _debugRender
 	public _delay
 	public _suwa
 	public _invertbitmap
 	public _set_bits
 	public _get_tile
 	public _set_tile
+	public _playerx
+	public _playery
 	public _flipcell
 	public _renderRLE
 	public _render_rect
@@ -2953,635 +3012,609 @@ CFUNCTIONEND 135
 	rseg $$TABsuwa$main
 _suwa :
 	db	00h
+	db	014h
+	db	03h
+	db	0ch
+	db	0ffh
 	db	00h
+	db	013h
+	db	01h
+	db	01h
+	db	01h
+	db	01h
+	db	01h
+	db	0bh
+	db	0ffh
 	db	00h
+	db	0dh
+	db	08h
+	db	01h
+	db	01h
+	db	0ch
+	db	0ffh
 	db	00h
+	db	05h
+	db	02h
+	db	03h
+	db	03h
+	db	08h
+	db	03h
+	db	0bh
+	db	0ffh
 	db	00h
-	db	03fh
-	db	080h
+	db	04h
+	db	01h
+	db	02h
+	db	01h
+	db	01h
+	db	01h
+	db	01h
+	db	01h
+	db	0ah
+	db	01h
+	db	0ch
+	db	0ffh
 	db	00h
+	db	05h
+	db	02h
+	db	01h
+	db	02h
+	db	0dh
+	db	01h
+	db	0bh
+	db	0ffh
 	db	00h
+	db	05h
+	db	02h
+	db	01h
+	db	01h
+	db	0fh
+	db	01h
+	db	0ah
+	db	0ffh
 	db	00h
+	db	04h
+	db	01h
+	db	02h
+	db	01h
+	db	0bh
+	db	07h
+	db	09h
+	db	0ffh
 	db	00h
+	db	05h
+	db	02h
+	db	01h
+	db	01h
+	db	07h
+	db	03h
+	db	07h
+	db	01h
+	db	08h
+	db	0ffh
 	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	07fh
-	db	0c0h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	0cfh
-	db	0e0h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	087h
-	db	0e0h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	0e3h
-	db	0e0h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
+	db	05h
+	db	01h
+	db	01h
+	db	01h
+	db	01h
+	db	01h
+	db	03h
+	db	03h
+	db	04h
+	db	0ch
 	db	03h
 	db	0ffh
-	db	031h
-	db	0e0h
 	db	00h
+	db	05h
+	db	02h
+	db	01h
+	db	01h
+	db	01h
+	db	03h
+	db	03h
+	db	04h
+	db	06h
+	db	01h
+	db	05h
+	db	02h
+	db	01h
+	db	0ffh
 	db	00h
+	db	05h
+	db	01h
+	db	01h
+	db	03h
+	db	03h
+	db	03h
+	db	0bh
+	db	01h
+	db	05h
+	db	02h
+	db	0ffh
 	db	00h
+	db	05h
+	db	03h
+	db	02h
+	db	03h
+	db	04h
+	db	02h
+	db	01h
+	db	03h
+	db	04h
+	db	01h
+	db	04h
+	db	01h
+	db	01h
+	db	01h
+	db	0ffh
 	db	00h
-	db	01eh
+	db	04h
+	db	02h
+	db	02h
+	db	02h
+	db	03h
+	db	04h
+	db	02h
+	db	01h
+	db	03h
+	db	01h
+	db	04h
+	db	01h
+	db	03h
+	db	01h
+	db	01h
+	db	01h
+	db	0ffh
+	db	00h
+	db	04h
+	db	04h
+	db	04h
+	db	01h
+	db	03h
+	db	01h
+	db	03h
+	db	01h
+	db	07h
+	db	01h
+	db	03h
+	db	02h
+	db	01h
+	db	0ffh
+	db	00h
+	db	04h
+	db	02h
+	db	01h
+	db	01h
+	db	03h
+	db	01h
+	db	03h
+	db	02h
+	db	03h
+	db	02h
+	db	06h
+	db	01h
+	db	02h
+	db	01h
+	db	01h
+	db	01h
+	db	01h
+	db	0ffh
+	db	00h
+	db	03h
+	db	01h
+	db	03h
+	db	01h
+	db	05h
+	db	03h
+	db	03h
+	db	02h
+	db	01h
+	db	01h
+	db	06h
+	db	02h
+	db	01h
+	db	01h
+	db	02h
+	db	0ffh
+	db	00h
+	db	02h
+	db	02h
+	db	02h
+	db	01h
+	db	05h
+	db	03h
+	db	05h
+	db	01h
+	db	01h
+	db	01h
+	db	01h
+	db	01h
+	db	04h
+	db	01h
+	db	01h
+	db	01h
+	db	03h
+	db	0ffh
+	db	00h
+	db	02h
+	db	01h
+	db	02h
+	db	04h
+	db	03h
+	db	03h
+	db	07h
+	db	01h
+	db	07h
+	db	01h
+	db	04h
+	db	0ffh
+	db	00h
+	db	01h
+	db	01h
+	db	03h
+	db	02h
+	db	01h
+	db	01h
+	db	02h
+	db	02h
+	db	07h
+	db	01h
+	db	02h
+	db	02h
+	db	03h
+	db	02h
+	db	05h
+	db	0ffh
+	db	00h
+	db	01h
+	db	01h
+	db	03h
+	db	02h
+	db	01h
+	db	01h
+	db	03h
+	db	03h
+	db	07h
+	db	01h
+	db	04h
+	db	02h
+	db	06h
+	db	0ffh
+	db	00h
+	db	01h
+	db	01h
+	db	03h
+	db	02h
+	db	02h
+	db	01h
+	db	01h
+	db	01h
+	db	0ah
+	db	01h
+	db	01h
+	db	01h
+	db	02h
+	db	01h
+	db	07h
+	db	0ffh
+	db	00h
+	db	02h
+	db	01h
+	db	02h
+	db	01h
+	db	04h
+	db	01h
+	db	01h
+	db	01h
+	db	08h
+	db	02h
+	db	03h
+	db	01h
+	db	08h
+	db	0ffh
+	db	00h
+	db	03h
+	db	01h
+	db	01h
+	db	03h
+	db	03h
+	db	03h
+	db	03h
+	db	01h
+	db	02h
+	db	03h
+	db	01h
+	db	02h
+	db	09h
+	db	0ffh
+	db	00h
+	db	04h
+	db	02h
+	db	01h
+	db	01h
+	db	03h
+	db	01h
+	db	02h
+	db	01h
+	db	03h
+	db	04h
+	db	02h
+	db	01h
+	db	0ah
+	db	0ffh
 	db	00h
 	db	06h
-	db	00h
-	db	019h
-	db	0e0h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	021h
-	db	081h
-	db	0fch
-	db	00h
-	db	0fh
-	db	0e0h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	020h
-	db	087h
-	db	00h
-	db	00h
-	db	00h
-	db	080h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	0e0h
-	db	0d8h
-	db	00h
-	db	00h
-	db	00h
-	db	080h
-	db	00h
-	db	00h
-	db	00h
 	db	01h
-	db	080h
-	db	058h
-	db	00h
-	db	00h
-	db	00h
-	db	080h
-	db	00h
-	db	00h
-	db	00h
 	db	01h
-	db	01eh
-	db	068h
-	db	00h
-	db	00h
-	db	00h
-	db	0c0h
-	db	00h
-	db	00h
-	db	00h
 	db	01h
-	db	01eh
-	db	070h
-	db	00h
-	db	00h
-	db	00h
-	db	070h
-	db	00h
-	db	00h
-	db	00h
+	db	03h
+	db	02h
 	db	01h
-	db	01eh
-	db	068h
-	db	00h
-	db	00h
-	db	00h
-	db	010h
-	db	00h
-	db	00h
-	db	00h
+	db	03h
 	db	01h
-	db	09eh
-	db	070h
+	db	03h
+	db	02h
+	db	01h
+	db	0ah
+	db	0ffh
 	db	00h
+	db	09h
+	db	01h
+	db	01h
+	db	01h
+	db	03h
+	db	01h
+	db	01h
+	db	01h
+	db	03h
+	db	01h
+	db	02h
+	db	01h
+	db	0ah
+	db	0ffh
 	db	00h
+	db	0ah
+	db	01h
+	db	01h
+	db	02h
+	db	02h
+	db	07h
+	db	01h
+	db	01h
+	db	0ah
+	db	0ffh
 	db	00h
-	db	018h
+	db	0ah
+	db	01h
+	db	02h
+	db	02h
+	db	01h
+	db	01h
+	db	03h
+	db	03h
+	db	01h
+	db	01h
+	db	0ah
+	db	0ffh
 	db	00h
+	db	0bh
+	db	01h
+	db	03h
+	db	01h
+	db	04h
+	db	01h
+	db	01h
+	db	01h
+	db	0ch
+	db	0ffh
 	db	00h
+	db	0ah
+	db	02h
+	db	08h
+	db	01h
+	db	01h
+	db	01h
+	db	0ch
+	db	0ffh
 	db	00h
+	db	0ah
+	db	01h
+	db	08h
+	db	02h
+	db	01h
+	db	03h
+	db	0ah
+	db	0ffh
 	db	00h
-	db	0c0h
-	db	0e8h
+	db	09h
+	db	01h
+	db	02h
+	db	01h
+	db	03h
+	db	05h
+	db	01h
+	db	01h
+	db	02h
+	db	01h
+	db	09h
+	db	0ffh
 	db	00h
+	db	09h
+	db	01h
+	db	02h
+	db	01h
+	db	01h
+	db	02h
+	db	04h
+	db	01h
+	db	01h
+	db	01h
+	db	02h
+	db	01h
+	db	09h
+	db	0ffh
 	db	00h
+	db	0ah
+	db	01h
+	db	01h
+	db	02h
+	db	02h
+	db	01h
+	db	03h
+	db	01h
+	db	01h
+	db	01h
+	db	02h
+	db	01h
+	db	09h
+	db	0ffh
+	db	00h
+	db	09h
+	db	01h
+	db	01h
+	db	01h
+	db	03h
+	db	01h
+	db	04h
+	db	01h
+	db	01h
+	db	01h
+	db	01h
+	db	01h
+	db	0ah
+	db	0ffh
+	db	00h
+	db	09h
+	db	01h
+	db	01h
+	db	01h
+	db	02h
+	db	01h
+	db	04h
+	db	01h
+	db	03h
+	db	02h
+	db	0ah
+	db	0ffh
+	db	00h
+	db	08h
+	db	01h
+	db	01h
+	db	01h
+	db	01h
+	db	01h
+	db	01h
+	db	01h
+	db	04h
+	db	01h
+	db	03h
+	db	02h
+	db	0ah
+	db	0ffh
+	db	00h
+	db	08h
+	db	01h
+	db	01h
+	db	01h
+	db	01h
+	db	01h
+	db	05h
+	db	01h
+	db	04h
+	db	02h
+	db	0ah
+	db	0ffh
+	db	00h
+	db	07h
+	db	02h
+	db	01h
+	db	01h
+	db	02h
+	db	01h
+	db	04h
+	db	02h
+	db	04h
+	db	01h
+	db	0ah
+	db	0ffh
+	db	00h
+	db	07h
+	db	02h
+	db	02h
+	db	01h
+	db	05h
+	db	01h
+	db	02h
+	db	01h
+	db	04h
+	db	01h
+	db	09h
+	db	0ffh
+	db	00h
+	db	05h
+	db	02h
+	db	01h
+	db	01h
+	db	02h
+	db	02h
+	db	04h
+	db	01h
+	db	03h
+	db	01h
+	db	02h
+	db	02h
+	db	09h
+	db	0ffh
+	db	00h
+	db	05h
+	db	01h
+	db	04h
+	db	01h
+	db	01h
+	db	01h
+	db	01h
+	db	01h
+	db	01h
+	db	02h
+	db	03h
+	db	03h
+	db	0bh
+	db	0ffh
+	db	00h
+	db	04h
+	db	01h
+	db	06h
+	db	03h
+	db	03h
+	db	01h
+	db	02h
+	db	02h
+	db	02h
+	db	01h
+	db	0ah
+	db	0ffh
+	db	00h
+	db	05h
+	db	08h
+	db	01h
+	db	05h
+	db	03h
+	db	02h
+	db	0bh
+	db	0ffh
+	db	00h
+	db	0dh
+	db	01h
+	db	03h
+	db	05h
+	db	0dh
+	db	0ffh
 	db	00h
 	db	0eh
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	041h
-	db	0d0h
-	db	00h
-	db	01h
+	db	04h
+	db	011h
 	db	0ffh
-	db	0ffh
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	03fh
-	db	0a8h
-	db	00h
-	db	01h
-	db	0ffh
-	db	0ffh
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	01dh
-	db	054h
-	db	00h
-	db	03fh
-	db	0ffh
-	db	0ffh
-	db	080h
-	db	00h
-	db	00h
-	db	00h
-	db	01ah
-	db	0aah
-	db	01h
-	db	0ffh
-	db	0ffh
-	db	0ffh
-	db	0ffh
-	db	0f0h
-	db	00h
-	db	00h
-	db	01dh
-	db	055h
-	db	01fh
-	db	0ffh
-	db	0ffh
-	db	0ffh
-	db	0ffh
-	db	0f8h
-	db	00h
-	db	00h
-	db	01ah
-	db	0aah
-	db	0bfh
-	db	0ffh
-	db	0ffh
-	db	0ffh
-	db	0ffh
-	db	0ffh
-	db	00h
-	db	00h
-	db	01dh
-	db	055h
-	db	0ffh
-	db	0ffh
-	db	0efh
-	db	0ffh
-	db	0ffh
-	db	0ffh
-	db	080h
-	db	00h
-	db	01ah
-	db	0afh
-	db	0ffh
-	db	0f8h
-	db	03h
-	db	0ffh
-	db	0ffh
-	db	0ffh
-	db	080h
-	db	00h
-	db	01dh
-	db	07fh
-	db	0ffh
-	db	0eah
-	db	0aah
-	db	0bfh
-	db	0ffh
-	db	0ffh
-	db	080h
-	db	00h
-	db	01bh
-	db	0ffh
-	db	0f0h
-	db	00h
-	db	00h
-	db	02fh
-	db	0ffh
-	db	0ffh
-	db	080h
-	db	00h
-	db	01fh
-	db	0ffh
-	db	0eah
-	db	0afh
-	db	0bfh
-	db	0abh
-	db	0ffh
-	db	0ffh
-	db	080h
-	db	00h
-	db	06fh
-	db	0ffh
-	db	080h
-	db	08h
-	db	0e1h
-	db	081h
-	db	0ffh
-	db	0ffh
-	db	080h
-	db	00h
-	db	07fh
-	db	0ffh
-	db	0afh
-	db	0e8h
-	db	04ah
-	db	0ebh
-	db	0ffh
-	db	0ffh
-	db	080h
-	db	00h
-	db	07fh
-	db	0f8h
-	db	038h
-	db	08h
-	db	060h
-	db	01h
-	db	0ffh
-	db	0ffh
-	db	080h
-	db	00h
-	db	07fh
-	db	0fah
-	db	0eah
-	db	0a8h
-	db	03ah
-	db	0aah
-	db	0ffh
-	db	0ffh
-	db	080h
-	db	00h
-	db	0ffh
-	db	0e0h
-	db	040h
-	db	08h
-	db	03eh
-	db	00h
-	db	03fh
-	db	0ffh
-	db	00h
-	db	03h
-	db	0ffh
-	db	0eah
-	db	0aah
-	db	0a8h
-	db	03fh
-	db	0aah
-	db	0bfh
-	db	0ffh
-	db	00h
-	db	07h
-	db	0ffh
-	db	0e0h
-	db	03h
-	db	0f0h
-	db	0f1h
-	db	080h
-	db	01fh
-	db	0feh
-	db	00h
-	db	0fh
-	db	0ffh
-	db	0cah
-	db	0afh
-	db	020h
-	db	0f0h
-	db	0aah
-	db	0afh
-	db	0feh
-	db	00h
-	db	0fh
-	db	0ffh
-	db	080h
-	db	05fh
-	db	030h
-	db	0f0h
-	db	080h
-	db	07h
-	db	0fch
-	db	00h
-	db	03fh
-	db	0ffh
-	db	0aah
-	db	0bfh
-	db	010h
-	db	0f0h
-	db	0aah
-	db	0afh
-	db	0f8h
-	db	00h
-	db	03fh
-	db	0ffh
-	db	055h
-	db	07fh
-	db	030h
-	db	070h
-	db	080h
-	db	07h
-	db	0e0h
-	db	00h
-	db	03fh
-	db	0ffh
-	db	0aah
-	db	0ffh
-	db	060h
-	db	040h
-	db	0aah
-	db	0abh
-	db	0c0h
-	db	00h
-	db	07fh
-	db	0ffh
-	db	055h
-	db	07fh
-	db	040h
-	db	060h
-	db	0d5h
-	db	05fh
-	db	080h
-	db	00h
-	db	0ffh
-	db	0ffh
-	db	0aah
-	db	0c0h
-	db	040h
-	db	021h
-	db	0aah
-	db	0afh
-	db	00h
-	db	00h
-	db	0ffh
-	db	0ffh
-	db	055h
-	db	040h
-	db	040h
-	db	03fh
-	db	055h
-	db	07eh
-	db	00h
-	db	00h
-	db	0ffh
-	db	0feh
-	db	0aah
-	db	0c0h
-	db	040h
-	db	03h
-	db	0aah
-	db	0bch
-	db	00h
-	db	00h
-	db	0ffh
-	db	0ffh
-	db	055h
-	db	07fh
-	db	0c0h
-	db	01h
-	db	0d5h
-	db	078h
-	db	00h
-	db	00h
-	db	0ffh
-	db	0ffh
-	db	0aah
-	db	0c0h
-	db	00h
-	db	01h
-	db	0aah
-	db	0b0h
-	db	00h
-	db	00h
-	db	0ffh
-	db	0ffh
-	db	055h
-	db	040h
-	db	00h
-	db	03h
-	db	0d5h
-	db	060h
-	db	00h
-	db	00h
-	db	07fh
-	db	0feh
-	db	0aah
-	db	0e0h
-	db	00h
-	db	06h
-	db	0aah
-	db	0c0h
-	db	00h
-	db	00h
-	db	03fh
-	db	0ffh
-	db	0d5h
-	db	070h
-	db	00h
-	db	0ch
-	db	0d5h
-	db	080h
-	db	00h
-	db	00h
-	db	0fh
-	db	0ffh
-	db	0eah
-	db	0b0h
-	db	0ch
-	db	018h
-	db	0a9h
-	db	00h
-	db	00h
-	db	00h
-	db	0fh
-	db	0ffh
-	db	055h
-	db	058h
-	db	0ch
-	db	031h
-	db	0d6h
-	db	00h
-	db	00h
-	db	00h
-	db	01h
-	db	0ffh
-	db	0eah
-	db	0ach
-	db	00h
-	db	061h
-	db	0ach
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	0ffh
-	db	0f5h
-	db	056h
-	db	07h
-	db	0c3h
-	db	058h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	07fh
-	db	0eah
-	db	0abh
-	db	0feh
-	db	02h
-	db	0a8h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	07h
-	db	075h
-	db	055h
-	db	080h
-	db	03h
-	db	058h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	06h
-	db	0eah
-	db	0abh
-	db	080h
-	db	00h
-	db	0a8h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	06h
-	db	0ddh
-	db	0d5h
-	db	080h
-	db	03h
-	db	058h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	03h
-	db	09bh
-	db	0aah
-	db	080h
-	db	02h
-	db	0a8h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	02h
-	db	0e7h
-	db	075h
-	db	0e0h
-	db	03h
-	db	058h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	02h
-	db	0e6h
-	db	02ah
-	db	0a0h
-	db	01h
-	db	0e8h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	0e0h
-	db	015h
-	db	060h
-	db	00h
-	db	078h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	040h
-	db	01ah
-	db	0e0h
-	db	00h
-	db	028h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	040h
-	db	0dh
-	db	040h
-	db	00h
-	db	038h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	00h
-	db	07h
-	db	0c0h
-	db	00h
-	db	038h
-	db	00h
-	db	00h
-	db	00h
 
 	rseg $$TABimage_raw$main
 _image_raw :
@@ -8404,6 +8437,964 @@ _circle :
 	db	06h
 	db	05h
 	db	06h
+	db	0ffh
+
+	rseg $$TABplayerx$main
+_playerx :
+	db	00h
+	db	0eh
+	db	01h
+	db	0dh
+	db	02h
+	db	03ah
+	db	01h
+	db	08h
+	db	02h
+	db	07h
+	db	02h
+	db	06h
+	db	02h
+	db	03h
+	db	02h
+	db	0bh
+	db	02h
+	db	0eh
+	db	0ffh
+	db	00h
+	db	02h
+	db	08h
+	db	03h
+	db	02h
+	db	0ch
+	db	04h
+	db	04h
+	db	03h
+	db	06h
+	db	03h
+	db	09h
+	db	01h
+	db	03h
+	db	08h
+	db	0bh
+	db	03h
+	db	05h
+	db	03h
+	db	07h
+	db	03h
+	db	05h
+	db	03h
+	db	05h
+	db	03h
+	db	02h
+	db	03h
+	db	02h
+	db	03h
+	db	06h
+	db	02h
+	db	07h
+	db	04h
+	db	03h
+	db	0ffh
+	db	0ch
+	db	01h
+	db	02h
+	db	0ch
+	db	04h
+	db	04h
+	db	04h
+	db	04h
+	db	04h
+	db	01h
+	db	0ah
+	db	01h
+	db	0bh
+	db	09h
+	db	03h
+	db	04h
+	db	03h
+	db	08h
+	db	03h
+	db	05h
+	db	03h
+	db	05h
+	db	03h
+	db	02h
+	db	03h
+	db	02h
+	db	03h
+	db	06h
+	db	02h
+	db	05h
+	db	07h
+	db	02h
+	db	0ffh
+	db	03h
+	db	06h
+	db	03h
+	db	01h
+	db	02h
+	db	0bh
+	db	06h
+	db	04h
+	db	03h
+	db	04h
+	db	03h
+	db	02h
+	db	09h
+	db	02h
+	db	03h
+	db	05h
+	db	03h
+	db	0ah
+	db	03h
+	db	02h
+	db	04h
+	db	09h
+	db	02h
+	db	06h
+	db	02h
+	db	05h
+	db	03h
+	db	02h
+	db	03h
+	db	02h
+	db	04h
+	db	05h
+	db	02h
+	db	04h
+	db	03h
+	db	04h
+	db	01h
+	db	02h
+	db	0ffh
+	db	03h
+	db	06h
+	db	03h
+	db	01h
+	db	02h
+	db	0bh
+	db	06h
+	db	05h
+	db	03h
+	db	02h
+	db	03h
+	db	03h
+	db	02h
+	db	09h
+	db	03h
+	db	05h
+	db	03h
+	db	0bh
+	db	03h
+	db	01h
+	db	03h
+	db	0ah
+	db	03h
+	db	05h
+	db	02h
+	db	04h
+	db	03h
+	db	03h
+	db	03h
+	db	02h
+	db	05h
+	db	04h
+	db	02h
+	db	03h
+	db	03h
+	db	08h
+	db	0ffh
+	db	03h
+	db	05h
+	db	03h
+	db	02h
+	db	02h
+	db	0bh
+	db	02h
+	db	02h
+	db	03h
+	db	04h
+	db	04h
+	db	01h
+	db	02h
+	db	04h
+	db	02h
+	db	09h
+	db	03h
+	db	04h
+	db	03h
+	db	0ch
+	db	06h
+	db	0bh
+	db	03h
+	db	04h
+	db	04h
+	db	03h
+	db	03h
+	db	03h
+	db	03h
+	db	02h
+	db	05h
+	db	04h
+	db	02h
+	db	02h
+	db	03h
+	db	09h
+	db	0ffh
+	db	03h
+	db	03h
+	db	04h
+	db	03h
+	db	02h
+	db	0ah
+	db	03h
+	db	02h
+	db	03h
+	db	05h
+	db	06h
+	db	04h
+	db	09h
+	db	02h
+	db	03h
+	db	01h
+	db	05h
+	db	0eh
+	db	04h
+	db	0dh
+	db	02h
+	db	03h
+	db	05h
+	db	03h
+	db	02h
+	db	04h
+	db	03h
+	db	02h
+	db	06h
+	db	03h
+	db	02h
+	db	02h
+	db	03h
+	db	04h
+	db	04h
+	db	01h
+	db	0ffh
+	db	09h
+	db	04h
+	db	02h
+	db	0ah
+	db	02h
+	db	04h
+	db	03h
+	db	05h
+	db	04h
+	db	05h
+	db	08h
+	db	03h
+	db	08h
+	db	0fh
+	db	04h
+	db	0dh
+	db	03h
+	db	02h
+	db	02h
+	db	01h
+	db	02h
+	db	02h
+	db	03h
+	db	04h
+	db	03h
+	db	02h
+	db	03h
+	db	01h
+	db	03h
+	db	02h
+	db	02h
+	db	02h
+	db	0ch
+	db	0ffh
+	db	06h
+	db	07h
+	db	02h
+	db	09h
+	db	0ah
+	db	05h
+	db	03h
+	db	06h
+	db	03h
+	db	08h
+	db	06h
+	db	010h
+	db	05h
+	db	0dh
+	db	03h
+	db	01h
+	db	03h
+	db	01h
+	db	03h
+	db	01h
+	db	02h
+	db	05h
+	db	03h
+	db	02h
+	db	03h
+	db	01h
+	db	04h
+	db	01h
+	db	02h
+	db	04h
+	db	03h
+	db	04h
+	db	03h
+	db	0ffh
+	db	03h
+	db	0ah
+	db	02h
+	db	09h
+	db	0bh
+	db	04h
+	db	03h
+	db	06h
+	db	02h
+	db	09h
+	db	03h
+	db	01h
+	db	03h
+	db	0fh
+	db	02h
+	db	01h
+	db	03h
+	db	0dh
+	db	02h
+	db	01h
+	db	02h
+	db	03h
+	db	05h
+	db	05h
+	db	03h
+	db	02h
+	db	03h
+	db	02h
+	db	06h
+	db	0bh
+	db	03h
+	db	0ffh
+	db	03h
+	db	0ah
+	db	02h
+	db	04h
+	db	02h
+	db	02h
+	db	03h
+	db	06h
+	db	03h
+	db	03h
+	db	03h
+	db	07h
+	db	02h
+	db	09h
+	db	03h
+	db	02h
+	db	04h
+	db	0ch
+	db	03h
+	db	02h
+	db	03h
+	db	0ch
+	db	05h
+	db	03h
+	db	05h
+	db	05h
+	db	03h
+	db	02h
+	db	03h
+	db	03h
+	db	05h
+	db	03h
+	db	01h
+	db	06h
+	db	03h
+	db	01h
+	db	0ffh
+	db	03h
+	db	0ah
+	db	08h
+	db	02h
+	db	03h
+	db	07h
+	db	03h
+	db	02h
+	db	03h
+	db	07h
+	db	09h
+	db	02h
+	db	03h
+	db	03h
+	db	04h
+	db	0ah
+	db	03h
+	db	03h
+	db	04h
+	db	0bh
+	db	04h
+	db	05h
+	db	03h
+	db	06h
+	db	03h
+	db	02h
+	db	03h
+	db	04h
+	db	04h
+	db	03h
+	db	02h
+	db	04h
+	db	04h
+	db	01h
+	db	0ffh
+	db	03h
+	db	0ah
+	db	07h
+	db	02h
+	db	03h
+	db	08h
+	db	03h
+	db	01h
+	db	03h
+	db	08h
+	db	09h
+	db	02h
+	db	03h
+	db	04h
+	db	03h
+	db	09h
+	db	03h
+	db	05h
+	db	04h
+	db	0bh
+	db	03h
+	db	05h
+	db	03h
+	db	06h
+	db	03h
+	db	02h
+	db	03h
+	db	05h
+	db	03h
+	db	03h
+	db	09h
+	db	02h
+	db	0ffh
+	db	02h
+	db	0bh
+	db	02h
+	db	07h
+	db	02h
+	db	0ah
+	db	02h
+	db	01h
+	db	02h
+	db	09h
+	db	05h
+	db	06h
+	db	02h
+	db	06h
+	db	02h
+	db	09h
+	db	02h
+	db	07h
+	db	02h
+	db	0ch
+	db	02h
+	db	06h
+	db	02h
+	db	07h
+	db	02h
+	db	04h
+	db	02h
+	db	07h
+	db	01h
+	db	05h
+	db	04h
+	db	05h
+	db	0ffh
+
+	rseg $$TABplayery$main
+_playery :
+	db	00h
+	db	0eh
+	db	01h
+	db	0dh
+	db	02h
+	db	039h
+	db	03h
+	db	0ch
+	db	02h
+	db	07h
+	db	02h
+	db	06h
+	db	02h
+	db	03h
+	db	02h
+	db	0bh
+	db	02h
+	db	0eh
+	db	0ffh
+	db	00h
+	db	02h
+	db	08h
+	db	03h
+	db	02h
+	db	0ch
+	db	04h
+	db	04h
+	db	03h
+	db	06h
+	db	03h
+	db	09h
+	db	01h
+	db	03h
+	db	08h
+	db	010h
+	db	08h
+	db	0ah
+	db	03h
+	db	05h
+	db	03h
+	db	05h
+	db	03h
+	db	02h
+	db	03h
+	db	02h
+	db	03h
+	db	06h
+	db	02h
+	db	07h
+	db	04h
+	db	03h
+	db	0ffh
+	db	0ch
+	db	01h
+	db	02h
+	db	0ch
+	db	04h
+	db	04h
+	db	04h
+	db	04h
+	db	04h
+	db	01h
+	db	0ah
+	db	01h
+	db	0bh
+	db	0ch
+	db	04h
+	db	04h
+	db	03h
+	db	09h
+	db	03h
+	db	05h
+	db	03h
+	db	05h
+	db	03h
+	db	02h
+	db	03h
+	db	02h
+	db	03h
+	db	06h
+	db	02h
+	db	05h
+	db	07h
+	db	02h
+	db	0ffh
+	db	03h
+	db	06h
+	db	03h
+	db	01h
+	db	02h
+	db	0bh
+	db	06h
+	db	04h
+	db	03h
+	db	04h
+	db	03h
+	db	02h
+	db	09h
+	db	02h
+	db	03h
+	db	05h
+	db	03h
+	db	0bh
+	db	04h
+	db	06h
+	db	02h
+	db	0ah
+	db	02h
+	db	06h
+	db	02h
+	db	05h
+	db	03h
+	db	02h
+	db	03h
+	db	02h
+	db	04h
+	db	05h
+	db	02h
+	db	04h
+	db	03h
+	db	04h
+	db	01h
+	db	02h
+	db	0ffh
+	db	03h
+	db	06h
+	db	03h
+	db	01h
+	db	02h
+	db	0bh
+	db	06h
+	db	05h
+	db	03h
+	db	02h
+	db	03h
+	db	03h
+	db	02h
+	db	09h
+	db	03h
+	db	05h
+	db	03h
+	db	0bh
+	db	03h
+	db	07h
+	db	03h
+	db	09h
+	db	03h
+	db	05h
+	db	02h
+	db	04h
+	db	03h
+	db	03h
+	db	03h
+	db	02h
+	db	05h
+	db	04h
+	db	02h
+	db	03h
+	db	03h
+	db	08h
+	db	0ffh
+	db	03h
+	db	05h
+	db	03h
+	db	02h
+	db	02h
+	db	0bh
+	db	02h
+	db	02h
+	db	03h
+	db	04h
+	db	04h
+	db	01h
+	db	02h
+	db	04h
+	db	02h
+	db	09h
+	db	03h
+	db	04h
+	db	03h
+	db	0bh
+	db	03h
+	db	08h
+	db	03h
+	db	09h
+	db	03h
+	db	04h
+	db	04h
+	db	03h
+	db	03h
+	db	03h
+	db	03h
+	db	02h
+	db	05h
+	db	04h
+	db	02h
+	db	02h
+	db	03h
+	db	09h
+	db	0ffh
+	db	03h
+	db	03h
+	db	04h
+	db	03h
+	db	02h
+	db	0ah
+	db	03h
+	db	02h
+	db	03h
+	db	05h
+	db	06h
+	db	04h
+	db	09h
+	db	02h
+	db	03h
+	db	01h
+	db	05h
+	db	0ch
+	db	02h
+	db	09h
+	db	03h
+	db	0ah
+	db	02h
+	db	03h
+	db	05h
+	db	03h
+	db	02h
+	db	04h
+	db	03h
+	db	02h
+	db	06h
+	db	03h
+	db	02h
+	db	02h
+	db	03h
+	db	04h
+	db	04h
+	db	01h
+	db	0ffh
+	db	09h
+	db	04h
+	db	02h
+	db	0ah
+	db	02h
+	db	04h
+	db	03h
+	db	05h
+	db	04h
+	db	05h
+	db	08h
+	db	03h
+	db	08h
+	db	0ch
+	db	03h
+	db	09h
+	db	03h
+	db	0ah
+	db	03h
+	db	02h
+	db	02h
+	db	01h
+	db	02h
+	db	02h
+	db	03h
+	db	04h
+	db	03h
+	db	02h
+	db	03h
+	db	01h
+	db	03h
+	db	02h
+	db	02h
+	db	02h
+	db	0ch
+	db	0ffh
+	db	06h
+	db	07h
+	db	02h
+	db	09h
+	db	0ah
+	db	05h
+	db	03h
+	db	06h
+	db	03h
+	db	08h
+	db	06h
+	db	0eh
+	db	03h
+	db	08h
+	db	03h
+	db	0bh
+	db	03h
+	db	01h
+	db	03h
+	db	01h
+	db	03h
+	db	01h
+	db	02h
+	db	05h
+	db	03h
+	db	02h
+	db	03h
+	db	01h
+	db	04h
+	db	01h
+	db	02h
+	db	04h
+	db	03h
+	db	04h
+	db	03h
+	db	0ffh
+	db	03h
+	db	0ah
+	db	02h
+	db	09h
+	db	0bh
+	db	04h
+	db	03h
+	db	06h
+	db	02h
+	db	09h
+	db	03h
+	db	01h
+	db	03h
+	db	0dh
+	db	03h
+	db	08h
+	db	03h
+	db	0ch
+	db	02h
+	db	01h
+	db	02h
+	db	03h
+	db	05h
+	db	05h
+	db	03h
+	db	02h
+	db	03h
+	db	02h
+	db	06h
+	db	0bh
+	db	03h
+	db	0ffh
+	db	03h
+	db	0ah
+	db	02h
+	db	04h
+	db	02h
+	db	02h
+	db	03h
+	db	06h
+	db	03h
+	db	03h
+	db	03h
+	db	07h
+	db	02h
+	db	09h
+	db	03h
+	db	02h
+	db	04h
+	db	0bh
+	db	03h
+	db	07h
+	db	03h
+	db	0dh
+	db	05h
+	db	03h
+	db	05h
+	db	05h
+	db	03h
+	db	02h
+	db	03h
+	db	03h
+	db	05h
+	db	03h
+	db	01h
+	db	06h
+	db	03h
+	db	01h
+	db	0ffh
+	db	03h
+	db	0ah
+	db	08h
+	db	02h
+	db	03h
+	db	07h
+	db	03h
+	db	02h
+	db	03h
+	db	07h
+	db	09h
+	db	02h
+	db	03h
+	db	03h
+	db	04h
+	db	0bh
+	db	03h
+	db	04h
+	db	04h
+	db	0eh
+	db	04h
+	db	05h
+	db	03h
+	db	06h
+	db	03h
+	db	02h
+	db	03h
+	db	04h
+	db	04h
+	db	03h
+	db	02h
+	db	04h
+	db	04h
+	db	01h
+	db	0ffh
+	db	03h
+	db	0ah
+	db	07h
+	db	02h
+	db	03h
+	db	08h
+	db	03h
+	db	01h
+	db	03h
+	db	08h
+	db	09h
+	db	02h
+	db	03h
+	db	04h
+	db	03h
+	db	0ch
+	db	08h
+	db	011h
+	db	03h
+	db	05h
+	db	03h
+	db	06h
+	db	03h
+	db	02h
+	db	03h
+	db	05h
+	db	03h
+	db	03h
+	db	09h
+	db	02h
+	db	0ffh
+	db	02h
+	db	0bh
+	db	02h
+	db	07h
+	db	02h
+	db	0ah
+	db	02h
+	db	01h
+	db	02h
+	db	09h
+	db	05h
+	db	06h
+	db	02h
+	db	06h
+	db	02h
+	db	0dh
+	db	05h
+	db	013h
+	db	02h
+	db	06h
+	db	02h
+	db	07h
+	db	02h
+	db	04h
+	db	02h
+	db	07h
+	db	01h
+	db	05h
+	db	04h
+	db	05h
 	db	0ffh
 
 	rseg $$FINITVARmain

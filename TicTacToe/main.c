@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "tictactoe.h"
-
+#include "screen.h"
 
 
 typedef unsigned char uint8_t;
@@ -305,7 +305,7 @@ void main() {
 	char invalid[] = "Invalid move.";
 	byte board[3][3] = {{0x00, 0x00, 0x00}, {0x00, 0x00, 0x00}, {0x00, 0x00, 0x00}};
 
-	int turn;
+	int turn = 0;
 	int gameEnd = 0;
 	int l,i;
 	byte player = 0x01;
@@ -319,8 +319,9 @@ void main() {
 	// X = 0x01
 	// O = 0x02
 	drawbitmap(board1,0x08,0x8,0x3F);
-	drawstage(board);
+	drawstage();
 	flipcell();
+	renderRLE(suwa,sizeof(suwa)-1,0x0E,0x0F);
 	while (!gameEnd) {
 
 		byte pressedbutton = CheckButtons();
@@ -334,25 +335,25 @@ void main() {
 			case SP_RIGHT:
 				drawbitmap(board1,0x08,0x8,0x3F);
 				posx++;
-				drawstage(board);
+				drawstage();
 				flipcell();
 				break;
 			case SP_LEFT:
 				drawbitmap(board1,0x08,0x8,0x3F);
 				posx--;
-				drawstage(board);
+				drawstage();
 				flipcell();
 				break;
 			case SP_UP:
 				drawbitmap(board1,0x08,0x8,0x3F);
 				posy--;
-				drawstage(board);
+				drawstage();
 				flipcell();
 				break;
 			case SP_DOWN:
 				drawbitmap(board1,0x08,0x8,0x3F);
 				posy++;
-				drawstage(board);
+				drawstage();
 				flipcell();
 				break;
 
@@ -360,38 +361,39 @@ void main() {
 				if (get_tile(posx,posy) != 0x00) {
 					//print(invalid,0,1); // Placeholder function
 					deref(0xD180) = 0x40;
-
-					drawstage(board);
+					//drawstage();
 
 				} else {
 					deref(0xD185) = posx;
 					deref(0xD186) = posy;
 					set_tile(posx, posy, player);
-
+					deref(0xD180) = 0x00;
 					deref(0xD270) = player;
-					drawstage(board);
+					drawstage();
 					flipcell();
 
-					/*
-					if (checkWin(board,player) == 1) {
 
-						drawstage(board); //Later
+					if (checkWin(player) == 0x01) {
+
+						drawstage(); //Later
 						flipcell();
-						//gameEnd = 1;
 						deref(0xD180) = 0x69;
-						//break;
-					}*/
+						gameEnd = 1;
+						break;
+					}
 
 
 
 
 					player = ( player == 0x01 ) ? 0x02 : 0x01;
-					/*
-				    if (turn == 9 && !checkWin(board, 0x01)
-				        && !checkWin(board, 0x02)) {
+					turn += 1;
+				    if (turn == 9 && checkWin(0x01) == 0
+				        && checkWin(0x02) == 0) {
 				        //print(draw,0,1); //It's draw
 				    	deref(0xD180) = 0xFF;
-				    }*/
+				    	gameEnd = 1;
+				    }
+
 
 				}
 				delay(100);
@@ -399,8 +401,10 @@ void main() {
 
 		}
 
-
 	}
+	//------------------------------------------------------------
+	renderRLE(playerx,sizeof(playerx)-1,22,24);
+	render_rect(22,24,22+148,24+14,0,1);
 }
 
 
@@ -409,7 +413,7 @@ void flipcell(){
 }
 
 
-void drawstage(char board[3][3]){
+void drawstage(){
 	int i,j;
 	if (posx > 3) {
 		posx = 1;
@@ -434,43 +438,44 @@ void drawstage(char board[3][3]){
 
 }
 
-byte checkWin(char board[3][3],byte player)
+int checkWin(byte player)
 {
+
     // Check rows, columns, and diagonals
     int i;
-    deref(0xD270) = player;
-	for (i = 0; i < 3; i++) {
-        if (board[i][0] == player && board[i][1] == player
-            && board[i][2] == player) {
+    int state = 0;
+    deref(0xD271) = player;
+	for (i = 1; i < 4; i++) {
+        if (get_tile(i,1) == player && get_tile(i,2) == player
+            && get_tile(i,3) == player) {
         	deref(0xD181) = 0x01;
-            return 1;
+        	state = 1;
+        	return state;
         }
-        if (board[0][i] == player && board[1][i] == player
-            && board[2][i] == player) {
+        if (get_tile(1,i) == player && get_tile(2,i) == player
+            && get_tile(3,i) == player) {
         	deref(0xD181) = 0x02;
-            return 1;
+        	state = 1;
+        	return state;
         }
     }
-    if (board[0][0] == player && board[1][1] == player
-        && board[2][2] == player) {
+    if (get_tile(1,1) == player && get_tile(2,2) == player
+        && get_tile(3,3) == player) {
     	deref(0xD181) = 0x03;
-        return 1;
+    	state = 1;
+    	return state;
     }
-    if (board[0][2] == player && board[1][1] == player
-        && board[2][0] == player) {
+    if (get_tile(1,3) == player && get_tile(2,2) == player
+        && get_tile(3,1) == player) {
     	deref(0xD181) = 0x04;
-        return 1;
+    	state = 1;
+    	return state;
     }
-    return 0;
+    state = 0;
+    return state;
 }
 
-void debugRender(char board[3][3]) {
-	int i,j;
-    for (i = 0; i < 3; i++) {
-        for (j = 0; j < 3; j++) {
-        	deref(0xD280 + j + i*0x10) = board[i][j];
-        }
-    }
-}
+
+
 
 

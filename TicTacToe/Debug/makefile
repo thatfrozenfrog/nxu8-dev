@@ -14,10 +14,10 @@ RM := rm -f
 -include ../makefile.defs
 
 # Export environment variables
-export DCL=E:/Lexide/Dcl
-export INCLU8=E:/Lexide/Inc;E:/Lexide/BuildTools/Ver.20231124/Inc/U16
-export LIBU8=E:/Lexide/BuildTools/Ver.20231124/Lib/U16
-export PATH=E:/Lexide/Bin;E:/Lexide/BuildTools/Ver.20231124/Bin;E:/Lexide/Utilities/Bin
+export DCL=E:/LAPIS/LEXIDE/Dcl
+export INCLU8=E:/LAPIS/LEXIDE/Inc;E:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Inc/U16
+export LIBU8=E:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16
+export PATH=E:/LAPIS/LEXIDE/Bin;E:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Bin;E:/LAPIS/LEXIDE/Utilities/Bin
 
 # Add inputs and outputs from these tool invocations to the build variables 
 OBJHEX += \

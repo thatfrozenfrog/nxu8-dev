@@ -1,4 +1,4 @@
-11:15:11 **** Incremental Build of configuration Debug for project TicTacToe ****
+09:32:05 **** Incremental Build of configuration Debug for project TicTacToe ****
 make all 
 'Building file: ../main.c'
 'Invoking: Compiler'
@@ -8,14 +8,15 @@ Copyright (C) 2008-2020 LAPIS Technology Co., Ltd.
 
 ..\main.c
 ..\printlib.h(13) : Warning : W5031 : 'drawbitmap': call to function with no prototype
-..\main.c(269) : Warning : W4002 : 'const' ignored on argument
+..\main.c(268) : Warning : W4002 : 'const' ignored on argument
+..\main.c(314) : Warning : W5002 : 'argument' : different levels of indirection
 ..\main.c(315) : Warning : W5002 : 'argument' : different levels of indirection
-..\main.c(316) : Warning : W5002 : 'argument' : different levels of indirection
-..\main.c(323) : Warning : W5031 : 'drawstage': call to function with no prototype
-..\main.c(324) : Warning : W5031 : 'flipcell': call to function with no prototype
+..\main.c(322) : Warning : W5031 : 'drawstage': call to function with no prototype
+..\main.c(323) : Warning : W5031 : 'flipcell': call to function with no prototype
+..\main.c(376) : Warning : W5031 : 'checkWin': call to function with no prototype
 
 Error(s)     :  0
-Warning(s)   :  6
+Warning(s)   :  7
 
 'Finished building: ../main.c'
 ' '
@@ -25,12 +26,12 @@ rasu8 -CD -ABW -SD -DF -ML -O"./" -WRPEAST -PR"main.prn" -L -NS -NR -NPL -NPW "m
 RASU8 Relocatable Assembler, Ver.1.80
 Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
 
-[E:/Lexide/Dcl\ML620906.dcl] loading...
+[E:/LAPIS/LEXIDE/Dcl\ML620906.dcl] loading...
   pass1...
   pass2...
-main.asm(577):577: Warning 25 : illegal access to SFR
+main.asm(580):580: Warning 25 : illegal access to SFR
 	st	er0,	00h:0f014h
-main.asm(649):649: Warning 25 : illegal access to SFR
+main.asm(652):652: Warning 25 : illegal access to SFR
 	st	r0,	00h:0f037h
 
   Print   File : main.prn
@@ -39,7 +40,7 @@ main.asm(649):649: Warning 25 : illegal access to SFR
 
   Errors   : 0
   Warnings : 2  (/Wrpeast)
-  Lines    : 8424
+  Lines    : 9415
   Assembly End.
 
 'Finished building: main.asm'
@@ -60,7 +61,7 @@ Warning W011: CODE/TABLE segments overlap
  Absfile: TicTacToe.abs
  Mapfile: TicTacToe.map
 
- Total ROM usage = 00D65   (3429)
+ Total ROM usage = 01318   (4888)
  Total RAM usage = 0040A   (1034)
 
  Linkage completed.
@@ -82,12 +83,23 @@ Convert End.
 make --no-print-directory post-build
 'Run it'
 cd.. && build.bat
-hex2bin v1.0.1, Copyright (C) 1999 Jacques Pelletier
-Lowest address = 00000000
-Highest address = 00000D63
+hex2bin v2.5, Copyright (C) 2017 Jacques Pelletier & contributors
+
+Allocate_Memory_and_Rewind:
+Lowest address:   00000000
+Highest address:  00001316
+Starting address: 00000000
+Max Length:       4887
+
+Binary file start = 00000000
+Records start     = 00000000
+Highest address   = 00001316
+Pad Byte          = FF
+Overlapped record detected
+Overlapped record detected
         1 file(s) copied.
 Press any key to continue . . . 
 ' '
 
-11:15:12 Build Finished. 0 errors, 12 warnings. (took 1s.346ms)
+09:32:06 Build Finished. 0 errors, 13 warnings. (took 1s.520ms)
 
