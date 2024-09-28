@@ -1,4 +1,4 @@
-09:32:05 **** Incremental Build of configuration Debug for project TicTacToe ****
+18:17:33 **** Incremental Build of configuration Debug for project TicTacToe ****
 make all 
 'Building file: ../main.c'
 'Invoking: Compiler'
@@ -11,9 +11,9 @@ Copyright (C) 2008-2020 LAPIS Technology Co., Ltd.
 ..\main.c(268) : Warning : W4002 : 'const' ignored on argument
 ..\main.c(314) : Warning : W5002 : 'argument' : different levels of indirection
 ..\main.c(315) : Warning : W5002 : 'argument' : different levels of indirection
-..\main.c(322) : Warning : W5031 : 'drawstage': call to function with no prototype
-..\main.c(323) : Warning : W5031 : 'flipcell': call to function with no prototype
-..\main.c(376) : Warning : W5031 : 'checkWin': call to function with no prototype
+..\main.c(323) : Warning : W5031 : 'drawstage': call to function with no prototype
+..\main.c(324) : Warning : W5031 : 'flipcell': call to function with no prototype
+..\main.c(377) : Warning : W5031 : 'checkWin': call to function with no prototype
 
 Error(s)     :  0
 Warning(s)   :  7
@@ -29,9 +29,9 @@ Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
 [E:/LAPIS/LEXIDE/Dcl\ML620906.dcl] loading...
   pass1...
   pass2...
-main.asm(580):580: Warning 25 : illegal access to SFR
+main.asm(582):582: Warning 25 : illegal access to SFR
 	st	er0,	00h:0f014h
-main.asm(652):652: Warning 25 : illegal access to SFR
+main.asm(654):654: Warning 25 : illegal access to SFR
 	st	r0,	00h:0f037h
 
   Print   File : main.prn
@@ -40,7 +40,7 @@ main.asm(652):652: Warning 25 : illegal access to SFR
 
   Errors   : 0
   Warnings : 2  (/Wrpeast)
-  Lines    : 9415
+  Lines    : 9925
   Assembly End.
 
 'Finished building: main.asm'
@@ -61,7 +61,7 @@ Warning W011: CODE/TABLE segments overlap
  Absfile: TicTacToe.abs
  Mapfile: TicTacToe.map
 
- Total ROM usage = 01318   (4888)
+ Total ROM usage = 01725   (5925)
  Total RAM usage = 0040A   (1034)
 
  Linkage completed.
@@ -83,23 +83,23 @@ Convert End.
 make --no-print-directory post-build
 'Run it'
 cd.. && build.bat
+Overlapped record detected
 hex2bin v2.5, Copyright (C) 2017 Jacques Pelletier & contributors
+Overlapped record detected
 
 Allocate_Memory_and_Rewind:
 Lowest address:   00000000
-Highest address:  00001316
+Highest address:  00001724
 Starting address: 00000000
-Max Length:       4887
+Max Length:       5925
 
 Binary file start = 00000000
 Records start     = 00000000
-Highest address   = 00001316
+Highest address   = 00001724
 Pad Byte          = FF
-Overlapped record detected
-Overlapped record detected
         1 file(s) copied.
 Press any key to continue . . . 
 ' '
 
-09:32:06 Build Finished. 0 errors, 13 warnings. (took 1s.520ms)
+18:17:34 Build Finished. 0 errors, 13 warnings. (took 1s.473ms)
 

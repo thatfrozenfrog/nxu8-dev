@@ -1,5 +1,5 @@
 RLU8 Object Linker, Ver.1.60.3 Linkage Information
-[Fri Sep 27 09:32:06 2024]
+[Fri Sep 27 18:17:34 2024]
 
 
                          ------------------
@@ -36,11 +36,11 @@ Number of Symbols:
  +---------------------------------------------------------------------------+
  |          | CODE | DATA | BIT  |NVDATA|NVBIT |TABLE |NUMBER| TBIT || total |
  |----------+------+------+------+------+------+------+------+------++-------|
- | SEGMENT  |    25|     2|     0|     0|     0|     9|      |      ||     36|
+ | SEGMENT  |    25|     2|     0|     0|     0|    10|      |      ||     37|
  |----------+------+------+------+------+------+------+------+------++-------|
  | COMMUNAL |     0|     2|     0|     0|     0|     0|      |      ||      2|
  |----------+------+------+------+------+------+------+------+------++-------|
- | PUBLIC   |    25|     4|     0|     0|     0|     7|     0|     0||     36|
+ | PUBLIC   |    25|     4|     0|     0|     0|     8|     0|     0||     37|
  +---------------------------------------------------------------------------+
 
 Target:  ML620906 
@@ -86,21 +86,24 @@ Link Map - Program memory space #0 ( ROMWINDOW: 0000 - CFFF )
       S CODE   00:0486    00:04D7    0052(82)          $$render_rect$main
       S CODE   00:04D8    00:050B    0034(52)          $$sidimou8lw
       S CODE   00:050C    00:054B    0040(64)          $$cidimou8lw
-      S CODE   00:054C    00:083F    02F4(756)         $$main$main
-      S CODE   00:0840    00:084D    000E(14)          $$sidivu8lw
-      S CODE   00:084E    00:0903    00B6(182)         $$renderRLE$main
-      S CODE   00:0904    00:0941    003E(62)          $$delay$main
-      S CODE   00:0942    00:0A3B    00FA(250)         $$drawstage$main
-      S CODE   00:0A3C    00:0A9F    0064(100)         $$CheckButtons$main
-      S CODE   00:0AA0    00:0C03    0164(356)         $$set_bits$main
-      S TABLE  00:0C04    00:0C72    006F(111)         $$TABcross$main
->GAP<          00:0C73    00:0C73    0001(1)           (ROM)
-      S TABLE  00:0C74    00:0ECF    025C(604)         $$TABsuwa$main
-      S TABLE  00:0ED0    00:0ED7    0008(8)           $$init_info
-      S TABLE  00:0ED8    00:0F3B    0064(100)         $$TABcircle$main
-      S TABLE  00:0F3C    00:1133    01F8(504)         $$TABboard1$main
-      S TABLE  00:1134    00:113B    0008(8)           $$FINITTABmain
-      S TABLE  00:113C    00:1316    01DB(475)         $$TABplayerx$main
+      S CODE   00:054C    00:08F3    03A8(936)         $$main$main
+      S CODE   00:08F4    00:0901    000E(14)          $$sidivu8lw
+      S CODE   00:0902    00:09B7    00B6(182)         $$renderRLE$main
+      S CODE   00:09B8    00:09F5    003E(62)          $$delay$main
+      S CODE   00:09F6    00:0AEF    00FA(250)         $$drawstage$main
+      S CODE   00:0AF0    00:0B53    0064(100)         $$CheckButtons$main
+      S CODE   00:0B54    00:0CB7    0164(356)         $$set_bits$main
+      S TABLE  00:0CB8    00:0D26    006F(111)         $$TABcross$main
+>GAP<          00:0D27    00:0D27    0001(1)           (ROM)
+      S TABLE  00:0D28    00:0F83    025C(604)         $$TABsuwa$main
+      S TABLE  00:0F84    00:0F8B    0008(8)           $$init_info
+      S TABLE  00:0F8C    00:1107    017C(380)         $$TABtie$main
+      S TABLE  00:1108    00:116B    0064(100)         $$TABcircle$main
+      S TABLE  00:116C    00:1363    01F8(504)         $$TABboard1$main
+      S TABLE  00:1364    00:136B    0008(8)           $$FINITTABmain
+      S TABLE  00:136C    00:1546    01DB(475)         $$TABplayerx$main
+>GAP<          00:1547    00:1547    0001(1)           (ROM)
+      S TABLE  00:1548    00:1724    01DD(477)         $$TABplayery$main
 
 
 Link Map - Data memory space #0
@@ -126,16 +129,15 @@ Not Linked segments:
                           CODE       0072(114)         $$print$main
                           CODE       003A(58)          $$invert_line$main
                           CODE       0096(150)         $$PrintWord$main
-                          TABLE      01DD(477)         $$TABplayery$main
      --------------------------------------------------------------
 
 
-Total size (CODE  ) = 00C06   (3078)
+Total size (CODE  ) = 00CBA   (3258)
 Total size (DATA  ) = 0040A   (1034)
 Total size (BIT   ) = 00000.0 (0.0)
 Total size (NVDATA) = 00000   (0)
 Total size (NVBIT ) = 00000.0 (0.0)
-Total size (TABLE ) = 00712   (1810)
+Total size (TABLE ) = 00A6B   (2667)
 
           -----------------------
            Symbol Table Synopsis
@@ -144,27 +146,29 @@ Total size (TABLE ) = 00712   (1810)
 Module         Value     Type         Symbol
 ------         -----     ----------   ------
 main
-               00:0A3C   Pub CODE     _CheckButtons
+               00:0AF0   Pub CODE     _CheckButtons
                00:01C4   Pub CODE     _checkWin
                00:054C   Pub CODE     _main
-               00:0942   Pub CODE     _drawstage
+               00:09F6   Pub CODE     _drawstage
                00:02E4   Pub CODE     _drawbitmap
-               00:0904   Pub CODE     _delay
-               00:0AA0   Pub CODE     _set_bits
+               00:09B8   Pub CODE     _delay
+               00:0B54   Pub CODE     _set_bits
                00:044A   Pub CODE     _get_tile
                00:02B4   Pub CODE     _set_tile
                00:0402   Pub CODE     _flipcell
-               00:084E   Pub CODE     _renderRLE
+               00:0902   Pub CODE     _renderRLE
                00:0486   Pub CODE     _render_rect
-               00:0F3C   Pub TABLE    _board1
-               00:0C04   Pub TABLE    _cross
-               00:0ED8   Pub TABLE    _circle
+               00:116C   Pub TABLE    _board1
+               00:0CB8   Pub TABLE    _cross
+               00:0F8C   Pub TABLE    _tie
+               00:1108   Pub TABLE    _circle
                00:EBFF   Pub DATA     _lastbutton
                00:EBF8   Pub DATA     _printdwordbuf
                00:EBFE   Pub DATA     _posx
                00:EBFD   Pub DATA     _posy
-               00:0C74   Pub TABLE    _suwa
-               00:113C   Pub TABLE    _playerx
+               00:0D28   Pub TABLE    _suwa
+               00:136C   Pub TABLE    _playerx
+               00:1548   Pub TABLE    _playery
 
 Module         Value     Type         Symbol
 ------         -----     ----------   ------
@@ -195,7 +199,7 @@ Module         Value     Type         Symbol
 memset_f
 
 
-Total ROM usage = 01318   (4888)
+Total ROM usage = 01725   (5925)
 Total RAM usage = 0040A   (1034)
 
 End of mapfile.

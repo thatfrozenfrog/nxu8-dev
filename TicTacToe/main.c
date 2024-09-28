@@ -315,6 +315,7 @@ void main() {
 	memset(0xf800,0x00,0x800);
 
 
+
 	// player:
 	// X = 0x01
 	// O = 0x02
@@ -403,8 +404,23 @@ void main() {
 
 	}
 	//------------------------------------------------------------
-	renderRLE(playerx,sizeof(playerx)-1,22,24);
-	render_rect(22,24,22+148,24+14,0,1);
+	if (deref(0xD180) == 0x69){
+		if (player == 0x01)
+			renderRLE(playerx,sizeof(playerx)-1,22,0);
+		if (player == 0x02)
+			renderRLE(playery,sizeof(playery)-1,22,0);
+	} else {
+		renderRLE(tie,sizeof(tie)-1,33,0);
+	}
+	render_rect(0,0,192,14,0,1);
+
+	//render_rect(0,0,192,14,0,1);
+	for (i = 0; i <= 96; i++){
+		render_rect(0,0,i,14,0,0);
+		render_rect(192-i,0,192,14,0,0);
+		//render_rect(i,0,192-i,14,0,1);
+		delay(200);
+	}
 }
 
 
