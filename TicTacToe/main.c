@@ -304,11 +304,12 @@ void main() {
 	char screen[] = "Tic Tac Toe";
 	char invalid[] = "Invalid move.";
 	byte board[3][3] = {{0x00, 0x00, 0x00}, {0x00, 0x00, 0x00}, {0x00, 0x00, 0x00}};
-
+	byte animation = 0;
 	int turn = 0;
 	int gameEnd = 0;
 	int l,i;
 	byte player = 0x01;
+	byte select = 1;
 	uint8_t *mem_address = (uint8_t *)0xF820;
 	posx = 1; posy = 1;
 	memset(0xD000,0x00,0x15D3);
@@ -377,7 +378,7 @@ void main() {
 					if (checkWin(player) == 0x01) {
 
 						drawstage(); //Later
-						flipcell();
+						//flipcell();
 						deref(0xD180) = 0x69;
 						gameEnd = 1;
 						break;
@@ -413,15 +414,51 @@ void main() {
 		renderRLE(tie,sizeof(tie)-1,33,0);
 	}
 	render_rect(0,0,192,14,0,1);
+	menu(player,select);
 
-	//render_rect(0,0,192,14,0,1);
-	for (i = 0; i <= 96; i++){
-		render_rect(0,0,i,14,0,0);
-		render_rect(192-i,0,192,14,0,0);
-		//render_rect(i,0,192-i,14,0,1);
-		delay(200);
-	}
+
+
 }
+
+void menu(byte player, byte select){
+	byte animation = 0;
+	int i = 0;
+	if (select == 0x00){
+		select = 0x01;
+	}
+
+
+
+
+	renderRLE(rematch,sizeof(rematch)-1,62,22);
+	renderRLE(quit,sizeof(quit)-1,81,44);
+
+
+	render_rect(0,22,192,22+13,0,1);
+	render_rect(0,44,192,44+13,0,1);
+
+
+	while (!animation){
+		//render_rect(0,0,i,14,0,0);
+		//render_rect(192-i,0,192,14,0,0);
+		byte pressedbutton = CheckButtons();
+		render_rect(0,22*select,i,22*select+13,0,0);
+		render_rect(192-i,22*select,192,22*select+13,0,0);
+		delay(300);
+		i += 1;
+		if ( i == 96 || pressedbutton == SP_DOWN || pressedbutton == SP_UP){
+			animation = 1;
+			if ( i != 96 ) {
+				select = ( select == 0x01 ) ? 0x02 : 0x01;
+				render_rect(0,22,192,22+13,0,0);
+				render_rect(0,44,192,44+13,0,0);
+				menu(player,select);
+			}
+		}
+	}
+
+}
+
 
 
 void flipcell(){
