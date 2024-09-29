@@ -39,7 +39,7 @@ CVERSION 3.66.2
 CGLOBAL 01H 03H 0000H "PrintWord" 08H 02H 02H 00H 83H 16H 00H 00H 07H
 CGLOBAL 01H 02H 0000H "CheckButtons" 08H 02H 75H 00H 82H 06H 00H 00H 00H
 CGLOBAL 01H 03H 0000H "checkWin" 08H 02H 89H 00H 83H 0aH 00H 00H 01H
-CGLOBAL 01H 03H 0000H "main" 08H 02H 81H 00H 82H 3aH 00H 00H 07H
+CGLOBAL 01H 03H 0000H "main" 08H 02H 81H 00H 82H 32H 00H 00H 07H
 CGLOBAL 01H 03H 0000H "menu" 08H 02H 86H 00H 83H 18H 00H 00H 07H
 CGLOBAL 01H 03H 0000H "drawstage" 08H 02H 88H 00H 83H 14H 00H 00H 07H
 CGLOBAL 01H 03H 0000H "invert_line" 08H 02H 7EH 00H 83H 08H 00H 00H 07H
@@ -121,12 +121,12 @@ CFILE 0001H 00000070H "..\\base.h"
 CFILE 0002H 0000004FH "..\\suwa.h"
 CFILE 0003H 00000038H "..\\printlib.h"
 CFILE 0004H 00000403H "..\\thefont.h"
-CFILE 0005H 00000105H "C:\\LAPIS\\LEXIDE\\BuildTools\\Ver.20231124\\Inc\\U16\\stdio.h"
-CFILE 0006H 0000007AH "C:\\LAPIS\\LEXIDE\\BuildTools\\Ver.20231124\\Inc\\U16\\yvals.h"
-CFILE 0007H 000000C9H "C:\\LAPIS\\LEXIDE\\BuildTools\\Ver.20231124\\Inc\\U16\\string.h"
+CFILE 0005H 00000105H "E:\\LAPIS\\LEXIDE\\BuildTools\\Ver.20231124\\Inc\\U16\\stdio.h"
+CFILE 0006H 0000007AH "E:\\LAPIS\\LEXIDE\\BuildTools\\Ver.20231124\\Inc\\U16\\yvals.h"
+CFILE 0007H 000000C9H "E:\\LAPIS\\LEXIDE\\BuildTools\\Ver.20231124\\Inc\\U16\\string.h"
 CFILE 0008H 00000066H "..\\tictactoe.h"
 CFILE 0009H 000000EBH "..\\screen.h"
-CFILE 0000H 00000234H "..\\main.c"
+CFILE 0000H 00000218H "..\\main.c"
 
 	rseg $$print$main
 CFUNCTION 0
@@ -1886,18 +1886,18 @@ CBLOCK 129 1 303
 ;;void main() {
 CLINEA 0000H 0001H 012FH 0001H 000DH
 	mov	fp,	sp
-	add	sp,	#-050
+	add	sp,	#-042
 CBLOCK 129 2 303
 CLOCAL 43H 000CH 000CH 0002H "screen" 05H 01H 0CH 00H 00H 00H
 CLOCAL 43H 000EH 001AH 0002H "invalid" 05H 01H 0EH 00H 00H 00H
 CLOCAL 42H 0009H 0024H 0002H "board" 08H 01H 03H 00H 01H 03H 00H 00H 00H
-CLOCAL 42H 0001H 0025H 0002H "animation" 02H 00H 00H
-CLOCAL 43H 0002H 0028H 0002H "turn" 02H 00H 01H
-CLOCAL 43H 0002H 002AH 0002H "gameEnd" 02H 00H 01H
+CLOCAL 4AH 0001H 0000H 0002H "animation" 02H 00H 00H
+CLOCAL 43H 0002H 0026H 0002H "turn" 02H 00H 01H
+CLOCAL 43H 0002H 0028H 0002H "gameEnd" 02H 00H 01H
 CLOCAL 4BH 0002H 0000H 0002H "l" 02H 00H 01H
-CLOCAL 43H 0002H 0030H 0002H "i" 02H 00H 01H
-CLOCAL 42H 0001H 002BH 0002H "player" 02H 00H 00H
-CLOCAL 42H 0001H 002CH 0002H "select" 02H 00H 00H
+CLOCAL 4BH 0002H 0000H 0002H "i" 02H 00H 01H
+CLOCAL 42H 0001H 0029H 0002H "player" 02H 00H 00H
+CLOCAL 4AH 0001H 0000H 0002H "select" 02H 00H 00H
 CLOCAL 6AH 0003H 0000H 0002H "mem_address" 04H 03H 00H 00H 00H
 
 ;;	char screen[] = "Tic Tac Toe";
@@ -1970,27 +1970,19 @@ CLINEA 0000H 0001H 0132H 0002H 0051H
 	st	r0,	-29[fp]
 	st	r0,	-28[fp]
 
-;;	byte animation = 0;
-CLINEA 0000H 0001H 0133H 0002H 0014H
-	st	r0,	-37[fp]
-
 ;;	int turn = 0;
 CLINEA 0000H 0001H 0134H 0002H 000EH
 	mov	er0,	#0 
-	st	er0,	-40[fp]
+	st	er0,	-38[fp]
 
 ;;	int gameEnd = 0;
 CLINEA 0000H 0001H 0135H 0002H 0011H
-	st	er0,	-42[fp]
+	st	er0,	-40[fp]
 
 ;;	byte player = 0x01;
 CLINEA 0000H 0001H 0137H 0002H 0014H
 	mov	r0,	#01h
-	st	r0,	-43[fp]
-
-;;	byte select = 1;
-CLINEA 0000H 0001H 0138H 0002H 0011H
-	st	r0,	-44[fp]
+	st	r0,	-41[fp]
 
 ;;	posx = 1; posy = 1;
 CLINEA 0000H 0001H 013AH 0002H 0014H
@@ -2061,12 +2053,12 @@ CLINEA 0000H 0001H 0146H 0002H 002AH
 CLINEA 0000H 0000H 0147H 0002H 0013H
 _$L178 :
 CBLOCK 129 3 327
-CLOCAL 42H 0001H 002DH 0003H "pressedbutton" 02H 00H 00H
+CLOCAL 42H 0001H 002AH 0003H "pressedbutton" 02H 00H 00H
 
 ;;		byte pressedbutton = CheckButtons();
 CLINEA 0000H 0001H 0149H 0003H 0026H
 	bl	_CheckButtons
-	st	r0,	-45[fp]
+	st	r0,	-42[fp]
 
 ;;		if (pressedbutton != 0xFF){
 CLINEA 0000H 0001H 014AH 0003H 001DH
@@ -2127,30 +2119,31 @@ CLINEA 0000H 0000H 014DH 0003H 001AH
 _$M26 :
 
 ;;		}
-CLINEA 0000H 0000H 0194H 0003H 0003H
+CLINEA 0000H 0000H 0195H 0003H 0003H
 _$L187 :
-CBLOCKEND 129 3 406
+CBLOCKEND 129 3 407
+CBLOCKEND 129 5 422
 
 ;;	while (!gameEnd) {
 CLINEA 0000H 0000H 0147H 0022H 002EH
-	l	er0,	-42[fp]
+	l	er0,	-40[fp]
 	beq	_$L178
 
 ;;	if (deref(0xD180) == 0x69){
-CLINEA 0000H 0001H 0198H 0002H 001CH
+CLINEA 0000H 0001H 0199H 0002H 001CH
 	l	r0,	00h:0d180h
 	cmp	r0,	#069h
 	bne	_$L213
-CBLOCK 129 10 408
+CBLOCK 129 10 409
 
 ;;		if (player == 0x01)
-CLINEA 0000H 0001H 0199H 0003H 0015H
-	l	r0,	-43[fp]
+CLINEA 0000H 0001H 019AH 0003H 0015H
+	l	r0,	-41[fp]
 	cmp	r0,	#01h
 	bne	_$L215
 
 ;;			renderRLE(playerx,sizeof(playerx)-1,22,0);
-CLINEA 0000H 0001H 019AH 0004H 002DH
+CLINEA 0000H 0001H 019BH 0004H 002DH
 	mov	er0,	#0 
 	push	er0
 	mov	er0,	#22
@@ -2166,13 +2159,13 @@ CLINEA 0000H 0001H 019AH 0004H 002DH
 _$L215 :
 
 ;;		if (player == 0x02)
-CLINEA 0000H 0001H 019BH 0003H 0015H
-	l	r0,	-43[fp]
+CLINEA 0000H 0001H 019CH 0003H 0015H
+	l	r0,	-41[fp]
 	cmp	r0,	#02h
 	bne	_$L219
 
 ;;			renderRLE(playery,sizeof(playery)-1,22,0);
-CLINEA 0000H 0001H 019CH 0004H 002DH
+CLINEA 0000H 0001H 019DH 0004H 002DH
 	mov	er0,	#0 
 	push	er0
 	mov	er0,	#22
@@ -2185,16 +2178,16 @@ CLINEA 0000H 0001H 019CH 0004H 002DH
 	mov	r2,	#SEG _playery
 	bl	_renderRLE
 	add	sp,	#6 
-CBLOCKEND 129 10 413
+CBLOCKEND 129 10 414
 	bal	_$L219
 _$L213 :
 
 ;;	} else {
-CLINEA 0000H 0000H 019DH 0002H 0009H
-CBLOCK 129 11 413
+CLINEA 0000H 0000H 019EH 0002H 0009H
+CBLOCK 129 11 414
 
 ;;		renderRLE(tie,sizeof(tie)-1,33,0);
-CLINEA 0000H 0001H 019EH 0003H 0024H
+CLINEA 0000H 0001H 019FH 0003H 0024H
 	mov	er0,	#0 
 	push	er0
 	mov	er0,	#33
@@ -2207,14 +2200,14 @@ CLINEA 0000H 0001H 019EH 0003H 0024H
 	mov	r2,	#SEG _tie
 	bl	_renderRLE
 	add	sp,	#6 
-CBLOCKEND 129 11 415
+CBLOCKEND 129 11 416
 
 ;;	}
-CLINEA 0000H 0000H 019FH 0002H 0002H
+CLINEA 0000H 0000H 01A0H 0002H 0002H
 _$L219 :
 
 ;;	render_rect(0,0,192,14,0,1);
-CLINEA 0000H 0001H 01A0H 0002H 001DH
+CLINEA 0000H 0001H 01A1H 0002H 001DH
 	mov	r0,	#01h
 	push	r0
 	mov	r0,	#00h
@@ -2229,227 +2222,15 @@ CLINEA 0000H 0001H 01A0H 0002H 001DH
 	add	sp,	#8 
 
 ;;	menu(player,select);
-CLINEA 0000H 0001H 01A1H 0002H 0015H
+CLINEA 0000H 0001H 01A2H 0002H 0015H
 	mov	er2,	#1 
-	l	r0,	-43[fp]
+	l	r0,	-41[fp]
 	mov	r1,	#00h
 	bl	_menu
-
-;;	renderRLE(rematch,sizeof(rematch)-1,62,22);
-CLINEA 0000H 0001H 01A3H 0002H 002CH
-	mov	er0,	#22
-	push	er0
-	mov	er0,	#62
-	push	er0
-	mov	r0,	#0b8h
-	push	er0
-	mov	r0,	#BYTE1 OFFSET _rematch
-	mov	r1,	#BYTE2 OFFSET _rematch
-	mov	r2,	#SEG _rematch
-	bl	_renderRLE
-	add	sp,	#6 
-
-;;	renderRLE(quit,sizeof(quit)-1,81,44);
-CLINEA 0000H 0001H 01A4H 0002H 0026H
-	mov	er0,	#44
-	push	er0
-	mov	r0,	#051h
-	push	er0
-	mov	r0,	#07ah
-	push	er0
-	mov	r0,	#BYTE1 OFFSET _quit
-	mov	r1,	#BYTE2 OFFSET _quit
-	mov	r2,	#SEG _quit
-	bl	_renderRLE
-	add	sp,	#6 
-
-;;	render_rect(0,22,192,22+13,0,1);
-CLINEA 0000H 0001H 01A7H 0002H 0021H
-	mov	r0,	#01h
-	push	r0
-	mov	r0,	#00h
-	push	r0
-	mov	er0,	#35
-	push	er0
-	mov	r0,	#0c0h
-	push	er0
-	mov	er2,	#22
-	mov	er0,	#0 
-	bl	_render_rect
-	add	sp,	#8 
-
-;;	render_rect(0,44,192,44+13,0,1);
-CLINEA 0000H 0001H 01A8H 0002H 0021H
-	mov	r0,	#01h
-	push	r0
-	mov	r0,	#00h
-	push	r0
-	mov	er0,	#57
-	push	er0
-	mov	r0,	#0c0h
-	push	er0
-	mov	er2,	#44
-	mov	er0,	#0 
-	bl	_render_rect
-	add	sp,	#8 
-
-;;	i = 0;
-CLINEA 0000H 0001H 01A9H 0002H 0007H
-	mov	er0,	#0 
-	st	er0,	-48[fp]
-
-;;	while (!animation){
-CLINEA 0000H 0000H 01ABH 0002H 0014H
-_$L222 :
-CBLOCK 129 12 427
-CLOCAL 42H 0001H 0031H 000CH "pressedbutton" 02H 00H 00H
-
-;;		byte pressedbutton = CheckButtons();
-CLINEA 0000H 0001H 01ACH 0003H 0026H
-	bl	_CheckButtons
-	st	r0,	-49[fp]
-
-;;		render_rect(0,22,i,22+13,0,0);
-CLINEA 0000H 0001H 01ADH 0003H 0020H
-	mov	r0,	#00h
-	push	r0
-	push	r0
-	mov	er0,	#35
-	push	er0
-	l	er0,	-48[fp]
-	push	er0
-	mov	er2,	#22
-	mov	er0,	#0 
-	bl	_render_rect
-	add	sp,	#8 
-
-;;		render_rect(192-i,22,192,22+13,0,0);
-CLINEA 0000H 0001H 01AEH 0003H 0026H
-	mov	r0,	#00h
-	push	r0
-	push	r0
-	mov	er0,	#35
-	push	er0
-	mov	r0,	#0c0h
-	push	er0
-	mov	er2,	#22
-	l	er4,	-48[fp]
-	sub	r0,	r4
-	subc	r1,	r5
-	bl	_render_rect
-	add	sp,	#8 
-
-;;		delay(300);
-CLINEA 0000H 0001H 01AFH 0003H 000DH
-	mov	r0,	#02ch
-	mov	r1,	#01h
-	bl	_delay
-
-;;		i += 1;
-CLINEA 0000H 0001H 01B0H 0003H 0009H
-	l	er0,	-48[fp]
-	add	er0,	#1 
-	st	er0,	-48[fp]
-
-;;		if ( i == 96 || pressedbutton == SP_DOWN || pressedbutton == SP_UP ){
-CLINEA 0000H 0001H 01B1H 0003H 0047H
-	cmp	r0,	#060h
-	cmpc	r1,	#00h
-	beq	_$L227
-	l	r0,	-49[fp]
-	cmp	r0,	#021h
-	beq	_$L227
-	cmp	r0,	#028h
-	bne	_$L236
-_$L227 :
-CBLOCK 129 13 433
-
-;;			animation = 1;
-CLINEA 0000H 0001H 01B2H 0004H 0011H
-	mov	r0,	#01h
-	st	r0,	-37[fp]
-
-;;			if ( i != 96 ) {
-CLINEA 0000H 0001H 01B3H 0004H 0013H
-	l	er0,	-48[fp]
-	cmp	r0,	#060h
-	cmpc	r1,	#00h
-	beq	_$L236
-CBLOCK 129 14 435
-
-;;				if (select == 0x01){
-CLINEA 0000H 0001H 01B4H 0005H 0018H
-	l	r0,	-44[fp]
-	cmp	r0,	#01h
-	bne	_$L238
-CBLOCK 129 15 436
-
-;;					select = 0x02;
-CLINEA 0000H 0001H 01B5H 0006H 0013H
-	mov	r0,	#02h
-CBLOCKEND 129 15 438
-	bal	_$L240
-_$L238 :
-
-;;				} else {
-CLINEA 0000H 0000H 01B6H 0005H 000CH
-CBLOCK 129 16 438
-
-;;					select = 0x01;
-CLINEA 0000H 0001H 01B7H 0006H 0013H
-	mov	r0,	#01h
-CBLOCKEND 129 16 440
-
-;;				}
-CLINEA 0000H 0000H 01B8H 0005H 0005H
-_$L240 :
-	st	r0,	-44[fp]
-
-;;				render_rect(0,22,192,22+13,0,0);
-CLINEA 0000H 0001H 01B9H 0005H 0024H
-	mov	r0,	#00h
-	push	r0
-	push	r0
-	mov	er0,	#35
-	push	er0
-	mov	r0,	#0c0h
-	push	er0
-	mov	er2,	#22
-	mov	er0,	#0 
-	bl	_render_rect
-	add	sp,	#8 
-
-;;				render_rect(0,44,192,44+13,0,0);
-CLINEA 0000H 0001H 01BAH 0005H 0024H
-	mov	r0,	#00h
-	push	r0
-	push	r0
-	mov	er0,	#57
-	push	er0
-	mov	r0,	#0c0h
-	push	er0
-	mov	er2,	#44
-	mov	er0,	#0 
-	bl	_render_rect
-	add	sp,	#8 
-CBLOCKEND 129 14 444
-
-;;			}
-CLINEA 0000H 0000H 01BCH 0004H 0004H
-_$L236 :
-CBLOCKEND 129 13 445
-CBLOCKEND 129 12 446
-
-;;	while (!animation){
-CLINEA 0000H 0000H 01ABH 0022H 002EH
-	l	r0,	-37[fp]
-	bne	_$M27
-	b	_$L222
-_$M27 :
-CBLOCKEND 129 2 450
+CBLOCKEND 129 2 422
 
 ;;}
-CLINEA 0000H 0001H 01C2H 0001H 0001H
+CLINEA 0000H 0001H 01A6H 0001H 0001H
 _$$end_of_main :
 	bal	$
 
@@ -2640,7 +2421,7 @@ CLINEA 0000H 0001H 0172H 0006H 001AH
 
 ;;					set_tile(posx, posy, player);
 CLINEA 0000H 0001H 0173H 0006H 0022H
-	l	r2,	-43[fp]
+	l	r2,	-41[fp]
 	l	r1,	FAR _posy
 	l	r0,	FAR _posx
 	bl	_set_tile
@@ -2652,7 +2433,7 @@ CLINEA 0000H 0001H 0174H 0006H 001AH
 
 ;;					deref(0xD270) = player;
 CLINEA 0000H 0001H 0175H 0006H 001CH
-	l	r0,	-43[fp]
+	l	r0,	-41[fp]
 	st	r0,	00h:0d270h
 
 ;;					drawstage();
@@ -2665,7 +2446,7 @@ CLINEA 0000H 0001H 0177H 0006H 0010H
 
 ;;					if (checkWin(player) == 0x01) {
 CLINEA 0000H 0001H 017AH 0006H 0024H
-	l	r0,	-43[fp]
+	l	r0,	-41[fp]
 	mov	r1,	#00h
 	bl	_checkWin
 	cmp	r0,	#01h
@@ -2685,7 +2466,7 @@ CLINEA 0000H 0001H 017EH 0007H 001BH
 ;;						gameEnd = 1;
 CLINEA 0000H 0001H 017FH 0007H 0012H
 	mov	er0,	#1 
-	st	er0,	-42[fp]
+	st	er0,	-40[fp]
 
 ;;						break;
 CLINEA 0000H 0001H 0180H 0007H 000CH
@@ -2698,7 +2479,7 @@ _$L198 :
 
 ;;					player = ( player == 0x01 ) ? 0x02 : 0x01;
 CLINEA 0000H 0000H 0186H 0006H 002FH
-	l	r0,	-43[fp]
+	l	r0,	-41[fp]
 	cmp	r0,	#01h
 	bne	_$L200
 	mov	er0,	#2 
@@ -2706,19 +2487,21 @@ CLINEA 0000H 0000H 0186H 0006H 002FH
 _$L200 :
 	mov	er0,	#1 
 _$L202 :
-	st	r0,	-43[fp]
+	st	r0,	-41[fp]
 
 ;;					turn += 1;
 CLINEA 0000H 0001H 0187H 0006H 000FH
-	l	er0,	-40[fp]
+	l	er0,	-38[fp]
 	add	er0,	#1 
-	st	er0,	-40[fp]
+	st	er0,	-38[fp]
 
 ;;				        && checkWin(0x02) == 0) {
 CLINEA 0000H 0000H 0189H 000DH 0025H
 	cmp	r0,	#09h
 	cmpc	r1,	#00h
-	bne	_$L203
+	beq	_$M27
+	b	_$L187
+_$M27 :
 
 ;;				    if (turn == 9 && checkWin(0x01) == 0
 CLINEA 0000H 0001H 0188H 0009H 002CH
@@ -2728,11 +2511,15 @@ CLINEA 0000H 0001H 0188H 0009H 002CH
 ;;				        && checkWin(0x02) == 0) {
 CLINEA 0000H 0000H 0189H 000DH 0025H
 	mov	er0,	er0
-	bne	_$L203
+	beq	_$M28
+	b	_$L187
+_$M28 :
 	mov	er0,	#2 
 	bl	_checkWin
 	mov	er0,	er0
-	bne	_$L203
+	beq	_$M29
+	b	_$L187
+_$M29 :
 CBLOCK 129 9 393
 
 ;;				    	deref(0xD180) = 0xFF;
@@ -2743,7 +2530,7 @@ CLINEA 0000H 0001H 018BH 000AH 001EH
 ;;				    	gameEnd = 1;
 CLINEA 0000H 0001H 018CH 000AH 0015H
 	mov	er0,	#1 
-	st	er0,	-42[fp]
+	st	er0,	-40[fp]
 CBLOCKEND 129 9 397
 
 ;;				    }
@@ -2751,17 +2538,10 @@ CLINEA 0000H 0000H 018DH 0009H 0009H
 _$L203 :
 CBLOCKEND 129 7 400
 
-;;				delay(100);
-CLINEA 0000H 0001H 0191H 0005H 000FH
-	mov	r0,	#064h
-	mov	r1,	#00h
-	bl	_delay
-
 ;;				break;
 CLINEA 0000H 0001H 0192H 0005H 000AH
 	b	_$L187
-CBLOCKEND 129 5 404
-CBLOCKEND 129 1 450
+CBLOCKEND 129 1 422
 CFUNCTIONEND 129
 
 
@@ -2769,16 +2549,16 @@ CFUNCTIONEND 129
 CFUNCTION 134
 
 _menu	:
-CBLOCK 134 1 452
+CBLOCK 134 1 424
 
 ;;void menu(byte player, byte select){
-CLINEA 0000H 0001H 01C4H 0001H 0024H
+CLINEA 0000H 0001H 01A8H 0001H 0024H
 	push	lr
 	bl	__regpushu8lw
 	add	sp,	#-06
 	mov	r9,	r1
 	mov	r8,	r0
-CBLOCK 134 2 452
+CBLOCK 134 2 424
 CRET 0012H
 CARGUMENT 46H 0001H 001CH "player" 02H 00H 00H
 CARGUMENT 46H 0001H 001DH "select" 02H 00H 00H
@@ -2786,32 +2566,32 @@ CLOCAL 42H 0001H 0001H 0002H "animation" 02H 00H 00H
 CLOCAL 43H 0002H 0004H 0002H "i" 02H 00H 01H
 
 ;;	byte animation = 0;
-CLINEA 0000H 0001H 01C5H 0002H 0014H
+CLINEA 0000H 0001H 01A9H 0002H 0014H
 	mov	r0,	#00h
 	st	r0,	-1[fp]
 
 ;;	int i = 0;
-CLINEA 0000H 0001H 01C6H 0002H 000BH
+CLINEA 0000H 0001H 01AAH 0002H 000BH
 	mov	er0,	#0 
 	st	er0,	-4[fp]
 
 ;;	if (select == 0x00){
-CLINEA 0000H 0001H 01C7H 0002H 0015H
+CLINEA 0000H 0001H 01ABH 0002H 0015H
 	cmp	r9,	#00h
-	bne	_$L242
-CBLOCK 134 3 455
+	bne	_$L221
+CBLOCK 134 3 427
 
 ;;		select = 0x01;
-CLINEA 0000H 0001H 01C8H 0003H 0010H
+CLINEA 0000H 0001H 01ACH 0003H 0010H
 	mov	r9,	#01h
-CBLOCKEND 134 3 457
+CBLOCKEND 134 3 429
 
 ;;	}
-CLINEA 0000H 0000H 01C9H 0002H 0002H
-_$L242 :
+CLINEA 0000H 0000H 01ADH 0002H 0002H
+_$L221 :
 
 ;;	renderRLE(rematch,sizeof(rematch)-1,62,22);
-CLINEA 0000H 0001H 01CEH 0002H 002CH
+CLINEA 0000H 0001H 01B2H 0002H 002CH
 	mov	er0,	#22
 	push	er0
 	mov	er0,	#62
@@ -2825,7 +2605,7 @@ CLINEA 0000H 0001H 01CEH 0002H 002CH
 	add	sp,	#6 
 
 ;;	renderRLE(quit,sizeof(quit)-1,81,44);
-CLINEA 0000H 0001H 01CFH 0002H 0026H
+CLINEA 0000H 0001H 01B3H 0002H 0026H
 	mov	er0,	#44
 	push	er0
 	mov	r0,	#051h
@@ -2839,7 +2619,7 @@ CLINEA 0000H 0001H 01CFH 0002H 0026H
 	add	sp,	#6 
 
 ;;	render_rect(0,22,192,22+13,0,1);
-CLINEA 0000H 0001H 01D2H 0002H 0021H
+CLINEA 0000H 0001H 01B6H 0002H 0021H
 	mov	r0,	#01h
 	push	r0
 	mov	r0,	#00h
@@ -2854,7 +2634,7 @@ CLINEA 0000H 0001H 01D2H 0002H 0021H
 	add	sp,	#8 
 
 ;;	render_rect(0,44,192,44+13,0,1);
-CLINEA 0000H 0001H 01D3H 0002H 0021H
+CLINEA 0000H 0001H 01B7H 0002H 0021H
 	mov	r0,	#01h
 	push	r0
 	mov	r0,	#00h
@@ -2869,18 +2649,18 @@ CLINEA 0000H 0001H 01D3H 0002H 0021H
 	add	sp,	#8 
 
 ;;	while (!animation){
-CLINEA 0000H 0000H 01D6H 0002H 0014H
-_$L246 :
-CBLOCK 134 4 470
+CLINEA 0000H 0000H 01BAH 0002H 0014H
+_$L225 :
+CBLOCK 134 4 442
 CLOCAL 42H 0001H 0005H 0004H "pressedbutton" 02H 00H 00H
 
 ;;		byte pressedbutton = CheckButtons();
-CLINEA 0000H 0001H 01D9H 0003H 0026H
+CLINEA 0000H 0001H 01BDH 0003H 0026H
 	bl	_CheckButtons
 	st	r0,	-5[fp]
 
 ;;		render_rect(0,22*select,i,22*select+13,0,0);
-CLINEA 0000H 0001H 01DAH 0003H 002EH
+CLINEA 0000H 0001H 01BEH 0003H 002EH
 	mov	r0,	#00h
 	push	r0
 	push	r0
@@ -2902,7 +2682,7 @@ CLINEA 0000H 0001H 01DAH 0003H 002EH
 	add	sp,	#8 
 
 ;;		render_rect(192-i,22*select,192,22*select+13,0,0);
-CLINEA 0000H 0001H 01DBH 0003H 0034H
+CLINEA 0000H 0001H 01BFH 0003H 0034H
 	mov	r0,	#00h
 	push	r0
 	push	r0
@@ -2926,56 +2706,56 @@ CLINEA 0000H 0001H 01DBH 0003H 0034H
 	add	sp,	#8 
 
 ;;		delay(300);
-CLINEA 0000H 0001H 01DCH 0003H 000DH
+CLINEA 0000H 0001H 01C0H 0003H 000DH
 	mov	r0,	#02ch
 	mov	r1,	#01h
 	bl	_delay
 
 ;;		i += 1;
-CLINEA 0000H 0001H 01DDH 0003H 0009H
+CLINEA 0000H 0001H 01C1H 0003H 0009H
 	l	er0,	-4[fp]
 	add	er0,	#1 
 	st	er0,	-4[fp]
 
 ;;		if ( i == 96 || pressedbutton == SP_DOWN || pressedbutton == SP_UP){
-CLINEA 0000H 0001H 01DEH 0003H 0046H
+CLINEA 0000H 0001H 01C2H 0003H 0046H
 	cmp	r0,	#060h
 	cmpc	r1,	#00h
-	beq	_$L251
+	beq	_$L230
 	l	r0,	-5[fp]
 	cmp	r0,	#021h
-	beq	_$L251
+	beq	_$L230
 	cmp	r0,	#028h
-	bne	_$L260
-_$L251 :
-CBLOCK 134 5 478
+	bne	_$L239
+_$L230 :
+CBLOCK 134 5 450
 
 ;;			animation = 1;
-CLINEA 0000H 0001H 01DFH 0004H 0011H
+CLINEA 0000H 0001H 01C3H 0004H 0011H
 	mov	r0,	#01h
 	st	r0,	-1[fp]
 
 ;;			if ( i != 96 ) {
-CLINEA 0000H 0001H 01E0H 0004H 0013H
+CLINEA 0000H 0001H 01C4H 0004H 0013H
 	l	er0,	-4[fp]
 	cmp	r0,	#060h
 	cmpc	r1,	#00h
-	beq	_$L260
-CBLOCK 134 6 480
+	beq	_$L239
+CBLOCK 134 6 452
 
 ;;				select = ( select == 0x01 ) ? 0x02 : 0x01;
-CLINEA 0000H 0000H 01E1H 0005H 002EH
+CLINEA 0000H 0000H 01C5H 0005H 002EH
 	cmp	r9,	#01h
-	bne	_$L262
+	bne	_$L241
 	mov	er0,	#2 
-	bal	_$L264
-_$L262 :
+	bal	_$L243
+_$L241 :
 	mov	er0,	#1 
-_$L264 :
+_$L243 :
 	mov	r9,	r0
 
 ;;				render_rect(0,22,192,22+13,0,0);
-CLINEA 0000H 0001H 01E2H 0005H 0024H
+CLINEA 0000H 0001H 01C6H 0005H 0024H
 	mov	r0,	#00h
 	push	r0
 	push	r0
@@ -2989,7 +2769,7 @@ CLINEA 0000H 0001H 01E2H 0005H 0024H
 	add	sp,	#8 
 
 ;;				render_rect(0,44,192,44+13,0,0);
-CLINEA 0000H 0001H 01E3H 0005H 0024H
+CLINEA 0000H 0001H 01C7H 0005H 0024H
 	mov	r0,	#00h
 	push	r0
 	push	r0
@@ -3003,30 +2783,30 @@ CLINEA 0000H 0001H 01E3H 0005H 0024H
 	add	sp,	#8 
 
 ;;				menu(player,select);
-CLINEA 0000H 0001H 01E4H 0005H 0018H
+CLINEA 0000H 0001H 01C8H 0005H 0018H
 	mov	r1,	r9
 	mov	r0,	r8
 	bl	_menu
-CBLOCKEND 134 6 485
+CBLOCKEND 134 6 457
 
 ;;			}
-CLINEA 0000H 0000H 01E5H 0004H 0004H
-_$L260 :
-CBLOCKEND 134 5 486
-CBLOCKEND 134 4 487
+CLINEA 0000H 0000H 01C9H 0004H 0004H
+_$L239 :
+CBLOCKEND 134 5 458
+CBLOCKEND 134 4 459
 
 ;;	while (!animation){
-CLINEA 0000H 0000H 01D6H 0022H 002EH
+CLINEA 0000H 0000H 01BAH 0022H 002EH
 	l	r0,	-1[fp]
-	bne	_$M29
-	b	_$L246
-_$M29 :
-CBLOCKEND 134 2 489
+	bne	_$M31
+	b	_$L225
+_$M31 :
+CBLOCKEND 134 2 461
 
 ;;}
-CLINEA 0000H 0001H 01E9H 0001H 0001H
+CLINEA 0000H 0001H 01CDH 0001H 0001H
 	b	__regpopu8lw
-CBLOCKEND 134 1 489
+CBLOCKEND 134 1 461
 CFUNCTIONEND 134
 
 
@@ -3034,17 +2814,17 @@ CFUNCTIONEND 134
 CFUNCTION 135
 
 _flipcell	:
-CBLOCK 135 1 493
+CBLOCK 135 1 465
 
 ;;void flipcell(){
-CLINEA 0000H 0001H 01EDH 0001H 0010H
+CLINEA 0000H 0001H 01D1H 0001H 0010H
 	push	lr
 	push	xr4
-CBLOCK 135 2 493
+CBLOCK 135 2 465
 CRET 0004H
 
 ;;	render_rect(45 + posx * 20, 1 + (posy - 1) * 21, 66 + posx*20, 20 + (posy-1) * 21, 1, 1);
-CLINEA 0000H 0001H 01EEH 0002H 005AH
+CLINEA 0000H 0001H 01D2H 0002H 005AH
 	mov	r0,	#01h
 	push	r0
 	push	r0
@@ -3070,13 +2850,13 @@ CLINEA 0000H 0001H 01EEH 0002H 005AH
 	mov	er0,	er6
 	bl	_render_rect
 	add	sp,	#8 
-CBLOCKEND 135 2 495
+CBLOCKEND 135 2 467
 
 ;;}
-CLINEA 0000H 0001H 01EFH 0001H 0001H
+CLINEA 0000H 0001H 01D3H 0001H 0001H
 	pop	xr4
 	pop	pc
-CBLOCKEND 135 1 495
+CBLOCKEND 135 1 467
 CFUNCTIONEND 135
 
 
@@ -3084,108 +2864,108 @@ CFUNCTIONEND 135
 CFUNCTION 136
 
 _drawstage	:
-CBLOCK 136 1 498
+CBLOCK 136 1 470
 
 ;;void drawstage(){
-CLINEA 0000H 0001H 01F2H 0001H 0011H
+CLINEA 0000H 0001H 01D6H 0001H 0011H
 	push	lr
 	bl	__regpushu8lw
 	add	sp,	#-04
-CBLOCK 136 2 498
+CBLOCK 136 2 470
 CRET 0010H
 CLOCAL 43H 0002H 0002H 0002H "i" 02H 00H 01H
 CLOCAL 43H 0002H 0004H 0002H "j" 02H 00H 01H
 
 ;;	if (posx > 3) {
-CLINEA 0000H 0001H 01F4H 0002H 0010H
+CLINEA 0000H 0001H 01D8H 0002H 0010H
 	l	r0,	FAR _posx
 	cmp	r0,	#03h
-	ble	_$L267
-CBLOCK 136 3 500
+	ble	_$L246
+CBLOCK 136 3 472
 
 ;;		posx = 1;
-CLINEA 0000H 0001H 01F5H 0003H 000BH
+CLINEA 0000H 0001H 01D9H 0003H 000BH
 	mov	r0,	#01h
 	st	r0,	FAR _posx
-CBLOCKEND 136 3 502
-	bal	_$L270
-_$L267 :
+CBLOCKEND 136 3 474
+	bal	_$L249
+_$L246 :
 
 ;;	} else if (posx < 1) {
-CLINEA 0000H 0000H 01F6H 0002H 0017H
+CLINEA 0000H 0000H 01DAH 0002H 0017H
 	cmp	r0,	#01h
-	bge	_$L270
-CBLOCK 136 4 502
+	bge	_$L249
+CBLOCK 136 4 474
 
 ;;		posx = 3;
-CLINEA 0000H 0001H 01F7H 0003H 000BH
+CLINEA 0000H 0001H 01DBH 0003H 000BH
 	mov	r0,	#03h
 	st	r0,	FAR _posx
-CBLOCKEND 136 4 504
+CBLOCKEND 136 4 476
 
 ;;	}
-CLINEA 0000H 0000H 01F8H 0002H 0002H
-_$L270 :
+CLINEA 0000H 0000H 01DCH 0002H 0002H
+_$L249 :
 
 ;;	if (posy > 3) {
-CLINEA 0000H 0001H 01F9H 0002H 0010H
+CLINEA 0000H 0001H 01DDH 0002H 0010H
 	l	r0,	FAR _posy
 	cmp	r0,	#03h
-	ble	_$L272
-CBLOCK 136 5 505
+	ble	_$L251
+CBLOCK 136 5 477
 
 ;;		posy = 1;
-CLINEA 0000H 0001H 01FAH 0003H 000BH
+CLINEA 0000H 0001H 01DEH 0003H 000BH
 	mov	r0,	#01h
 	st	r0,	FAR _posy
-CBLOCKEND 136 5 507
-	bal	_$L275
-_$L272 :
+CBLOCKEND 136 5 479
+	bal	_$L254
+_$L251 :
 
 ;;	} else if (posy < 1) {
-CLINEA 0000H 0000H 01FBH 0002H 0017H
+CLINEA 0000H 0000H 01DFH 0002H 0017H
 	cmp	r0,	#01h
-	bge	_$L275
-CBLOCK 136 6 507
+	bge	_$L254
+CBLOCK 136 6 479
 
 ;;		posy = 3;
-CLINEA 0000H 0001H 01FCH 0003H 000BH
+CLINEA 0000H 0001H 01E0H 0003H 000BH
 	mov	r0,	#03h
 	st	r0,	FAR _posy
-CBLOCKEND 136 6 509
+CBLOCKEND 136 6 481
 
 ;;	}
-CLINEA 0000H 0000H 01FDH 0002H 0002H
-_$L275 :
+CLINEA 0000H 0000H 01E1H 0002H 0002H
+_$L254 :
 
 ;;    for (i = 0; i < 3; i++) {
-CLINEA 0000H 0001H 01FEH 000AH 000FH
+CLINEA 0000H 0001H 01E2H 000AH 000FH
 	mov	er0,	#0 
 	st	er0,	-2[fp]
 
 ;;    for (i = 0; i < 3; i++) {
-CLINEA 0000H 0000H 01FEH 0018H 001AH
-_$L279 :
-CBLOCK 136 7 510
+CLINEA 0000H 0000H 01E2H 0018H 001AH
+_$L258 :
+CBLOCK 136 7 482
 
 ;;        for (j = 0; j < 3; j++) {
-CLINEA 0000H 0001H 01FFH 000EH 0013H
+CLINEA 0000H 0001H 01E3H 000EH 0013H
 	mov	er0,	#0 
 	st	er0,	-4[fp]
 
 ;;        for (j = 0; j < 3; j++) {
-CLINEA 0000H 0000H 01FFH 001CH 001EH
-_$L285 :
-CBLOCK 136 8 511
+CLINEA 0000H 0000H 01E3H 001CH 001EH
+_$L264 :
+CBLOCK 136 8 483
 
 ;;        	if (get_tile(i+1,j+1) == 0x01) {
-CLINEA 0000H 0000H 0200H 0000H 0000H
+CLINEA 0000H 0000H 01E4H 0000H 0000H
 	l	er0,	-4[fp]
 	add	er0,	#1 
 	mov	er4,	er0
 
 ;;        	if (get_tile(i+1,j+1) == 0x01) {
-CLINEA 0000H 0001H 0200H 000AH 0029H
+CLINEA 0000H 0001H 01E4H 000AH 0029H
 	mov	r1,	r0
 	l	er2,	-2[fp]
 	add	er2,	#1 
@@ -3193,11 +2973,11 @@ CLINEA 0000H 0001H 0200H 000AH 0029H
 	mov	r0,	r2
 	bl	_get_tile
 	cmp	r0,	#01h
-	bne	_$L289
-CBLOCK 136 9 512
+	bne	_$L268
+CBLOCK 136 9 484
 
 ;;        		renderRLE(cross, sizeof(cross), 66 + (i) * 20 + (i), 2 + (j) * 21 );
-CLINEA 0000H 0001H 0201H 000BH 004EH
+CLINEA 0000H 0001H 01E5H 000BH 004EH
 	l	er0,	-4[fp]
 	mov	er2,	#21
 	bl	__imulu8lw
@@ -3219,21 +2999,21 @@ CLINEA 0000H 0001H 0201H 000BH 004EH
 	mov	r2,	#SEG _cross
 	bl	_renderRLE
 	add	sp,	#6 
-CBLOCKEND 136 9 514
-	bal	_$L292
-_$L289 :
+CBLOCKEND 136 9 486
+	bal	_$L271
+_$L268 :
 
 ;;        	} else if (get_tile(i+1,j+1) == 0x02) {
-CLINEA 0000H 0000H 0202H 000AH 0030H
+CLINEA 0000H 0000H 01E6H 000AH 0030H
 	mov	r1,	r4
 	mov	r0,	r6
 	bl	_get_tile
 	cmp	r0,	#02h
-	bne	_$L292
-CBLOCK 136 10 514
+	bne	_$L271
+CBLOCK 136 10 486
 
 ;;        		renderRLE(circle, sizeof(circle), 66 + (i) * 20 + (i), 2 + (j) * 21 );
-CLINEA 0000H 0001H 0203H 000BH 0050H
+CLINEA 0000H 0001H 01E7H 000BH 0050H
 	l	er0,	-4[fp]
 	mov	er2,	#21
 	bl	__imulu8lw
@@ -3255,49 +3035,49 @@ CLINEA 0000H 0001H 0203H 000BH 0050H
 	mov	r2,	#SEG _circle
 	bl	_renderRLE
 	add	sp,	#6 
-CBLOCKEND 136 10 516
+CBLOCKEND 136 10 488
 
 ;;        	}
-CLINEA 0000H 0000H 0204H 000AH 000AH
-_$L292 :
-CBLOCKEND 136 8 517
+CLINEA 0000H 0000H 01E8H 000AH 000AH
+_$L271 :
+CBLOCKEND 136 8 489
 
 ;;        for (j = 0; j < 3; j++) {
-CLINEA 0000H 0000H 01FFH 001CH 001EH
+CLINEA 0000H 0000H 01E3H 001CH 001EH
 	st	er4,	-4[fp]
 
 ;;        for (j = 0; j < 3; j++) {
-CLINEA 0000H 0000H 01FFH 0015H 001AH
+CLINEA 0000H 0000H 01E3H 0015H 001AH
 	cmp	r4,	#03h
 	cmpc	r5,	#00h
-	bges	_$M32
-	b	_$L285
-_$M32 :
-CBLOCKEND 136 7 518
+	bges	_$M34
+	b	_$L264
+_$M34 :
+CBLOCKEND 136 7 490
 
 ;;    for (i = 0; i < 3; i++) {
-CLINEA 0000H 0000H 01FEH 0018H 001AH
+CLINEA 0000H 0000H 01E2H 0018H 001AH
 	st	er6,	-2[fp]
 
 ;;    for (i = 0; i < 3; i++) {
-CLINEA 0000H 0000H 01FEH 0015H 001AH
+CLINEA 0000H 0000H 01E2H 0015H 001AH
 	cmp	r6,	#03h
 	cmpc	r7,	#00h
-	bges	_$M33
-	b	_$L279
-_$M33 :
+	bges	_$M35
+	b	_$L258
+_$M35 :
 
 ;;	delay(400);
-CLINEA 0000H 0001H 0207H 0002H 000CH
+CLINEA 0000H 0001H 01EBH 0002H 000CH
 	mov	r0,	#090h
 	mov	r1,	#01h
 	bl	_delay
-CBLOCKEND 136 2 521
+CBLOCKEND 136 2 493
 
 ;;}
-CLINEA 0000H 0001H 0209H 0001H 0001H
+CLINEA 0000H 0001H 01EDH 0001H 0001H
 	b	__regpopu8lw
-CBLOCKEND 136 1 521
+CBLOCKEND 136 1 493
 CFUNCTIONEND 136
 
 
@@ -3305,226 +3085,226 @@ CFUNCTIONEND 136
 CFUNCTION 137
 
 _checkWin	:
-CBLOCK 137 1 524
+CBLOCK 137 1 496
 
 ;;{
-CLINEA 0000H 0001H 020CH 0001H 0001H
+CLINEA 0000H 0001H 01F0H 0001H 0001H
 	push	lr
 	bl	__regpushu8lw
 	add	sp,	#-02
 	mov	r8,	r0
-CBLOCK 137 2 524
+CBLOCK 137 2 496
 CRET 000EH
 CARGUMENT 46H 0001H 001CH "player" 02H 00H 00H
 CLOCAL 43H 0002H 0002H 0002H "i" 02H 00H 01H
 CLOCAL 4BH 0002H 0000H 0002H "state" 02H 00H 01H
 
 ;;    deref(0xD271) = player;
-CLINEA 0000H 0001H 0211H 0005H 001BH
+CLINEA 0000H 0001H 01F5H 0005H 001BH
 	st	r0,	00h:0d271h
 
 ;;	for (i = 1; i < 4; i++) {
-CLINEA 0000H 0001H 0212H 0002H 001AH
+CLINEA 0000H 0001H 01F6H 0002H 001AH
 	mov	er0,	#1 
 	st	er0,	-2[fp]
-_$L297 :
-CBLOCK 137 3 530
+_$L276 :
+CBLOCK 137 3 502
 
 ;;        if (get_tile(i,1) == player && get_tile(i,2) == player
-CLINEA 0000H 0001H 0213H 0009H 003EH
+CLINEA 0000H 0001H 01F7H 0009H 003EH
 	mov	r1,	#01h
 	l	r0,	-2[fp]
 	bl	_get_tile
 
 ;;            && get_tile(i,3) == player) {
-CLINEA 0000H 0000H 0214H 000DH 0029H
+CLINEA 0000H 0000H 01F8H 000DH 0029H
 	cmp	r8,	r0
-	bne	_$L301
+	bne	_$L280
 
 ;;        if (get_tile(i,1) == player && get_tile(i,2) == player
-CLINEA 0000H 0000H 0213H 0009H 003EH
+CLINEA 0000H 0000H 01F7H 0009H 003EH
 	mov	r1,	#02h
 	l	r0,	-2[fp]
 	bl	_get_tile
 
 ;;            && get_tile(i,3) == player) {
-CLINEA 0000H 0000H 0214H 000DH 0029H
+CLINEA 0000H 0000H 01F8H 000DH 0029H
 	cmp	r8,	r0
-	bne	_$L301
+	bne	_$L280
 	mov	r1,	#03h
 	l	r0,	-2[fp]
 	bl	_get_tile
 	cmp	r8,	r0
-	bne	_$L301
-CBLOCK 137 4 532
+	bne	_$L280
+CBLOCK 137 4 504
 
 ;;        	deref(0xD181) = 0x01;
-CLINEA 0000H 0001H 0215H 000AH 001EH
+CLINEA 0000H 0001H 01F9H 000AH 001EH
 	mov	r0,	#01h
 	st	r0,	00h:0d181h
 
 ;;        	return state;
-CLINEA 0000H 0001H 0217H 000AH 0016H
+CLINEA 0000H 0001H 01FBH 000AH 0016H
 	mov	er0,	#1 
-CBLOCKEND 137 4 536
-CBLOCKEND 137 2 558
+CBLOCKEND 137 4 508
+CBLOCKEND 137 2 530
 
 ;;}
-CLINEA 0000H 0001H 022EH 0001H 0001H
-_$L294 :
+CLINEA 0000H 0001H 0212H 0001H 0001H
+_$L273 :
 	b	__regpopu8lw
 
 ;;        }
-CLINEA 0000H 0000H 0218H 0009H 0009H
-_$L301 :
+CLINEA 0000H 0000H 01FCH 0009H 0009H
+_$L280 :
 
 ;;        if (get_tile(1,i) == player && get_tile(2,i) == player
-CLINEA 0000H 0001H 0219H 0009H 003EH
+CLINEA 0000H 0001H 01FDH 0009H 003EH
 	l	r1,	-2[fp]
 	mov	r0,	#01h
 	bl	_get_tile
 
 ;;            && get_tile(3,i) == player) {
-CLINEA 0000H 0000H 021AH 000DH 0029H
+CLINEA 0000H 0000H 01FEH 000DH 0029H
 	cmp	r8,	r0
-	bne	_$L311
+	bne	_$L290
 
 ;;        if (get_tile(1,i) == player && get_tile(2,i) == player
-CLINEA 0000H 0000H 0219H 0009H 003EH
+CLINEA 0000H 0000H 01FDH 0009H 003EH
 	l	r1,	-2[fp]
 	mov	r0,	#02h
 	bl	_get_tile
 
 ;;            && get_tile(3,i) == player) {
-CLINEA 0000H 0000H 021AH 000DH 0029H
+CLINEA 0000H 0000H 01FEH 000DH 0029H
 	cmp	r8,	r0
-	bne	_$L311
+	bne	_$L290
 	l	r1,	-2[fp]
 	mov	r0,	#03h
 	bl	_get_tile
 	cmp	r8,	r0
-	bne	_$L311
-CBLOCK 137 5 538
+	bne	_$L290
+CBLOCK 137 5 510
 
 ;;        	deref(0xD181) = 0x02;
-CLINEA 0000H 0001H 021BH 000AH 001EH
+CLINEA 0000H 0001H 01FFH 000AH 001EH
 	mov	r0,	#02h
 	st	r0,	00h:0d181h
 
 ;;        	return state;
-CLINEA 0000H 0001H 021DH 000AH 0016H
+CLINEA 0000H 0001H 0201H 000AH 0016H
 	mov	er0,	#1 
-	bal	_$L294
-CBLOCKEND 137 5 542
+	bal	_$L273
+CBLOCKEND 137 5 514
 
 ;;        }
-CLINEA 0000H 0000H 021EH 0009H 0009H
-_$L311 :
-CBLOCKEND 137 3 543
+CLINEA 0000H 0000H 0202H 0009H 0009H
+_$L290 :
+CBLOCKEND 137 3 515
 
 ;;	for (i = 1; i < 4; i++) {
-CLINEA 0000H 0000H 0212H 0002H 001AH
+CLINEA 0000H 0000H 01F6H 0002H 001AH
 	l	er0,	-2[fp]
 	add	er0,	#1 
 	st	er0,	-2[fp]
 
 ;;	for (i = 1; i < 4; i++) {
-CLINEA 0000H 0000H 0212H 0015H 001AH
+CLINEA 0000H 0000H 01F6H 0015H 001AH
 	cmp	r0,	#04h
 	cmpc	r1,	#00h
-	blts	_$L297
+	blts	_$L276
 
 ;;    if (get_tile(1,1) == player && get_tile(2,2) == player
-CLINEA 0000H 0001H 0220H 0005H 003AH
+CLINEA 0000H 0001H 0204H 0005H 003AH
 	mov	r1,	#01h
 	mov	r0,	#01h
 	bl	_get_tile
 
 ;;        && get_tile(3,3) == player) {
-CLINEA 0000H 0000H 0221H 0009H 0025H
+CLINEA 0000H 0000H 0205H 0009H 0025H
 	cmp	r8,	r0
-	bne	_$L321
+	bne	_$L300
 
 ;;    if (get_tile(1,1) == player && get_tile(2,2) == player
-CLINEA 0000H 0000H 0220H 0005H 003AH
+CLINEA 0000H 0000H 0204H 0005H 003AH
 	mov	r1,	#02h
 	mov	r0,	#02h
 	bl	_get_tile
 
 ;;        && get_tile(3,3) == player) {
-CLINEA 0000H 0000H 0221H 0009H 0025H
+CLINEA 0000H 0000H 0205H 0009H 0025H
 	cmp	r8,	r0
-	bne	_$L321
+	bne	_$L300
 	mov	r1,	#03h
 	mov	r0,	#03h
 	bl	_get_tile
 	cmp	r8,	r0
-	bne	_$L321
-CBLOCK 137 6 545
+	bne	_$L300
+CBLOCK 137 6 517
 
 ;;    	deref(0xD181) = 0x03;
-CLINEA 0000H 0001H 0222H 0006H 001AH
+CLINEA 0000H 0001H 0206H 0006H 001AH
 	mov	r0,	#03h
 	st	r0,	00h:0d181h
 
 ;;    	return state;
-CLINEA 0000H 0001H 0224H 0006H 0012H
+CLINEA 0000H 0001H 0208H 0006H 0012H
 	mov	er0,	#1 
-	bal	_$L294
-CBLOCKEND 137 6 549
+	bal	_$L273
+CBLOCKEND 137 6 521
 
 ;;    }
-CLINEA 0000H 0000H 0225H 0005H 0005H
-_$L321 :
+CLINEA 0000H 0000H 0209H 0005H 0005H
+_$L300 :
 
 ;;    if (get_tile(1,3) == player && get_tile(2,2) == player
-CLINEA 0000H 0001H 0226H 0005H 003AH
+CLINEA 0000H 0001H 020AH 0005H 003AH
 	mov	r1,	#03h
 	mov	r0,	#01h
 	bl	_get_tile
 
 ;;        && get_tile(3,1) == player) {
-CLINEA 0000H 0000H 0227H 0009H 0025H
+CLINEA 0000H 0000H 020BH 0009H 0025H
 	cmp	r8,	r0
-	bne	_$L331
+	bne	_$L310
 
 ;;    if (get_tile(1,3) == player && get_tile(2,2) == player
-CLINEA 0000H 0000H 0226H 0005H 003AH
+CLINEA 0000H 0000H 020AH 0005H 003AH
 	mov	r1,	#02h
 	mov	r0,	#02h
 	bl	_get_tile
 
 ;;        && get_tile(3,1) == player) {
-CLINEA 0000H 0000H 0227H 0009H 0025H
+CLINEA 0000H 0000H 020BH 0009H 0025H
 	cmp	r8,	r0
-	bne	_$L331
+	bne	_$L310
 	mov	r1,	#01h
 	mov	r0,	#03h
 	bl	_get_tile
 	cmp	r8,	r0
-	bne	_$L331
-CBLOCK 137 7 551
+	bne	_$L310
+CBLOCK 137 7 523
 
 ;;    	deref(0xD181) = 0x04;
-CLINEA 0000H 0001H 0228H 0006H 001AH
+CLINEA 0000H 0001H 020CH 0006H 001AH
 	mov	r0,	#04h
 	st	r0,	00h:0d181h
 
 ;;    	return state;
-CLINEA 0000H 0001H 022AH 0006H 0012H
+CLINEA 0000H 0001H 020EH 0006H 0012H
 	mov	er0,	#1 
-	b	_$L294
-CBLOCKEND 137 7 555
+	b	_$L273
+CBLOCKEND 137 7 527
 
 ;;    }
-CLINEA 0000H 0000H 022BH 0005H 0005H
-_$L331 :
+CLINEA 0000H 0000H 020FH 0005H 0005H
+_$L310 :
 
 ;;    return state;
-CLINEA 0000H 0001H 022DH 0005H 0011H
+CLINEA 0000H 0001H 0211H 0005H 0011H
 	mov	er0,	#0 
-	b	_$L294
-CBLOCKEND 137 1 558
+	b	_$L273
+CBLOCKEND 137 1 530
 CFUNCTIONEND 137
 
 	public _board1

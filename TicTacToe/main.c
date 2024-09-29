@@ -398,8 +398,9 @@ void main() {
 
 
 				}
-				delay(100);
+
 				break;
+			delay(100);
 
 		}
 
@@ -415,7 +416,7 @@ void main() {
 	}
 	render_rect(0,0,192,14,0,1);
 	menu(player,select);
-
+	//yes
 
 
 }

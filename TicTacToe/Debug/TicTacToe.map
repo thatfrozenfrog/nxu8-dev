@@ -1,5 +1,5 @@
 RLU8 Object Linker, Ver.1.60.3 Linkage Information
-[Sat Sep 28 13:44:09 2024]
+[Sun Sep 29 13:16:29 2024]
 
 
                          ------------------
@@ -21,13 +21,13 @@ Module Name           File Name                                 CCU8     RASU8
 -----------           ---------                                 -----    -----
 main                  .\main.obj                                3.66     1.80
 startup               .\startup.obj                             -.--     1.80
-SIDIVLW               C:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
-memset_f              C:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\LU8100LW.LIB -.--     1.04
-SIDIMOLW              C:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
-CIDIMOLW              C:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
-PUSHPOPU8LW           C:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.61
-SIMODLW               C:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
-IMULLW                C:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
+SIDIVLW               E:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
+memset_f              E:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\LU8100LW.LIB -.--     1.04
+SIDIMOLW              E:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
+CIDIMOLW              E:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
+PUSHPOPU8LW           E:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.61
+SIMODLW               E:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
+IMULLW                E:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
 
 
 Number of Modules: 9
@@ -87,28 +87,28 @@ Link Map - Program memory space #0 ( ROMWINDOW: 0000 - CFFF )
       S CODE   00:05DE    00:062F    0052(82)          $$render_rect$main
       S CODE   00:0630    00:0663    0034(52)          $$sidimou8lw
       S CODE   00:0664    00:06A3    0040(64)          $$cidimou8lw
-      S CODE   00:06A4    00:0B2F    048C(1164)        $$main$main
-      S CODE   00:0B30    00:0B3D    000E(14)          $$sidivu8lw
-      S CODE   00:0B3E    00:0BF3    00B6(182)         $$renderRLE$main
-      S CODE   00:0BF4    00:0C31    003E(62)          $$delay$main
-      S CODE   00:0C32    00:0D2B    00FA(250)         $$drawstage$main
-      S CODE   00:0D2C    00:0D8F    0064(100)         $$CheckButtons$main
-      S CODE   00:0D90    00:0EF3    0164(356)         $$set_bits$main
-      S TABLE  00:0EF4    00:0F62    006F(111)         $$TABcross$main
->GAP<          00:0F63    00:0F63    0001(1)           (ROM)
-      S TABLE  00:0F64    00:11BF    025C(604)         $$TABsuwa$main
-      S TABLE  00:11C0    00:123A    007B(123)         $$TABquit$main
->GAP<          00:123B    00:123B    0001(1)           (ROM)
-      S TABLE  00:123C    00:1243    0008(8)           $$init_info
-      S TABLE  00:1244    00:13BF    017C(380)         $$TABtie$main
-      S TABLE  00:13C0    00:1423    0064(100)         $$TABcircle$main
-      S TABLE  00:1424    00:161B    01F8(504)         $$TABboard1$main
-      S TABLE  00:161C    00:1623    0008(8)           $$FINITTABmain
-      S TABLE  00:1624    00:17FE    01DB(475)         $$TABplayerx$main
->GAP<          00:17FF    00:17FF    0001(1)           (ROM)
-      S TABLE  00:1800    00:19DC    01DD(477)         $$TABplayery$main
->GAP<          00:19DD    00:19DD    0001(1)           (ROM)
-      S TABLE  00:19DE    00:1A96    00B9(185)         $$TABrematch$main
+      S CODE   00:06A4    00:0A01    035E(862)         $$main$main
+      S CODE   00:0A02    00:0A0F    000E(14)          $$sidivu8lw
+      S CODE   00:0A10    00:0AC5    00B6(182)         $$renderRLE$main
+      S CODE   00:0AC6    00:0B03    003E(62)          $$delay$main
+      S CODE   00:0B04    00:0BFD    00FA(250)         $$drawstage$main
+      S CODE   00:0BFE    00:0C61    0064(100)         $$CheckButtons$main
+      S CODE   00:0C62    00:0DC5    0164(356)         $$set_bits$main
+      S TABLE  00:0DC6    00:0E34    006F(111)         $$TABcross$main
+>GAP<          00:0E35    00:0E35    0001(1)           (ROM)
+      S TABLE  00:0E36    00:1091    025C(604)         $$TABsuwa$main
+      S TABLE  00:1092    00:110C    007B(123)         $$TABquit$main
+>GAP<          00:110D    00:110D    0001(1)           (ROM)
+      S TABLE  00:110E    00:1115    0008(8)           $$init_info
+      S TABLE  00:1116    00:1291    017C(380)         $$TABtie$main
+      S TABLE  00:1292    00:12F5    0064(100)         $$TABcircle$main
+      S TABLE  00:12F6    00:14ED    01F8(504)         $$TABboard1$main
+      S TABLE  00:14EE    00:14F5    0008(8)           $$FINITTABmain
+      S TABLE  00:14F6    00:16D0    01DB(475)         $$TABplayerx$main
+>GAP<          00:16D1    00:16D1    0001(1)           (ROM)
+      S TABLE  00:16D2    00:18AE    01DD(477)         $$TABplayery$main
+>GAP<          00:18AF    00:18AF    0001(1)           (ROM)
+      S TABLE  00:18B0    00:1968    00B9(185)         $$TABrematch$main
 
 
 Link Map - Data memory space #0
@@ -137,7 +137,7 @@ Not Linked segments:
      --------------------------------------------------------------
 
 
-Total size (CODE  ) = 00EF6   (3830)
+Total size (CODE  ) = 00DC8   (3528)
 Total size (DATA  ) = 0040A   (1034)
 Total size (BIT   ) = 00000.0 (0.0)
 Total size (NVDATA) = 00000   (0)
@@ -151,32 +151,32 @@ Total size (TABLE ) = 00B9F   (2975)
 Module         Value     Type         Symbol
 ------         -----     ----------   ------
 main
-               00:0D2C   Pub CODE     _CheckButtons
+               00:0BFE   Pub CODE     _CheckButtons
                00:01C4   Pub CODE     _checkWin
                00:06A4   Pub CODE     _main
                00:0486   Pub CODE     _menu
-               00:0C32   Pub CODE     _drawstage
+               00:0B04   Pub CODE     _drawstage
                00:02E4   Pub CODE     _drawbitmap
-               00:0BF4   Pub CODE     _delay
-               00:0D90   Pub CODE     _set_bits
+               00:0AC6   Pub CODE     _delay
+               00:0C62   Pub CODE     _set_bits
                00:044A   Pub CODE     _get_tile
                00:02B4   Pub CODE     _set_tile
                00:0402   Pub CODE     _flipcell
-               00:0B3E   Pub CODE     _renderRLE
+               00:0A10   Pub CODE     _renderRLE
                00:05DE   Pub CODE     _render_rect
-               00:1424   Pub TABLE    _board1
-               00:0EF4   Pub TABLE    _cross
-               00:1244   Pub TABLE    _tie
-               00:13C0   Pub TABLE    _circle
+               00:12F6   Pub TABLE    _board1
+               00:0DC6   Pub TABLE    _cross
+               00:1116   Pub TABLE    _tie
+               00:1292   Pub TABLE    _circle
                00:EBFF   Pub DATA     _lastbutton
-               00:19DE   Pub TABLE    _rematch
+               00:18B0   Pub TABLE    _rematch
                00:EBF8   Pub DATA     _printdwordbuf
                00:EBFE   Pub DATA     _posx
                00:EBFD   Pub DATA     _posy
-               00:11C0   Pub TABLE    _quit
-               00:0F64   Pub TABLE    _suwa
-               00:1624   Pub TABLE    _playerx
-               00:1800   Pub TABLE    _playery
+               00:1092   Pub TABLE    _quit
+               00:0E36   Pub TABLE    _suwa
+               00:14F6   Pub TABLE    _playerx
+               00:16D2   Pub TABLE    _playery
 
 Module         Value     Type         Symbol
 ------         -----     ----------   ------
@@ -207,7 +207,7 @@ Module         Value     Type         Symbol
 memset_f
 
 
-Total ROM usage = 01A95   (6805)
+Total ROM usage = 01967   (6503)
 Total RAM usage = 0040A   (1034)
 
 End of mapfile.
