@@ -1,50 +1,65 @@
-13:16:28 **** Incremental Build of configuration Debug for project TicTacToe ****
+22:48:24 **** Incremental Build of configuration Debug for project TicTacToe ****
 make all 
-'Building file: ../main.c'
-'Invoking: Compiler'
-ccu8 -SD -ABW -TML620906 -ML -far -Fa"./" -Om -Zs -Oa -W1 "../main.c"
-CCU8 C Compiler, Ver.3.66
-Copyright (C) 2008-2020 LAPIS Technology Co., Ltd.
-
-..\main.c
-..\printlib.h(13) : Warning : W5031 : 'drawbitmap': call to function with no prototype
-..\main.c(268) : Warning : W4002 : 'const' ignored on argument
-..\main.c(315) : Warning : W5002 : 'argument' : different levels of indirection
-..\main.c(316) : Warning : W5002 : 'argument' : different levels of indirection
-..\main.c(324) : Warning : W5031 : 'drawstage': call to function with no prototype
-..\main.c(325) : Warning : W5031 : 'flipcell': call to function with no prototype
-..\main.c(378) : Warning : W5031 : 'checkWin': call to function with no prototype
-..\main.c(418) : Warning : W5031 : 'menu': call to function with no prototype
-
-Error(s)     :  0
-Warning(s)   :  8
-
-'Finished building: ../main.c'
-' '
-'Building file: main.asm'
+'Building file: ../startup.asm'
 'Invoking: Assembler'
-rasu8 -CD -ABW -SD -DF -ML -O"./" -WRPEAST -PR"main.prn" -L -NS -NR -NPL -NPW "main.asm"
+rasu8 -CD -ABW -D -DF -ML -O"./" -WRPEAST -PR"startup.prn" -L -NS -NR -NPL -NPW "../startup.asm"
 RASU8 Relocatable Assembler, Ver.1.80
 Copyright (C) 2008-2018 LAPIS Semiconductor Co., Ltd.
 
 [E:/LAPIS/LEXIDE/Dcl\ML620906.dcl] loading...
   pass1...
   pass2...
-main.asm(588):588: Warning 25 : illegal access to SFR
-	st	er0,	00h:0f014h
-main.asm(660):660: Warning 25 : illegal access to SFR
-	st	r0,	00h:0f037h
+..\startup.asm(99):99: Warning 06 : expression of type NUMBER required
+	lea	IE0
+..\startup.asm(104):104: Warning 25 : illegal access to SFR
+	st	r0,	0F03Dh
+..\startup.asm(126):126: Warning 25 : illegal access to SFR
+	st	er2,	IRQ0
+..\startup.asm(145):145: Warning 25 : illegal access to SFR
+	st	r0,	0F030h
+..\startup.asm(147):147: Warning 25 : illegal access to SFR
+	st	r0,	0F033h
+..\startup.asm(149):149: Warning 25 : illegal access to SFR
+	st	r0,	0F034h
+..\startup.asm(151):151: Warning 25 : illegal access to SFR
+	st	r0,	0F035h
+..\startup.asm(153):153: Warning 25 : illegal access to SFR
+	st	r0,	0F036h
+..\startup.asm(154):154: Warning 25 : illegal access to SFR
+	st	r1,	0F039h
+..\startup.asm(156):156: Warning 25 : illegal access to SFR
+	st	r0,	0F031h
+..\startup.asm(158):158: Warning 25 : illegal access to SFR
+	st	r0,	0F032h
+..\startup.asm(162):162: Warning 06 : expression of type NUMBER required
+	lea	P1D
+..\startup.asm(171):171: Warning 06 : expression of type NUMBER required
+	lea	P0D
+..\startup.asm(191):191: Warning 25 : illegal access to SFR
+	st	r0,	0F030h
+..\startup.asm(193):193: Warning 25 : illegal access to SFR
+	st	r0,	0F033h
+..\startup.asm(195):195: Warning 25 : illegal access to SFR
+	st	r0,	0F034h
+..\startup.asm(197):197: Warning 25 : illegal access to SFR
+	st	r0,	0F035h
+..\startup.asm(199):199: Warning 25 : illegal access to SFR
+	st	r0,	0F036h
+..\startup.asm(200):200: Warning 25 : illegal access to SFR
+	st	r1,	0F039h
+..\startup.asm(202):202: Warning 25 : illegal access to SFR
+	st	r0,	0F031h
 
-  Print   File : main.prn
-  Object  File : .\main.obj
+  Print   File : startup.prn
+  Object  File : .\startup.obj
   Error   File : Console
 
   Errors   : 0
-  Warnings : 2  (/Wrpeast)
-  Lines    : 10462
+  Warnings : 20  (/Wrpeast)
+  Lines    : 206
   Assembly End.
 
-'Finished building: main.asm'
+'Finished building: ../startup.asm'
 ' '
 'Invoking: Linker'
 rlu8 -D -SD -NS -CC -ABW  "./main.obj" "./startup.obj" ,"TicTacToe.abs",,"LU8100LW.LIB";
@@ -84,10 +99,10 @@ Convert End.
 make --no-print-directory post-build
 'Run it'
 cd.. && build.bat
+Overlapped record detected
 hex2bin v2.5, Copyright (C) 2017 Jacques Pelletier & contributors
 Overlapped record detected
 
-Overlapped record detected
 Allocate_Memory_and_Rewind:
 Lowest address:   00000000
 Highest address:  00001968
@@ -102,5 +117,5 @@ Pad Byte          = FF
 Press any key to continue . . . 
 ' '
 
-13:16:29 Build Finished. 0 errors, 14 warnings. (took 1s.532ms)
+22:48:25 Build Finished. 0 errors, 24 warnings. (took 1s.229ms)
 

@@ -1,6 +1,7 @@
 type(ML620906)
 model large
 romwindow 0, 0cfffH
+
 extrn   code: _main
 ;extrn 	code: _TM0
 public  $$start_up
@@ -203,4 +204,3 @@ _reset_SFR:
 
 _entry:
 	b _main
-	;start your program here

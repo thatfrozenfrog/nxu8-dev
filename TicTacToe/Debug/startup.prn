@@ -1,237 +1,236 @@
 RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   1 
  Source File: ..\startup.asm
  Object File: .\startup.obj
- Date  : 2024/09/29 Sun.[13:15]
+ Date  : 2024/10/28 Mon.[22:48]
  Title : 
 ## Loc. Object                   Line   Source Statements
 
                                     1   type(ML620906)
                                     2   model large
                                     3   romwindow 0, 0cfffH
-                                    4   extrn   code: _main
-                                    5   ;extrn 	code: _TM0
-                                    6   public  $$start_up
-    = 0000F000H                     7   _$$SP	EQU	0F000h
-                                    8   
-00:0000 00-F0                       9   dw	_$$SP
-00:0002 70-00                      10   dw	$$start_up
-00:0004 52-00                      11   dw	_BRK
-00:0006 5A-00                      12   dw	_INT
-00:0008 5A-00                      13   dw	_INT
-00:000A 5A-00                      14   dw	_INT
-00:000C 5A-00                      15   dw	_INT
-00:000E 5A-00                      16   dw	_INT
-00:0010 5A-00                      17   dw	_INT
-00:0012 5A-00                      18   dw	_INT
-00:0014 5A-00                      19   dw	_INT
-00:0016 5A-00                      20   dw	_INT
-00:0018 5A-00                      21   dw	_INT
-00:001A 5A-00                      22   dw	_INT
-00:001C 5A-00                      23   dw	_INT
-00:001E 5A-00                      24   dw	_INT
-00:0020 5A-00                      25   dw	_INT
-00:0022 5A-00                      26   dw	_INT
-00:0024 5A-00                      27   dw	_INT
-00:0026 5A-00                      28   dw	_INT
-00:0028 5A-00                      29   dw	_INT
-00:002A 5A-00                      30   dw	_INT
-00:002C 5A-00                      31   dw	_INT
-00:002E 5A-00                      32   dw	_INT
-00:0030 5A-00                      33   dw	_INT
-00:0032 5A-00                      34   dw	_INT
-00:0034 5A-00                      35   dw	_INT
-00:0036 5A-00                      36   dw	_INT
-00:0038 5A-00                      37   dw	_INT
-00:003A 5A-00                      38   dw	_INT
-00:003C 5A-00                      39   dw	_INT
-00:003E 5A-00                      40   dw	_INT
-00:0040 5A-00                      41   dw	_INT
-00:0042 5A-00                      42   dw	_INT
-00:0044 5A-00                      43   dw	_INT
-00:0046 5A-00                      44   dw	_INT
-00:0048 5A-00                      45   dw	_INT
-00:004A 5A-00                      46   dw	_INT
-00:004C 5A-00                      47   dw	_INT
-00:004E 5A-00                      48   dw 	_INT
-00:0050 5C-00                      49   dw	_TM0INT
-                                   50   
-00:0052                            51   _BRK:
-00:0052 00-F0'00-00'               52   	b _main
-00:0056 03 E9                      53   	mov	psw,	#3
-00:0058 FF-FF                      54   	brk
-                                   55   
-00:005A                            56   _INT:
-00:005A 0F-FE                      57   	rti
-                                   58   
-00:005C                            59   _TM0INT:
-00:005C CE-F7                      60   	push	elr,epsw,ea
-00:005E 08-ED                      61   	ei
-00:0060 7E-F0                      62   	push	qr0
-00:0062 7E-F8                      63   	push	qr8
-00:0064 D8 01                      64   	mov r1, #0D8h
-00:0066 11-91 10-D8                65   	st r1, 0D810h
-                                   66   ;	bl _TM0
-00:006A 3E-F8                      67   	pop	qr8
-00:006C 3E-F0                      68   	pop	qr0
-00:006E 8E-F7                      69   	pop	pc,psw,ea
-                                   70   
+                                    4   
+                                    5   extrn   code: _main
+                                    6   ;extrn 	code: _TM0
+                                    7   public  $$start_up
+    = 0000F000H                     8   _$$SP	EQU	0F000h
+                                    9   
+00:0000 00-F0                      10   dw	_$$SP
+00:0002 70-00                      11   dw	$$start_up
+00:0004 52-00                      12   dw	_BRK
+00:0006 5A-00                      13   dw	_INT
+00:0008 5A-00                      14   dw	_INT
+00:000A 5A-00                      15   dw	_INT
+00:000C 5A-00                      16   dw	_INT
+00:000E 5A-00                      17   dw	_INT
+00:0010 5A-00                      18   dw	_INT
+00:0012 5A-00                      19   dw	_INT
+00:0014 5A-00                      20   dw	_INT
+00:0016 5A-00                      21   dw	_INT
+00:0018 5A-00                      22   dw	_INT
+00:001A 5A-00                      23   dw	_INT
+00:001C 5A-00                      24   dw	_INT
+00:001E 5A-00                      25   dw	_INT
+00:0020 5A-00                      26   dw	_INT
+00:0022 5A-00                      27   dw	_INT
+00:0024 5A-00                      28   dw	_INT
+00:0026 5A-00                      29   dw	_INT
+00:0028 5A-00                      30   dw	_INT
+00:002A 5A-00                      31   dw	_INT
+00:002C 5A-00                      32   dw	_INT
+00:002E 5A-00                      33   dw	_INT
+00:0030 5A-00                      34   dw	_INT
+00:0032 5A-00                      35   dw	_INT
+00:0034 5A-00                      36   dw	_INT
+00:0036 5A-00                      37   dw	_INT
+00:0038 5A-00                      38   dw	_INT
+00:003A 5A-00                      39   dw	_INT
+00:003C 5A-00                      40   dw	_INT
+00:003E 5A-00                      41   dw	_INT
+00:0040 5A-00                      42   dw	_INT
+00:0042 5A-00                      43   dw	_INT
+00:0044 5A-00                      44   dw	_INT
+00:0046 5A-00                      45   dw	_INT
+00:0048 5A-00                      46   dw	_INT
+00:004A 5A-00                      47   dw	_INT
+00:004C 5A-00                      48   dw	_INT
+00:004E 5A-00                      49   dw 	_INT
+00:0050 5C-00                      50   dw	_TM0INT
+                                   51   
+00:0052                            52   _BRK:
+00:0052 00-F0'00-00'               53   	b _main
+00:0056 03 E9                      54   	mov	psw,	#3
+00:0058 FF-FF                      55   	brk
+                                   56   
+00:005A                            57   _INT:
+00:005A 0F-FE                      58   	rti
+                                   59   
+00:005C                            60   _TM0INT:
+00:005C CE-F7                      61   	push	elr,epsw,ea
+00:005E 08-ED                      62   	ei
+00:0060 7E-F0                      63   	push	qr0
+00:0062 7E-F8                      64   	push	qr8
+00:0064 D8 01                      65   	mov r1, #0D8h
+00:0066 11-91 10-D8                66   	st r1, 0D810h
+                                   67   ;	bl _TM0
+00:006A 3E-F8                      68   	pop	qr8
+00:006C 3E-F0                      69   	pop	qr0
+00:006E 8E-F7                      70   	pop	pc,psw,ea
                                    71   
                                    72   
-00:0070                            73   $$start_up:
-00:0070 01-F0 8E-00                74   	bl	_reset_lr
-00:0074 00 00                      75   	mov	r0,	#0
-00:0076 11-90 00-F0                76   	st	r0,	DSR
-00:007A 01-F0 90-00                77   	bl	_init_SFR
-00:007E C8 00                      78   	mov	r0,	#0C8h
-00:0080 05 01                      79   	mov	r1,	#5
-00:0082 01-F0 D8-00                80   	bl	_timer
-00:0086 01-F0 80-01                81   	bl	_reset_SFR
-00:008A 00-F0 B0-01                82   	b	_entry
-                                   83   
-00:008E                            84   _reset_lr:
-00:008E 1F-FE                      85   	rt
-                                   86   
-00:0090                            87   _init_SFR:
-00:0090 CE-F8                      88   	push	lr
-00:0092 31 00                      89   	mov	r0,	#31h
-00:0094 11-90 0A-F0                90   	st	r0,	FCON
-00:0098 17 00                      91   	mov	r0,	#17h
-00:009A 11-90 28-F0                92   	st	r0,	BLKCON0
-                                   93   
-00:009E 32 00                      94   	mov	r0,	#32h
-00:00A0                            95   _$init_clock:
-00:00A0 FF 10                      96   	add	r0,	#-1h
-00:00A2 FE C8                      97   	bne	_$init_clock
-00:00A4 0C-F0 10-F0                98   	lea	IE0
+                                   73   
+00:0070                            74   $$start_up:
+00:0070 01-F0 8E-00                75   	bl	_reset_lr
+00:0074 00 00                      76   	mov	r0,	#0
+00:0076 11-90 00-F0                77   	st	r0,	DSR
+00:007A 01-F0 90-00                78   	bl	_init_SFR
+00:007E C8 00                      79   	mov	r0,	#0C8h
+00:0080 05 01                      80   	mov	r1,	#5
+00:0082 01-F0 D8-00                81   	bl	_timer
+00:0086 01-F0 80-01                82   	bl	_reset_SFR
+00:008A 00-F0 B0-01                83   	b	_entry
+                                   84   
+00:008E                            85   _reset_lr:
+00:008E 1F-FE                      86   	rt
+                                   87   
+00:0090                            88   _init_SFR:
+00:0090 CE-F8                      89   	push	lr
+00:0092 31 00                      90   	mov	r0,	#31h
+00:0094 11-90 0A-F0                91   	st	r0,	FCON
+00:0098 17 00                      92   	mov	r0,	#17h
+00:009A 11-90 28-F0                93   	st	r0,	BLKCON0
+                                   94   
+00:009E 32 00                      95   	mov	r0,	#32h
+00:00A0                            96   _$init_clock:
+00:00A0 FF 10                      97   	add	r0,	#-1h
+00:00A2 FE C8                      98   	bne	_$init_clock
+00:00A4 0C-F0 10-F0                99   	lea	IE0
  ** Warning 06: expression of type NUMBER required
-00:00A8 20 E0                      99   	mov	er0,	#20h
-00:00AA 53-90                     100   	st	er0,	[ea+]
-00:00AC 31-91                     101   	st	r1,	[ea]
-00:00AE 07 00                     102   	mov	r0,	#7h
-00:00B0 11-90 3D-F0               103   	st	r0,	0F03Dh
+00:00A8 20 E0                     100   	mov	er0,	#20h
+00:00AA 53-90                     101   	st	er0,	[ea+]
+00:00AC 31-91                     102   	st	r1,	[ea]
+00:00AE 07 00                     103   	mov	r0,	#7h
+00:00B0 11-90 3D-F0               104   	st	r0,	0F03Dh
  ** Warning 25: illegal access to SFR
-00:00B4 50 00                     104   	mov	r0,	#50h
-00:00B6 00 01                     105   	mov	r1,	#0
-00:00B8 01-F0 D8-00               106   	bl	_timer
-00:00BC 01-F0 20-01               107   	bl	_init_screen
-00:00C0 01-F0 50-01               108   	bl	_init_port1
-00:00C4 01-F0 60-01               109   	bl	_init_port0
-00:00C8 01-F0 70-01               110   	bl	_init_p00
-00:00CC 00 E0                     111   	mov	er0,	#0
-00:00CE 11-90 42-F0               112   	st	r0,	KIMASK
-00:00D2 13-90 46-F0               113   	st	er0,	KOD
-00:00D6 8E-F2                     114   	pop	pc
-                                  115   
-00:00D8                           116   _timer:
-00:00D8 80-A0 0A-F0               117   	sb	XTM0
-00:00DC 92-A0 0A-F0               118   	rb	XTM1
-00:00E0 B2-A0 28-F0               119   	rb	DTM0
-00:00E4 F7-EB                     120   	di
-00:00E6 01 E2                     121   	mov	er2,	#1
-00:00E8 13-92 24-F0               122   	st	er2,	TM0CON
-00:00EC 00 E2                     123   	mov	er2,	#0
-00:00EE 13-92 22-F0               124   	st	er2,	TM0C
-00:00F2 13-92 14-F0               125   	st	er2,	IRQ0
+00:00B4 50 00                     105   	mov	r0,	#50h
+00:00B6 00 01                     106   	mov	r1,	#0
+00:00B8 01-F0 D8-00               107   	bl	_timer
+00:00BC 01-F0 20-01               108   	bl	_init_screen
+00:00C0 01-F0 50-01               109   	bl	_init_port1
+00:00C4 01-F0 60-01               110   	bl	_init_port0
+00:00C8 01-F0 70-01               111   	bl	_init_p00
+00:00CC 00 E0                     112   	mov	er0,	#0
+00:00CE 11-90 42-F0               113   	st	r0,	KIMASK
+00:00D2 13-90 46-F0               114   	st	er0,	KOD
+00:00D6 8E-F2                     115   	pop	pc
+                                  116   
+00:00D8                           117   _timer:
+00:00D8 80-A0 0A-F0               118   	sb	XTM0
+00:00DC 92-A0 0A-F0               119   	rb	XTM1
+00:00E0 B2-A0 28-F0               120   	rb	DTM0
+00:00E4 F7-EB                     121   	di
+00:00E6 01 E2                     122   	mov	er2,	#1
+00:00E8 13-92 24-F0               123   	st	er2,	TM0CON
+00:00EC 00 E2                     124   	mov	er2,	#0
+00:00EE 13-92 22-F0               125   	st	er2,	TM0C
+00:00F2 13-92 14-F0               126   	st	er2,	IRQ0
  ** Warning 25: illegal access to SFR
-00:00F6 11-92 16-F0               126   	st	r2,	IRQ2
-00:00FA D0-A0 10-F0               127   	sb	ETM0
-00:00FE 13-90 20-F0               128   	st	er0,	TM0D
-00:0102 01 00                     129   	mov	r0,	#1
-00:0104 11-90 25-F0               130   	st	r0,	TM0CON1
-00:0108                           131   _stop:
-00:0108 50 00                     132   	mov	r0,	#50h
-00:010A A0 01                     133   	mov	r1,	#0A0h
-00:010C 11-90 08-F0               134   	st	r0,	STPACP
-00:0110 11-91 08-F0               135   	st	r1,	STPACP
-00:0114 02 00                     136   	mov	r0,	#2
-00:0116 11-90 09-F0               137   	st	r0,	SBYCON
-00:011A 8F-FE                     138   	nop
-00:011C 8F-FE                     139   	nop
-00:011E 1F-FE                     140   	rt
-                                  141   
-00:0120                           142   _init_screen:
-00:0120 04 00                     143   	mov	r0,	#4
-00:0122 11-90 30-F0               144   	st	r0,	0F030h
+00:00F6 11-92 16-F0               127   	st	r2,	IRQ2
+00:00FA D0-A0 10-F0               128   	sb	ETM0
+00:00FE 13-90 20-F0               129   	st	er0,	TM0D
+00:0102 01 00                     130   	mov	r0,	#1
+00:0104 11-90 25-F0               131   	st	r0,	TM0CON1
+00:0108                           132   _stop:
+00:0108 50 00                     133   	mov	r0,	#50h
+00:010A A0 01                     134   	mov	r1,	#0A0h
+00:010C 11-90 08-F0               135   	st	r0,	STPACP
+00:0110 11-91 08-F0               136   	st	r1,	STPACP
+00:0114 02 00                     137   	mov	r0,	#2
+00:0116 11-90 09-F0               138   	st	r0,	SBYCON
+00:011A 8F-FE                     139   	nop
+00:011C 8F-FE                     140   	nop
+00:011E 1F-FE                     141   	rt
+                                  142   
+00:0120                           143   _init_screen:
+00:0120 04 00                     144   	mov	r0,	#4
+00:0122 11-90 30-F0               145   	st	r0,	0F030h
  ** Warning 25: illegal access to SFR
-00:0126 07 00                     145   	mov	r0,	#7
-00:0128 11-90 33-F0               146   	st	r0,	0F033h
+00:0126 07 00                     146   	mov	r0,	#7
+00:0128 11-90 33-F0               147   	st	r0,	0F033h
  ** Warning 25: illegal access to SFR
-00:012C 09 00                     147   	mov	r0,	#9
-00:012E 11-90 34-F0               148   	st	r0,	0F034h
+00:012C 09 00                     148   	mov	r0,	#9
+00:012E 11-90 34-F0               149   	st	r0,	0F034h
  ** Warning 25: illegal access to SFR
-00:0132 17 00                     149   	mov	r0,	#17h
-00:0134 11-90 35-F0               150   	st	r0,	0F035h
+00:0132 17 00                     150   	mov	r0,	#17h
+00:0134 11-90 35-F0               151   	st	r0,	0F035h
  ** Warning 25: illegal access to SFR
-00:0138 01 E0                     151   	mov	er0,	#1
-00:013A 11-90 36-F0               152   	st	r0,	0F036h
+00:0138 01 E0                     152   	mov	er0,	#1
+00:013A 11-90 36-F0               153   	st	r0,	0F036h
  ** Warning 25: illegal access to SFR
-00:013E 11-91 39-F0               153   	st	r1,	0F039h
+00:013E 11-91 39-F0               154   	st	r1,	0F039h
  ** Warning 25: illegal access to SFR
-00:0142 17 00                     154   	mov	r0,	#17h
-00:0144 11-90 31-F0               155   	st	r0,	0F031h
+00:0142 17 00                     155   	mov	r0,	#17h
+00:0144 11-90 31-F0               156   	st	r0,	0F031h
  ** Warning 25: illegal access to SFR
-00:0148 12 00                     156   	mov	r0,	#12h
-00:014A 11-90 32-F0               157   	st	r0,	0F032h
+00:0148 12 00                     157   	mov	r0,	#12h
+00:014A 11-90 32-F0               158   	st	r0,	0F032h
  ** Warning 25: illegal access to SFR
-00:014E 1F-FE                     158   	rt
-                                  159   
-00:0150                           160   _init_port1:
-00:0150 0C-F0 20-F2               161   	lea	P1D
+00:014E 1F-FE                     159   	rt
+                                  160   
+00:0150                           161   _init_port1:
+00:0150 0C-F0 20-F2               162   	lea	P1D
  ** Warning 06: expression of type NUMBER required
-00:0154 00 00                     162   	mov	r0,	#0
-00:0156 7F 01                     163   	mov	r1,	#7Fh
-00:0158 53-90                     164   	st	er0,	[ea+]
-00:015A 53-90                     165   	st	er0,	[ea+]
-00:015C 31-90                     166   	st	r0,	[ea]
-00:015E 1F-FE                     167   	rt
-                                  168   
-00:0160                           169   _init_port0:
-00:0160 0C-F0 48-F0               170   	lea	P0D
+00:0154 00 00                     163   	mov	r0,	#0
+00:0156 7F 01                     164   	mov	r1,	#7Fh
+00:0158 53-90                     165   	st	er0,	[ea+]
+00:015A 53-90                     166   	st	er0,	[ea+]
+00:015C 31-90                     167   	st	r0,	[ea]
+00:015E 1F-FE                     168   	rt
+                                  169   
+00:0160                           170   _init_port0:
+00:0160 0C-F0 48-F0               171   	lea	P0D
  ** Warning 06: expression of type NUMBER required
-00:0164 00 E0                     171   	mov	er0,	#0
-00:0166 07 E2                     172   	mov	er2,	#7
-00:0168 53-90                     173   	st	er0,	[ea+]
-00:016A 53-92                     174   	st	er2,	[ea+]
-00:016C 31-92                     175   	st	r2,	[ea]
-00:016E 1F-FE                     176   	rt
-                                  177   
-00:0170                           178   _init_p00:
-00:0170 00 00                     179   	mov	r0,	#0
-00:0172 11-90 41-F0               180   	st	r0,	KICON
-00:0176 80 00                     181   	mov	r0,	#80h
-00:0178 FF 01                     182   	mov	r1,	#0FFh
-00:017A 13-90 44-F0               183   	st	er0,	KOMASK
-00:017E 1F-FE                     184   	rt
-                                  185   
-00:0180                           186   _reset_SFR:
-00:0180 01 00                     187   	mov	r0,	#1
-00:0182 11-90 0A-F0               188   	st	r0,	FCON
-00:0186 04 00                     189   	mov	r0,	#4
-00:0188 11-90 30-F0               190   	st	r0,	0F030h
+00:0164 00 E0                     172   	mov	er0,	#0
+00:0166 07 E2                     173   	mov	er2,	#7
+00:0168 53-90                     174   	st	er0,	[ea+]
+00:016A 53-92                     175   	st	er2,	[ea+]
+00:016C 31-92                     176   	st	r2,	[ea]
+00:016E 1F-FE                     177   	rt
+                                  178   
+00:0170                           179   _init_p00:
+00:0170 00 00                     180   	mov	r0,	#0
+00:0172 11-90 41-F0               181   	st	r0,	KICON
+00:0176 80 00                     182   	mov	r0,	#80h
+00:0178 FF 01                     183   	mov	r1,	#0FFh
+00:017A 13-90 44-F0               184   	st	er0,	KOMASK
+00:017E 1F-FE                     185   	rt
+                                  186   
+00:0180                           187   _reset_SFR:
+00:0180 01 00                     188   	mov	r0,	#1
+00:0182 11-90 0A-F0               189   	st	r0,	FCON
+00:0186 04 00                     190   	mov	r0,	#4
+00:0188 11-90 30-F0               191   	st	r0,	0F030h
  ** Warning 25: illegal access to SFR
-00:018C 03 00                     191   	mov	r0,	#3
-00:018E 11-90 33-F0               192   	st	r0,	0F033h
+00:018C 03 00                     192   	mov	r0,	#3
+00:018E 11-90 33-F0               193   	st	r0,	0F033h
  ** Warning 25: illegal access to SFR
-00:0192 09 00                     193   	mov	r0,	#9
-00:0194 11-90 34-F0               194   	st	r0,	0F034h
+00:0192 09 00                     194   	mov	r0,	#9
+00:0194 11-90 34-F0               195   	st	r0,	0F034h
  ** Warning 25: illegal access to SFR
-00:0198 17 00                     195   	mov	r0,	#17h
-00:019A 11-90 35-F0               196   	st	r0,	0F035h
+00:0198 17 00                     196   	mov	r0,	#17h
+00:019A 11-90 35-F0               197   	st	r0,	0F035h
  ** Warning 25: illegal access to SFR
-00:019E 01 E0                     197   	mov	er0,	#1
-00:01A0 11-90 36-F0               198   	st	r0,	0F036h
+00:019E 01 E0                     198   	mov	er0,	#1
+00:01A0 11-90 36-F0               199   	st	r0,	0F036h
  ** Warning 25: illegal access to SFR
-00:01A4 11-91 39-F0               199   	st	r1,	0F039h
+00:01A4 11-91 39-F0               200   	st	r1,	0F039h
  ** Warning 25: illegal access to SFR
-00:01A8 15 00                     200   	mov	r0,	#15h
-00:01AA 11-90 31-F0               201   	st	r0,	0F031h
+00:01A8 15 00                     201   	mov	r0,	#15h
+00:01AA 11-90 31-F0               202   	st	r0,	0F031h
  ** Warning 25: illegal access to SFR
-00:01AE 1F-FE                     202   	rt
-                                  203   
-00:01B0                           204   _entry:
-00:01B0 00-F0'00-00'              205   	b _main
-                                  206   	;start your program here
-                                  207   
+00:01AE 1F-FE                     203   	rt
+                                  204   
+00:01B0                           205   _entry:
+00:01B0 00-F0'00-00'              206   	b _main
 
 
 
@@ -243,4 +242,4 @@ RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   1
 
   Errors   : 0
   Warnings : 20  (/Wrpeast)
-  Lines    : 207
+  Lines    : 206
