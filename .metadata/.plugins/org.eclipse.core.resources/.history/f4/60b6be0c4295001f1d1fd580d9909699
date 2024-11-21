@@ -1,8 +1,0 @@
-type(ML620906)
-model large
-romwindow 0, 0cfffH
-extrn   code: _main
-
-_entry:
-	b _main
-	;start your program here
