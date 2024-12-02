@@ -25,6 +25,7 @@ keytable		EQU 83DAH
 startup_str_1		EQU 30F00H
 startup_str_1_len	EQU 13H
 last_ki_ko		EQU 0D150h
+
 cseg	#3	at	1000h
 
 _hex_editor_mode:
@@ -39,10 +40,100 @@ _$ret_main:
 	pop	pc
 
 _$start:
+	bl	_startup_screen
 
 	bl	_hex_editor
+
 	bal	_$ret_main
 
+_startup_screen:
+	push	lr
+	bl	_enter	;0:9D22
+	add	sp,	#-16h
+	mov	bp,	sp
+	mov	r0,	#0Ah
+	st	r0,	0D137h
+	mov	r0,	#1
+	st	r0,	0D139h
+	bl	_clear_DDD4	;0:7F00
+	mov	r8,	#BYTE3 startup_str_1
+	mov	r10,	#BYTE1 startup_str_1
+	mov	r11,	#BYTE2 startup_str_1
+	push	r8
+	push	er10
+	mov	er0,	bp
+	bl	_extract_string
+	add	sp,	#4
+
+	mov	r0,	#2
+	mov	r1,	#2
+	mov	er2,	bp
+	bl	_line_print	;0:821E
+
+	add	er10,	#startup_str_1_len
+	push	r8
+	push	er10
+	mov	er0,	bp
+	bl	_extract_string
+	add	sp,	#4
+
+	mov	r0,	#2
+	mov	r1,	#10h
+	mov	er2,	bp
+	bl	_line_print	;0:821E
+
+	mov	r0,	#2
+	mov	r1,	#30h
+	mov	r2,	#BYTE1 press_ac_str
+	mov	r3,	#BYTE2 press_ac_str
+	bl	_line_print	;0:821E
+
+	bl	_render_DDD4	;0:8704
+
+	bl	_wait_AC
+
+	b	_leave	;0:9D2A
+
+_extract_string:
+	push	fp
+	mov	fp,	sp
+	push	xr4
+	mov	er6,	er0
+_$extract_loop:
+	l	r2,	04h[fp]
+	l	er4,	02h[fp]
+	l	r0,	r2:[er4]
+	st	r0,	[er6]
+	add	er4,	#1
+	st	er4,	02h[fp]
+	add	er6,	#1
+	mov	r0,	r0
+	bne		_$extract_loop
+
+	pop	xr4
+	mov	sp,	fp
+	pop	fp
+	rt
+
+_wait_AC:
+	push	lr
+	mov	r4,	#0
+	mov	r5,	#2
+_$waitac_loop:
+	mov	r0,	#10h
+	st	r0,	0F046h
+	mov	er0,	#3Fh
+	tb	0F040h.2
+	beq	_$waitac_ret
+	bl	_delay
+	add	er4,	#-1
+	bne	_$waitac_loop
+
+_$waitac_ret:
+	mov    r0,    #10h
+    mov    r1,    #10h
+    bl    _delay
+	pop	pc
 
 ;main function of the hex editor
 _hex_editor:
@@ -50,13 +141,11 @@ _hex_editor:
 	bl	_enter
 	add	sp,	#-6
 	mov	bp,	sp
+	mov 	r0, 	#00h
+	mov 	r1,	#212
+	st 	er0, 	0D400h
 	mov	er0,	#0
-	lea	0D400h
-	st	er0,	[ea+]
-	st	er0,	[ea+]
-	st	er0,	[ea+]
-	st	er0,	[ea]
-	st	er0,	02h[bp]
+	st	er0,	02h[bp]	
 	gjmp	_$full_repaint
 _$hexed_loop:
 	mov	er0,	#0
@@ -64,11 +153,11 @@ _$hexed_loop:
 	mov	r0,	#1
 	st	er0,	04h[bp]
 	mov	er0,	bp
-	bl	_get_keycode_fixed	;2:A84C
+	bl 	_get_keycode_fixed
 	mov	r0,	r0
 	bne	_$has_key_press
 	mov	er0,	#0
-	st	er0,	0D150h
+	st	er0,	last_ki_ko
 	gjmp	_$refresh
 
 _$has_key_press:
@@ -204,19 +293,12 @@ _$alpha:
 	gjmp	_$refresh_stat_bar
 
 _$ac:
-	tb	0D110h.3
-	gbeq	_$exec
-	bl	_shutdown
-	gjmp	_$refresh
-
-_$exec:
-	l er14, 0D400h
-	mov sp,	er14
+	l 	er14, 	0D400h
+	mov 	sp,	er14
 	pop lr
 	add sp, #-4h
 	pop pc
 	brk
-
 
 _$type:
 	l	r2,	02h[bp]
@@ -235,7 +317,7 @@ _$write:
 	st	r0,	r4:[er2]
 	mov	r0,	#0
 	st	r0,	02h[bp]
-
+	gjmp 	_$L2
 _$full_repaint:
 	mov	r0,	#1
 	gjmp	_$repaint
@@ -463,8 +545,22 @@ _restore_SFR:
 	mov	r0,	#17h
 	st	r0,	0F028h
 	rt
+_$delay_keycode:
+	bl	_get_keycode
+	push 	er0
+	mov 	r0, 	#10h
+	mov 	r1, 	#00h
+	bl 	_delay
+	pop 	er0
+	nop
+	rt
+	
+	
 
+	
 
+	
+	
 _get_keycode_fixed:
 	push	lr
 	bl	_enter

@@ -1,5 +1,5 @@
 RLU8 Object Linker, Ver.1.60.3 Linkage Information
-[Fri Aug 30 21:13:28 2024]
+[Mon Dec  2 16:19:35 2024]
 
 
                          ------------------
@@ -78,10 +78,10 @@ Link Map - Memory space above #1
      -------------------------------------------------------
  ---
 >GAP<          03:0000.0  03:0FFF.7  1000.0(4096.0)    (ROM)
-      S CODE   03:1000    03:14B9    04BA(1210)        (absolute)
+      S CODE   03:1000    03:13F5    03F6(1014)        (absolute)
 
 
-Total size (CODE  ) = 004BA   (1210)
+Total size (CODE  ) = 003F6   (1014)
 Total size (DATA  ) = 00000   (0)
 Total size (BIT   ) = 00000.0 (0.0)
 Total size (NVDATA) = 00000   (0)
@@ -93,7 +93,7 @@ Module         Value     Type         Symbol
 hexeditorg
 
 
-Total ROM usage = 004BA   (1210)
+Total ROM usage = 003F6   (1014)
 Total RAM usage = 00000   (0)
 
 End of mapfile.
