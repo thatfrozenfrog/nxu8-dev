@@ -1,7 +1,7 @@
 RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   1 
  Source File: hexeditorg.asm
  Object File: hexeditorg.obj
- Date  : 2024/12/02 Mon.[16:19]
+ Date  : 2024/12/25 Wed.[20:53]
  Title : 
 ## Loc. Object                   Line   Source Statements
 
@@ -32,525 +32,533 @@ RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   1
     = 00030F00H                    25   startup_str_1		EQU 30F00H
     = 00000013H                    26   startup_str_1_len	EQU 13H
     = 0000D150H                    27   last_ki_ko		EQU 0D150h
-  --------------------------       28   cseg	#3	at	1000h
+  --------------------------       28   cseg	#3	at	1440h
                                    29   
-03:1000                            30   _hex_editor_mode:
-03:1000 CE-F8                      31   	push	lr
-03:1002 6E-F4                      32   	push	xr4
-03:1004 00 04                      33   	mov	r4,	#0
-03:1006 11-94 10-D1                34   	st	r4,	0D110h
-03:100A 04 CE                      35   	bal	_$start
-03:100C                            36   _$ret_main:
-03:100C 01-F3 9C-13                37   	bl	_restore_SFR
-03:1010 2E-F4                      38   	pop	xr4
-03:1012 8E-F2                      39   	pop	pc
+03:1440                            30   _hex_editor_mode:
+03:1440 CE-F8                      31   	push	lr
+03:1442 6E-F4                      32   	push	xr4
+03:1444 00 04                      33   	mov	r4,	#0
+03:1446 11-94 10-D1                34   	st	r4,	0D110h
+03:144A 04 CE                      35   	bal	_$start
+03:144C                            36   _$ret_main:
+03:144C 01-F3 E6-17                37   	bl	_restore_SFR
+03:1450 2E-F4                      38   	pop	xr4
+03:1452 8E-F2                      39   	pop	pc
                                    40   
-03:1014                            41   _$start:
+03:1454                            41   _$start:
                                    42   
-03:1014 01-F3 1A-10                43   	bl	_hex_editor
-03:1018 F9 CE                      44   	bal	_$ret_main
+03:1454 01-F3 5A-14                43   	bl	_hex_editor
+03:1458 F9 CE                      44   	bal	_$ret_main
                                    45   
                                    46   
                                    47   ;main function of the hex editor
-03:101A                            48   _hex_editor:
-03:101A CE-F8                      49   	push	lr
-03:101C 01-F0 30-AC                50   	bl	_enter
-03:1020 FA E1                      51   	add	sp,	#-6
-03:1022 1A-AC                      52   	mov	bp,	sp
-03:1024 00 E0                      53   	mov	er0,	#0
+03:145A                            48   _hex_editor:
+03:145A CE-F8                      49   	push	lr
+03:145C 01-F0 30-AC                50   	bl	_enter
+03:1460 FA E1                      51   	add	sp,	#-6
+03:1462 1A-AC                      52   	mov	bp,	sp
+03:1464 00 E0                      53   	mov	er0,	#0
 RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   2 
  Title : 
 ## Loc. Object                   Line   Source Statements
 
-03:1026 0C-F0 00-D4                54   	lea	0D400h
-03:102A 53-90                      55   	st	er0,	[ea+]
-03:102C 53-90                      56   	st	er0,	[ea+]
-03:102E 53-90                      57   	st	er0,	[ea+]
-03:1030 33-90                      58   	st	er0,	[ea]
-03:1032 82 B0                      59   	st	er0,	02h[bp]
-03:1034 00-F3 C0-11                60   	gjmp	_$full_repaint
-03:1038                            61   _$hexed_loop:
-03:1038 00 E0                      62   	mov	er0,	#0
-03:103A C3-90                      63   	st	er0,	[bp]
-03:103C 01 00                      64   	mov	r0,	#1
-03:103E 84 B0                      65   	st	er0,	04h[bp]
-03:1040 C5-F0                      66   	mov	er0,	bp
-03:1042 01-F3 B6-13                67   	bl	_get_keycode_fixed	
+03:1466 0C-F0 00-D4                54   	lea	0D400h
+03:146A 53-90                      55   	st	er0,	[ea+]
+03:146C 53-90                      56   	st	er0,	[ea+]
+03:146E 53-90                      57   	st	er0,	[ea+]
+03:1470 33-90                      58   	st	er0,	[ea]
+                                   59   	
+03:1472 00 00                      60   	mov r0, #00h
+03:1474 D4 01                      61   	mov r1, #212
+03:1476 13-90 00-D4                62   	st er0, 0D400h	
+                                   63   
+03:147A 82 B0                      64   	st	er0,	02h[bp]
+03:147C 00-F3 0A-16                65   	gjmp	_$full_repaint
+                                   66   	
+03:1480                            67   _$hexed_loop:
+03:1480 00 E0                      68   	mov	er0,	#0
+03:1482 C3-90                      69   	st	er0,	[bp]
+03:1484 01 00                      70   	mov	r0,	#1
+03:1486 84 B0                      71   	st	er0,	04h[bp]
+03:1488 C5-F0                      72   	mov	er0,	bp
+03:148A 01-F3 00-18                73   	bl	_get_keycode_fixed	
                                         ;2:A84C
-03:1046 00-80                      68   	mov	r0,	r0
-03:1048 05 C8                      69   	bne	_$has_key_press
-03:104A 00 E0                      70   	mov	er0,	#0
-03:104C 13-90 50-D1                71   	st	er0,	0D150h
-03:1050 00-F3 CC-11                72   	gjmp	_$refresh
-                                   73   
-03:1054                            74   _$has_key_press:
-03:1054 C2-90                      75   	l	er0,	[bp]
-03:1056 12-92 50-D1                76   	l	er2,	0D150h
-03:105A 27-F0                      77   	cmp	er0,	er2
-03:105C 02-C8                      78   	gbeq	_$refresh
-03:105E 00-F3 CC-11               >>>   
-03:1062 13-90 50-D1                79   	st	er0,	0D150h
-03:1066 00 00                      80   	mov	r0,	#0
-03:1068 84 D0                      81   	st	r0,	04h[bp]
-03:106A C5-F0                      82   	mov	er0,	bp
-03:106C DA 02                      83   	mov	r2,	#BYTE1 keytable
-03:106E 83 03                      84   	mov	r3,	#BYTE2 keytable
-03:1070 01-F2 92-98                85   	bl	_convert_keycode	
+03:148E 00-80                      74   	mov	r0,	r0
+03:1490 05 C8                      75   	bne	_$has_key_press
+03:1492 00 E0                      76   	mov	er0,	#0
+03:1494 13-90 50-D1                77   	st	er0,	0D150h
+03:1498 00-F3 16-16                78   	gjmp	_$refresh
+                                   79   
+03:149C                            80   _$has_key_press:
+03:149C C2-90                      81   	l	er0,	[bp]
+03:149E 12-92 50-D1                82   	l	er2,	0D150h
+03:14A2 27-F0                      83   	cmp	er0,	er2
+03:14A4 02-C8                      84   	gbeq	_$refresh
+03:14A6 00-F3 16-16               >>>   
+03:14AA 13-90 50-D1                85   	st	er0,	0D150h
+03:14AE 00 00                      86   	mov	r0,	#0
+03:14B0 84 D0                      87   	st	r0,	04h[bp]
+03:14B2 C5-F0                      88   	mov	er0,	bp
+03:14B4 DA 02                      89   	mov	r2,	#BYTE1 keytable
+03:14B6 83 03                      90   	mov	r3,	#BYTE2 keytable
+03:14B8 01-F2 92-98                91   	bl	_convert_keycode	
                                         ;2:52DC
-03:1074 30 E2                      86   	mov	er2,	#30h
-03:1076 27-F0                      87   	cmp	er0,	er2
-03:1078 02-C0                      88   	gblt	_$refresh
-03:107A 00-F3 CC-11               >>>   
-03:107E 3F E2                      89   	mov	er2,	#3Fh
-03:1080 27-F0                      90   	cmp	er0,	er2
-03:1082 02-C2                      91   	gble	_$type
-03:1084 00-F3 98-11               >>>   
-03:1088 FC 71                      92   	cmp	r1,	#0FCh
-03:108A 02-C9                      93   	gbne	_$refresh
-03:108C 00-F3 CC-11               >>>   
-03:1090 1F 70                      94   	cmp	r0,	#1Fh
-03:1092 1C C9                      95   	gbeq	_$L1
-03:1094 1E 70                      96   	cmp	r0,	#1Eh
-03:1096 1E C9                      97   	gbeq	_$L2
-03:1098 1C 70                      98   	cmp	r0,	#1Ch
-03:109A 20 C9                      99   	gbeq	_$L3
-03:109C 1D 70                     100   	cmp	r0,	#1Dh
-03:109E 2B C9                     101   	gbeq	_$L4
-03:10A0 28 70                     102   	cmp	r0,	#28h
-03:10A2 65 C9                     103   	gbeq	_$alpha
+03:14BC 30 E2                      92   	mov	er2,	#30h
+03:14BE 27-F0                      93   	cmp	er0,	er2
+03:14C0 02-C0                      94   	gblt	_$refresh
+03:14C2 00-F3 16-16               >>>   
+03:14C6 3F E2                      95   	mov	er2,	#3Fh
+03:14C8 27-F0                      96   	cmp	er0,	er2
+03:14CA 02-C2                      97   	gble	_$type
+03:14CC 00-F3 E0-15               >>>   
+03:14D0 FC 71                      98   	cmp	r1,	#0FCh
+03:14D2 02-C9                      99   	gbne	_$refresh
+03:14D4 00-F3 16-16               >>>   
+03:14D8 1F 70                     100   	cmp	r0,	#1Fh
+03:14DA 1C C9                     101   	gbeq	_$L1
+03:14DC 1E 70                     102   	cmp	r0,	#1Eh
+03:14DE 1E C9                     103   	gbeq	_$L2
 RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   3 
  Title : 
 ## Loc. Object                   Line   Source Statements
 
-03:10A4 29 70                     104   	cmp	r0,	#29h
-03:10A6 5B C9                     105   	gbeq	_$shift
-03:10A8 26 70                     106   	cmp	r0,	#26h
-03:10AA 69 C9                     107   	gbeq	_$ac
-03:10AC 24 70                     108   	cmp	r0,	#24h
-03:10AE 02-C9                     109   	gbne	_$refresh
-03:10B0 00-F3 CC-11               >>>   
-                                  110   ;if menu pressed
-03:10B4 A1-A0 10-D1               111   	tb	0D110h.2
-03:10B8 02-C9                     112   	gbne	_$refresh
-03:10BA 00-F3 CC-11               >>>   
-03:10BE 01-F3 E8-11               113   	bl	_menu_handle
-03:10C2 00 70                     114   	cmp	r0,	#0
-03:10C4 02-C9                     115   	gbne	_$hexed_ret
-03:10C6 00-F3 E4-11               >>>   
-03:10CA 7A CE                     116   	gjmp	_$full_repaint
-                                  117   
-03:10CC                           118   _$L1:
-03:10CC FF 00                     119   	mov	r0,	#0FFh
-03:10CE 00-81                     120   	mov	r1,	r0
-03:10D0 10-82                     121   	mov	r2,	r1
-03:10D2 20 CE                     122   	gjmp	_$change_addr
-03:10D4                           123   _$L2:
-03:10D4 01 00                     124   	mov	r0,	#1
-03:10D6 00 01                     125   	mov	r1,	#0
-03:10D8 10-82                     126   	mov	r2,	r1
-03:10DA 1C CE                     127   	gjmp	_$change_addr
-03:10DC                           128   _$L3:
-03:10DC 00 00                     129   	mov	r0,	#0
-03:10DE FF 02                     130   	mov	r2,	#0FFh
-03:10E0 A1-A0 10-D1               131   	tb	0D110h.2
-03:10E4 06 C8                     132   	gbne	_$L3_1
-03:10E6 20-81                     133   	mov	r1,	r2
-03:10E8 B1-A0 10-D1               134   	tb	0D110h.3
-03:10EC 13 C8                     135   	gbne	_$change_addr
-03:10EE F8 00                     136   	mov	r0,	#0F8h
-03:10F0 11 CE                     137   	gjmp	_$change_addr
-03:10F2                           138   _$L3_1:
-03:10F2 00-81                     139   	mov	r1,	r0
-03:10F4 0F CE                     140   	gjmp	_$change_addr
-03:10F6                           141   _$L4:
-03:10F6 00 00                     142   	mov	r0,	#0
-03:10F8 A1-A0 10-D1               143   	tb	0D110h.2
-03:10FC 07 C8                     144   	gbne	_$L4_1
-03:10FE 00-82                     145   	mov	r2,	r0
-03:1100 B1-A0 10-D1               146   	tb	0D110h.3
-03:1104 06 C8                     147   	gbne	_$L4_2
-03:1106 00-81                     148   	mov	r1,	r0
-03:1108 08 00                     149   	mov	r0,	#8
-03:110A 04 CE                     150   	gjmp	_$change_addr
-03:110C                           151   _$L4_1:
-03:110C 00-81                     152   	mov	r1,	r0
-03:110E 01 02                     153   	mov	r2,	#1
-03:1110 01 CE                     154   	gjmp	_$change_addr
-03:1112                           155   _$L4_2:
-03:1112 01 01                     156   	mov	r1,	#1
+03:14E0 1C 70                     104   	cmp	r0,	#1Ch
+03:14E2 20 C9                     105   	gbeq	_$L3
+03:14E4 1D 70                     106   	cmp	r0,	#1Dh
+03:14E6 2B C9                     107   	gbeq	_$L4
+03:14E8 28 70                     108   	cmp	r0,	#28h
+03:14EA 65 C9                     109   	gbeq	_$alpha
+03:14EC 29 70                     110   	cmp	r0,	#29h
+03:14EE 5B C9                     111   	gbeq	_$shift
+03:14F0 26 70                     112   	cmp	r0,	#26h
+03:14F2 69 C9                     113   	gbeq	_$ac
+03:14F4 24 70                     114   	cmp	r0,	#24h
+03:14F6 02-C9                     115   	gbne	_$refresh
+03:14F8 00-F3 16-16               >>>   
+                                  116   ;if menu pressed
+03:14FC A1-A0 10-D1               117   	tb	0D110h.2
+03:1500 02-C9                     118   	gbne	_$refresh
+03:1502 00-F3 16-16               >>>   
+03:1506 01-F3 32-16               119   	bl	_menu_handle
+03:150A 00 70                     120   	cmp	r0,	#0
+03:150C 02-C9                     121   	gbne	_$hexed_ret
+03:150E 00-F3 2E-16               >>>   
+03:1512 7B CE                     122   	gjmp	_$full_repaint
+                                  123   
+03:1514                           124   _$L1:
+03:1514 FF 00                     125   	mov	r0,	#0FFh
+03:1516 00-81                     126   	mov	r1,	r0
+03:1518 10-82                     127   	mov	r2,	r1
+03:151A 20 CE                     128   	gjmp	_$change_addr
+03:151C                           129   _$L2:
+03:151C 01 00                     130   	mov	r0,	#1
+03:151E 00 01                     131   	mov	r1,	#0
+03:1520 10-82                     132   	mov	r2,	r1
+03:1522 1C CE                     133   	gjmp	_$change_addr
+03:1524                           134   _$L3:
+03:1524 00 00                     135   	mov	r0,	#0
+03:1526 FF 02                     136   	mov	r2,	#0FFh
+03:1528 A1-A0 10-D1               137   	tb	0D110h.2
+03:152C 06 C8                     138   	gbne	_$L3_1
+03:152E 20-81                     139   	mov	r1,	r2
+03:1530 B1-A0 10-D1               140   	tb	0D110h.3
+03:1534 13 C8                     141   	gbne	_$change_addr
+03:1536 F8 00                     142   	mov	r0,	#0F8h
+03:1538 11 CE                     143   	gjmp	_$change_addr
+03:153A                           144   _$L3_1:
+03:153A 00-81                     145   	mov	r1,	r0
+03:153C 0F CE                     146   	gjmp	_$change_addr
+03:153E                           147   _$L4:
+03:153E 00 00                     148   	mov	r0,	#0
+03:1540 A1-A0 10-D1               149   	tb	0D110h.2
+03:1544 07 C8                     150   	gbne	_$L4_1
+03:1546 00-82                     151   	mov	r2,	r0
+03:1548 B1-A0 10-D1               152   	tb	0D110h.3
+03:154C 06 C8                     153   	gbne	_$L4_2
+03:154E 00-81                     154   	mov	r1,	r0
+03:1550 08 00                     155   	mov	r0,	#8
+03:1552 04 CE                     156   	gjmp	_$change_addr
 RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   4 
  Title : 
 ## Loc. Object                   Line   Source Statements
 
-03:1114                           157   _$change_addr:
-03:1114 01 E4                     158   	mov	er4,	#1
-03:1116 82 D5                     159   	st	r5,	02h[bp]
-03:1118 84 D4                     160   	st	r4,	04h[bp]
-03:111A 12-94 00-D4               161   	l	er4,	0D400h
-03:111E 10-96 02-D4               162   	l	r6,	0D402h
-03:1122 06-F4                     163   	add	er4,	er0
-03:1124 26-86                     164   	addc	r6,	r2
-03:1126 1F 26                     165   	and	r6,	#1Fh	;dsr is
+03:1554                           157   _$L4_1:
+03:1554 00-81                     158   	mov	r1,	r0
+03:1556 01 02                     159   	mov	r2,	#1
+03:1558 01 CE                     160   	gjmp	_$change_addr
+03:155A                           161   _$L4_2:
+03:155A 01 01                     162   	mov	r1,	#1
+03:155C                           163   _$change_addr:
+03:155C 01 E4                     164   	mov	er4,	#1
+03:155E 82 D5                     165   	st	r5,	02h[bp]
+03:1560 84 D4                     166   	st	r4,	04h[bp]
+03:1562 12-94 00-D4               167   	l	er4,	0D400h
+03:1566 10-96 02-D4               168   	l	r6,	0D402h
+03:156A 06-F4                     169   	add	er4,	er0
+03:156C 26-86                     170   	addc	r6,	r2
+03:156E 1F 26                     171   	and	r6,	#1Fh	;dsr is
                                          masked with 0x1F
-03:1128 13-94 00-D4               166   	st	er4,	0D400h
-03:112C 11-96 02-D4               167   	st	r6,	0D402h
-03:1130 12-90 04-D4               168   	l	er0,	0D404h
-03:1134 10-92 06-D4               169   	l	r2,	0D406h
-03:1138 47-F0                     170   	cmp	er0,	er4
-03:113A 65-82                     171   	cmpc	r2,	r6
-03:113C 0A C2                     172   	gbgt	_$L5
-                                  173   
-03:113E A0 E0                     174   	add	er0,	#20h
-03:1140 00 62                     175   	addc	r2,	#0
-03:1142 47-F0                     176   	cmp	er0,	er4
-03:1144 65-82                     177   	cmpc	r2,	r6
-03:1146 3C C2                     178   	gbgt	_$full_repaint
+03:1570 13-94 00-D4               172   	st	er4,	0D400h
+03:1574 11-96 02-D4               173   	st	r6,	0D402h
+03:1578 12-90 04-D4               174   	l	er0,	0D404h
+03:157C 10-92 06-D4               175   	l	r2,	0D406h
+03:1580 47-F0                     176   	cmp	er0,	er4
+03:1582 65-82                     177   	cmpc	r2,	r6
+03:1584 0A C2                     178   	gbgt	_$L5
                                   179   
-03:1148 18 E0                     180   	mov	er0,	#18h
-03:114A 08-84                     181   	sub	r4,	r0
-03:114C 19-85                     182   	subc	r5,	r1
-03:114E 19-86                     183   	subc	r6,	r1
-03:1150 1F 26                     184   	and	r6,	#1Fh
+03:1586 A0 E0                     180   	add	er0,	#20h
+03:1588 00 62                     181   	addc	r2,	#0
+03:158A 47-F0                     182   	cmp	er0,	er4
+03:158C 65-82                     183   	cmpc	r2,	r6
+03:158E 3D C2                     184   	gbgt	_$full_repaint
                                   185   
-03:1152                           186   _$L5:
-03:1152 F8 24                     187   	and	r4,	#0F8h
-03:1154 13-94 04-D4               188   	st	er4,	0D404h
-03:1158 11-96 06-D4               189   	st	r6,	0D406h
-03:115C 31 CE                     190   	gjmp	_$full_repaint
+03:1590 18 E0                     186   	mov	er0,	#18h
+03:1592 08-84                     187   	sub	r4,	r0
+03:1594 19-85                     188   	subc	r5,	r1
+03:1596 19-86                     189   	subc	r6,	r1
+03:1598 1F 26                     190   	and	r6,	#1Fh
                                   191   
-03:115E                           192   _$shift:
-03:115E A2-A0 10-D1               193   	rb	0D110h.2
-03:1162 10-90 10-D1               194   	l	r0,	0D110h
-03:1166 08 40                     195   	xor	r0,	#8
-03:1168 11-90 10-D1               196   	st	r0,	0D110h
-03:116C 2B CE                     197   	gjmp	_$refresh_stat_bar
-                                  198   
-03:116E                           199   _$alpha:
-03:116E B2-A0 10-D1               200   	rb	0D110h.3
-03:1172 10-90 10-D1               201   	l	r0,	0D110h
-03:1176 04 40                     202   	xor	r0,	#4
-03:1178 11-90 10-D1               203   	st	r0,	0D110h
-03:117C 23 CE                     204   	gjmp	_$refresh_stat_bar
-                                  205   
-03:117E                           206   _$ac:
-03:117E B1-A0 10-D1               207   	tb	0D110h.3
-03:1182 03 C9                     208   	gbeq	_$exec
-03:1184 01-F0 E8-9E               209   	bl	_shutdown
-03:1188 21 CE                     210   	gjmp	_$refresh
+03:159A                           192   _$L5:
+03:159A F8 24                     193   	and	r4,	#0F8h
+03:159C 13-94 04-D4               194   	st	er4,	0D404h
+03:15A0 11-96 06-D4               195   	st	r6,	0D406h
+03:15A4 32 CE                     196   	gjmp	_$full_repaint
+                                  197   
+03:15A6                           198   _$shift:
+03:15A6 A2-A0 10-D1               199   	rb	0D110h.2
+03:15AA 10-90 10-D1               200   	l	r0,	0D110h
+03:15AE 08 40                     201   	xor	r0,	#8
+03:15B0 11-90 10-D1               202   	st	r0,	0D110h
+03:15B4 2C CE                     203   	gjmp	_$refresh_stat_bar
+                                  204   
+03:15B6                           205   _$alpha:
+03:15B6 B2-A0 10-D1               206   	rb	0D110h.3
+03:15BA 10-90 10-D1               207   	l	r0,	0D110h
+03:15BE 04 40                     208   	xor	r0,	#4
+03:15C0 11-90 10-D1               209   	st	r0,	0D110h
+03:15C4 24 CE                     210   	gjmp	_$refresh_stat_bar
                                   211   
 RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   5 
  Title : 
 ## Loc. Object                   Line   Source Statements
 
-03:118A                           212   _$exec:
-03:118A 12-9E 00-D4               213   	l er14, 0D400h
-03:118E EA-A1                     214   	mov sp,	er14
-03:1190 8E-F8                     215   	pop lr
-03:1192 FC E1                     216   	add sp, #-4h
-03:1194 8E-F2                     217   	pop pc
-03:1196 FF-FF                     218   	brk
-                                  219   
-                                  220   
-03:1198                           221   _$type:
-03:1198 02 D2                     222   	l	r2,	02h[bp]
-03:119A 05 C8                     223   	gbne	_$write
-03:119C 11-90 80-D1               224   	st	r0,	0D180h
-03:11A0 01 00                     225   	mov	r0,	#1
-03:11A2 82 D0                     226   	st	r0,	02h[bp]
-03:11A4 13 CE                     227   	gjmp	_$refresh
-03:11A6                           228   _$write:
-03:11A6 10-91 80-D1               229   	l	r1,	0D180h
-03:11AA 4A-91                     230   	sll	r1,	#4
-03:11AC 0F 20                     231   	and	r0,	#0Fh
-03:11AE 13-80                     232   	or	r0,	r1
-03:11B0 12-92 00-D4               233   	l	er2,	0D400h
-03:11B4 10-94 02-D4               234   	l	r4,	0D402h
-03:11B8 4F-90 21-90               235   	st	r0,	r4:[er2]
-03:11BC 00 00                     236   	mov	r0,	#0
-03:11BE 82 D0                     237   	st	r0,	02h[bp]
-                                  238   
-03:11C0                           239   _$full_repaint:
-03:11C0 01 00                     240   	mov	r0,	#1
-03:11C2 05 CE                     241   	gjmp	_$repaint
-03:11C4                           242   _$refresh_stat_bar:
-03:11C4 01-F0 FE-94               243   	bl	_render_stat_bar
-03:11C8 01 00                     244   	mov	r0,	#1
-03:11CA 84 D0                     245   	st	r0,	04h[bp]
-03:11CC                           246   _$refresh:
-03:11CC 00 00                     247   	mov	r0,	#0
-03:11CE                           248   _$repaint:
-03:11CE 04 D2                     249   	l	r2,	04h[bp]
-03:11D0 03 C8                     250   	bne	_$keep_stat
-03:11D2 00 02                     251   	mov	r2,	#0
-03:11D4 11-92 10-D1               252   	st	r2,	0D110h
-03:11D8                           253   _$keep_stat:
-03:11D8 4E-F0                     254   	push	r0
-03:11DA 01-F3 7A-12               255   	bl	_repaint
-03:11DE 02 E1                     256   	add	sp,	#2
-03:11E0 00-F3 38-10               257   	gjmp	_$hexed_loop
-                                  258   	
-03:11E4                           259   _$hexed_ret:
-03:11E4 00-F0 38-AC               260   	b	_leave
-                                  261   
-03:11E8                           262   _menu_handle:
-03:11E8 CE-F8                     263   	push	lr
-                                  264   ;backup the SFRs related to the timer
-03:11EA 10-90 0A-F0               265   	l	r0,	0F00Ah
-03:11EE 4E-F0                     266   	push	r0
-03:11F0 12-90 10-F0               267   	l	er0,	0F010h
+03:15C6                           212   _$ac:
+03:15C6 B1-A0 10-D1               213   	tb	0D110h.3
+03:15CA 03 C9                     214   	gbeq	_$exec
+03:15CC 01-F0 E8-9E               215   	bl	_shutdown
+03:15D0 22 CE                     216   	gjmp	_$refresh
+                                  217   
+03:15D2                           218   _$exec:
+03:15D2 12-9E 00-D4               219   	l er14, 0D400h
+03:15D6 EA-A1                     220   	mov sp,	er14
+03:15D8 8E-F8                     221   	pop lr
+03:15DA FC E1                     222   	add sp, #-4h
+03:15DC 8E-F2                     223   	pop pc
+03:15DE FF-FF                     224   	brk
+                                  225   
+                                  226   
+03:15E0                           227   _$type:
+03:15E0 02 D2                     228   	l	r2,	02h[bp]
+03:15E2 05 C8                     229   	gbne	_$write
+03:15E4 11-90 80-D1               230   	st	r0,	0D180h
+03:15E8 01 00                     231   	mov	r0,	#1
+03:15EA 82 D0                     232   	st	r0,	02h[bp]
+03:15EC 14 CE                     233   	gjmp	_$refresh
+03:15EE                           234   _$write:
+03:15EE 10-91 80-D1               235   	l	r1,	0D180h
+03:15F2 4A-91                     236   	sll	r1,	#4
+03:15F4 0F 20                     237   	and	r0,	#0Fh
+03:15F6 13-80                     238   	or	r0,	r1
+03:15F8 12-92 00-D4               239   	l	er2,	0D400h
+03:15FC 10-94 02-D4               240   	l	r4,	0D402h
+03:1600 4F-90 21-90               241   	st	r0,	r4:[er2]
+03:1604 00 00                     242   	mov	r0,	#0
+03:1606 82 D0                     243   	st	r0,	02h[bp]
+03:1608 89 CE                     244   	gjmp _$L2
+                                  245   
+                                  246   
+03:160A                           247   _$full_repaint:
+03:160A 01 00                     248   	mov	r0,	#1
+03:160C 05 CE                     249   	gjmp	_$repaint
+03:160E                           250   _$refresh_stat_bar:
+03:160E 01-F0 FE-94               251   	bl	_render_stat_bar
+03:1612 01 00                     252   	mov	r0,	#1
+03:1614 84 D0                     253   	st	r0,	04h[bp]
+03:1616                           254   _$refresh:
+03:1616 00 00                     255   	mov	r0,	#0
+03:1618                           256   _$repaint:
+03:1618 04 D2                     257   	l	r2,	04h[bp]
+03:161A 03 C8                     258   	bne	_$keep_stat
+03:161C 00 02                     259   	mov	r2,	#0
+03:161E 11-92 10-D1               260   	st	r2,	0D110h
+03:1622                           261   _$keep_stat:
+03:1622 4E-F0                     262   	push	r0
+03:1624 01-F3 C4-16               263   	bl	_repaint
+03:1628 02 E1                     264   	add	sp,	#2
+03:162A 00-F3 80-14               265   	gjmp	_$hexed_loop
+                                  266   	
+03:162E                           267   _$hexed_ret:
 RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   6 
  Title : 
 ## Loc. Object                   Line   Source Statements
 
+03:162E 00-F0 38-AC               268   	b	_leave
+                                  269   
+03:1632                           270   _menu_handle:
+03:1632 CE-F8                     271   	push	lr
+                                  272   ;backup the SFRs related to the timer
+03:1634 10-90 0A-F0               273   	l	r0,	0F00Ah
+03:1638 4E-F0                     274   	push	r0
+03:163A 12-90 10-F0               275   	l	er0,	0F010h
  ** Warning 25: illegal access to SFR
-03:11F4 5E-F0                     268   	push	er0
-03:11F6 10-90 18-F0               269   	l	r0,	0F018h
-03:11FA 4E-F0                     270   	push	r0
-03:11FC 12-90 20-F0               271   	l	er0,	0F020h
-03:1200 5E-F0                     272   	push	er0
-03:1202 12-90 24-F0               273   	l	er0,	0F024h
-03:1206 5E-F0                     274   	push	er0
-03:1208 10-90 28-F0               275   	l	r0,	0F028h
-03:120C 4E-F0                     276   	push	r0
-03:120E 01-F3 9C-13               277   	bl	_restore_SFR
-                                  278   
-                                  279   ;also handle settings menu here
-03:1212 00 00                     280   	mov	r0,	#0
-03:1214 11-90 42-D1               281   	st	r0,	0D142h
-03:1218 11-90 64-D1               282   	st	r0,	0D164h
-03:121C 11-90 65-D1               283   	st	r0,	0D165h
-03:1220 B1-A0 10-D1               284   	tb	0D110h.3
-03:1224 09 C8                     285   	bne	_$settings
-03:1226 01 00                     286   	mov	r0,	#1
-03:1228 11-90 13-D1               287   	st	r0,	0D113h
-03:122C 00 00                     288   	mov	r0,	#0
-03:122E 11-90 10-D1               289   	st	r0,	0D110h
-03:1232 01-F2 4C-AD               290   	bl	_display_menu	;2:63C8
-03:1236 09 CE                     291   	bal	_$menu_ret
-03:1238                           292   _$settings:
-03:1238 02 00                     293   	mov	r0,	#2
-03:123A 11-90 13-D1               294   	st	r0,	0D113h
-03:123E 00 00                     295   	mov	r0,	#0
-03:1240 11-90 10-D1               296   	st	r0,	0D110h
-03:1244 01-F2 B8-D5               297   	bl	_display_settings	
+03:163E 5E-F0                     276   	push	er0
+03:1640 10-90 18-F0               277   	l	r0,	0F018h
+03:1644 4E-F0                     278   	push	r0
+03:1646 12-90 20-F0               279   	l	er0,	0F020h
+03:164A 5E-F0                     280   	push	er0
+03:164C 12-90 24-F0               281   	l	er0,	0F024h
+03:1650 5E-F0                     282   	push	er0
+03:1652 10-90 28-F0               283   	l	r0,	0F028h
+03:1656 4E-F0                     284   	push	r0
+03:1658 01-F3 E6-17               285   	bl	_restore_SFR
+                                  286   
+                                  287   ;also handle settings menu here
+03:165C 00 00                     288   	mov	r0,	#0
+03:165E 11-90 42-D1               289   	st	r0,	0D142h
+03:1662 11-90 64-D1               290   	st	r0,	0D164h
+03:1666 11-90 65-D1               291   	st	r0,	0D165h
+03:166A B1-A0 10-D1               292   	tb	0D110h.3
+03:166E 09 C8                     293   	bne	_$settings
+03:1670 01 00                     294   	mov	r0,	#1
+03:1672 11-90 13-D1               295   	st	r0,	0D113h
+03:1676 00 00                     296   	mov	r0,	#0
+03:1678 11-90 10-D1               297   	st	r0,	0D110h
+03:167C 01-F2 4C-AD               298   	bl	_display_menu	;2:63C8
+03:1680 09 CE                     299   	bal	_$menu_ret
+03:1682                           300   _$settings:
+03:1682 02 00                     301   	mov	r0,	#2
+03:1684 11-90 13-D1               302   	st	r0,	0D113h
+03:1688 00 00                     303   	mov	r0,	#0
+03:168A 11-90 10-D1               304   	st	r0,	0D110h
+03:168E 01-F2 B8-D5               305   	bl	_display_settings	
                                         ;2:88EE
-03:1248 00 00                     298   	mov	r0,	#0
-                                  299   
-03:124A                           300   _$menu_ret:
-03:124A 00-82                     301   	mov	r2,	r0
-03:124C 00 00                     302   	mov	r0,	#0
-03:124E 11-90 13-D1               303   	st	r0,	0D113h
-                                  304   
-03:1252 0E-F0                     305   	pop	r0
-03:1254 11-90 28-F0               306   	st	r0,	0F028h
-03:1258 1E-F0                     307   	pop	er0
-03:125A 13-90 24-F0               308   	st	er0,	0F024h
-03:125E 1E-F0                     309   	pop	er0
-03:1260 13-90 20-F0               310   	st	er0,	0F020h
-03:1264 0E-F0                     311   	pop	r0
-03:1266 11-90 18-F0               312   	st	r0,	0F018h
-03:126A 1E-F0                     313   	pop	er0
-03:126C 13-90 10-F0               314   	st	er0,	0F010h
- ** Warning 25: illegal access to SFR
-03:1270 0E-F0                     315   	pop	r0
-03:1272 11-90 0A-F0               316   	st	r0,	0F00Ah
-                                  317   
-03:1276 20-80                     318   	mov	r0,	r2
-03:1278 8E-F2                     319   	pop	pc
-                                  320   
+03:1692 00 00                     306   	mov	r0,	#0
+                                  307   
+03:1694                           308   _$menu_ret:
+03:1694 00-82                     309   	mov	r2,	r0
+03:1696 00 00                     310   	mov	r0,	#0
+03:1698 11-90 13-D1               311   	st	r0,	0D113h
+                                  312   
+03:169C 0E-F0                     313   	pop	r0
+03:169E 11-90 28-F0               314   	st	r0,	0F028h
+03:16A2 1E-F0                     315   	pop	er0
+03:16A4 13-90 24-F0               316   	st	er0,	0F024h
+03:16A8 1E-F0                     317   	pop	er0
+03:16AA 13-90 20-F0               318   	st	er0,	0F020h
+03:16AE 0E-F0                     319   	pop	r0
+03:16B0 11-90 18-F0               320   	st	r0,	0F018h
+03:16B4 1E-F0                     321   	pop	er0
 RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   7 
  Title : 
 ## Loc. Object                   Line   Source Statements
 
-03:127A                           321   _repaint:
-03:127A CE-F8                     322   	push	lr
-03:127C 01-F0 30-AC               323   	bl	_enter
-03:1280 F2 E1                     324   	add	sp,	#-0Eh
-03:1282 1A-AC                     325   	mov	bp,	sp
-03:1284 00 E2                     326   	mov	er2,	#0
-03:1286 50 D0                     327   	l	r0,	10h[fp]
-03:1288 03 C9                     328   	beq	_$L6
-03:128A 01-F0 60-8C               329   	bl	_clear_DDD4	;0:7F00
-03:128E 01 E2                     330   	mov	er2,	#1
-03:1290                           331   _$L6:
-03:1290 8A B2                     332   	st	er2,	0Ah[bp]
-03:1292 01 E0                     333   	mov	er0,	#1
-03:1294 11-90 39-D1               334   	st	r0,	0D139h
-03:1298 11-91 38-D1               335   	st	r1,	0D138h
-03:129C 0A 00                     336   	mov	r0,	#0Ah
-03:129E 11-90 37-D1               337   	st	r0,	0D137h
-03:12A2 00 00                     338   	mov	r0,	#0
-03:12A4 02 01                     339   	mov	r1,	#2
-03:12A6 88 B0                     340   	st	er0,	08h[bp]
-03:12A8 10 00                     341   	mov	r0,	#10h
-03:12AA D4 01                     342   	mov	r1,	#0D4h
-03:12AC 8C B0                     343   	st	er0,	0Ch[bp]
-03:12AE 04 07                     344   	mov	r7,	#4
-03:12B0 12-94 00-D4               345   	l	er4,	0D400h
-03:12B4 10-96 02-D4               346   	l	r6,	0D402h
-03:12B8 12-98 04-D4               347   	l	er8,	0D404h
-03:12BC 10-9A 06-D4               348   	l	r10,	0D406h
-03:12C0                           349   _$loop1:
-03:12C0 50 D0                     350   	l	r0,	10h[fp]
-03:12C2 18 C9                     351   	beq	_$L7
-03:12C4 CA-F0                     352   	lea	[bp]
-03:12C6 A0-80                     353   	mov	r0,	r10
-03:12C8 01-F2 10-40               354   	bl	_hex_byte	;2:2492
-03:12CC 53-90                     355   	st	er0,	[ea+]
-03:12CE 3A 00                     356   	mov	r0,	#3Ah
-03:12D0 51-90                     357   	st	r0,	[ea+]
-03:12D2 90-80                     358   	mov	r0,	r9
-03:12D4 01-F2 10-40               359   	bl	_hex_byte	;2:2492
-03:12D8 51-90                     360   	st	r0,	[ea+]
-03:12DA 51-91                     361   	st	r1,	[ea+]
-03:12DC 80-80                     362   	mov	r0,	r8
-03:12DE 01-F2 10-40               363   	bl	_hex_byte	;2:2492
-03:12E2 51-90                     364   	st	r0,	[ea+]
-03:12E4 51-91                     365   	st	r1,	[ea+]
-03:12E6 00 00                     366   	mov	r0,	#0
-03:12E8 31-90                     367   	st	r0,	[ea]
-03:12EA C5-F2                     368   	mov	er2,	bp
-03:12EC 09 D1                     369   	l	r1,	09h[bp]
-03:12EE 02 00                     370   	mov	r0,	#2
-03:12F0 01-F0 7E-8F               371   	bl	_line_print	;0:821E
-03:12F4                           372   _$L7:
-03:12F4 3C 00                     373   	mov	r0,	#3Ch
-03:12F6 88 D0                     374   	st	r0,	08h[bp]
-03:12F8 08 0B                     375   	mov	r11,	#8
-03:12FA                           376   _$loop2:
+03:16B6 13-90 10-F0               322   	st	er0,	0F010h
+ ** Warning 25: illegal access to SFR
+03:16BA 0E-F0                     323   	pop	r0
+03:16BC 11-90 0A-F0               324   	st	r0,	0F00Ah
+                                  325   
+03:16C0 20-80                     326   	mov	r0,	r2
+03:16C2 8E-F2                     327   	pop	pc
+                                  328   
+03:16C4                           329   _repaint:
+03:16C4 CE-F8                     330   	push	lr
+03:16C6 01-F0 30-AC               331   	bl	_enter
+03:16CA F2 E1                     332   	add	sp,	#-0Eh
+03:16CC 1A-AC                     333   	mov	bp,	sp
+03:16CE 00 E2                     334   	mov	er2,	#0
+03:16D0 50 D0                     335   	l	r0,	10h[fp]
+03:16D2 03 C9                     336   	beq	_$L6
+03:16D4 01-F0 60-8C               337   	bl	_clear_DDD4	;0:7F00
+03:16D8 01 E2                     338   	mov	er2,	#1
+03:16DA                           339   _$L6:
+03:16DA 8A B2                     340   	st	er2,	0Ah[bp]
+03:16DC 01 E0                     341   	mov	er0,	#1
+03:16DE 11-90 39-D1               342   	st	r0,	0D139h
+03:16E2 11-91 38-D1               343   	st	r1,	0D138h
+03:16E6 0A 00                     344   	mov	r0,	#0Ah
+03:16E8 11-90 37-D1               345   	st	r0,	0D137h
+03:16EC 00 00                     346   	mov	r0,	#0
+03:16EE 02 01                     347   	mov	r1,	#2
+03:16F0 88 B0                     348   	st	er0,	08h[bp]
+03:16F2 10 00                     349   	mov	r0,	#10h
+03:16F4 D4 01                     350   	mov	r1,	#0D4h
+03:16F6 8C B0                     351   	st	er0,	0Ch[bp]
+03:16F8 04 07                     352   	mov	r7,	#4
+03:16FA 12-94 00-D4               353   	l	er4,	0D400h
+03:16FE 10-96 02-D4               354   	l	r6,	0D402h
+03:1702 12-98 04-D4               355   	l	er8,	0D404h
+03:1706 10-9A 06-D4               356   	l	r10,	0D406h
+03:170A                           357   _$loop1:
+03:170A 50 D0                     358   	l	r0,	10h[fp]
+03:170C 18 C9                     359   	beq	_$L7
+03:170E CA-F0                     360   	lea	[bp]
+03:1710 A0-80                     361   	mov	r0,	r10
+03:1712 01-F2 10-40               362   	bl	_hex_byte	;2:2492
+03:1716 53-90                     363   	st	er0,	[ea+]
+03:1718 3A 00                     364   	mov	r0,	#3Ah
+03:171A 51-90                     365   	st	r0,	[ea+]
+03:171C 90-80                     366   	mov	r0,	r9
+03:171E 01-F2 10-40               367   	bl	_hex_byte	;2:2492
+03:1722 51-90                     368   	st	r0,	[ea+]
+03:1724 51-91                     369   	st	r1,	[ea+]
+03:1726 80-80                     370   	mov	r0,	r8
+03:1728 01-F2 10-40               371   	bl	_hex_byte	;2:2492
+03:172C 51-90                     372   	st	r0,	[ea+]
+03:172E 51-91                     373   	st	r1,	[ea+]
+03:1730 00 00                     374   	mov	r0,	#0
+03:1732 31-90                     375   	st	r0,	[ea]
+03:1734 C5-F2                     376   	mov	er2,	bp
 RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   8 
  Title : 
 ## Loc. Object                   Line   Source Statements
 
-03:12FA AF-90 80-90               377   	l	r0,	r10:[er8]
-03:12FE 0C B2                     378   	l	er2,	0Ch[bp]
-03:1300 20-91                     379   	l	r1,	[er2]
-03:1302 21-90                     380   	st	r0,	[er2]
-03:1304 81 E2                     381   	add	er2,	#1
-03:1306 8C B2                     382   	st	er2,	0Ch[bp]
-03:1308 50 D2                     383   	l	r2,	10h[fp]
-03:130A 04 C8                     384   	bne	_$L8
-03:130C 17-80                     385   	cmp	r0,	r1
-03:130E 14 C9                     386   	beq	_$L10
-03:1310 01 01                     387   	mov	r1,	#1
-03:1312 8A D1                     388   	st	r1,	0Ah[bp]
-03:1314                           389   _$L8:
-03:1314 01-F2 10-40               390   	bl	_hex_byte	;2:2492
-03:1318 C3-90                     391   	st	er0,	[bp]
-03:131A 00 00                     392   	mov	r0,	#0
-03:131C 82 D0                     393   	st	r0,	02h[bp]
-03:131E 87-F4                     394   	cmp	er4,	er8
-03:1320 A5-86                     395   	cmpc	r6,	r10
-03:1322 03 C8                     396   	bne	_$L9
-03:1324 04 00                     397   	mov	r0,	#4
-03:1326 11-90 38-D1               398   	st	r0,	0D138h
-03:132A                           399   _$L9:
-03:132A 08 B0                     400   	l	er0,	08h[bp]
-03:132C C5-F2                     401   	mov	er2,	bp
-03:132E 01-F0 7E-8F               402   	bl	_line_print	;0:821E
-03:1332 00 00                     403   	mov	r0,	#0
-03:1334 11-90 38-D1               404   	st	r0,	0D138h
-03:1338                           405   _$L10:
-03:1338 08 B0                     406   	l	er0,	08h[bp]
-03:133A 90 E0                     407   	add	er0,	#10h
-03:133C 88 B0                     408   	st	er0,	08h[bp]
-03:133E 81 E8                     409   	add	er8,	#1
-03:1340 00 6A                     410   	addc	r10,	#0
-03:1342 1F 2A                     411   	and	r10,	#1Fh
-03:1344 FF 1B                     412   	add	r11,	#-1
-03:1346 D9 C8                     413   	bne	_$loop2
-                                  414   
-03:1348 09 D1                     415   	l	r1,	09h[bp]
-03:134A 0A 11                     416   	add	r1,	#0Ah
-03:134C 89 D1                     417   	st	r1,	09h[bp]
-                                  418   
-03:134E FF 17                     419   	add	r7,	#-1
-03:1350 B7 C8                     420   	bne	_$loop1
-                                  421   	
-03:1352 50 D0                     422   	l	r0,	10h[fp]
-03:1354 1B C9                     423   	beq	_$skip_addr_print
-03:1356 CA-F0                     424   	lea	[bp]
-03:1358 60-80                     425   	mov	r0,	r6
-03:135A 01-F2 10-40               426   	bl	_hex_byte
-03:135E 53-90                     427   	st	er0,	[ea+]
-03:1360 3A 00                     428   	mov	r0,	#3Ah
-03:1362 51-90                     429   	st	r0,	[ea+]
-03:1364 50-80                     430   	mov	r0,	r5
-03:1366 01-F2 10-40               431   	bl	_hex_byte
-03:136A 51-90                     432   	st	r0,	[ea+]
+03:1736 09 D1                     377   	l	r1,	09h[bp]
+03:1738 02 00                     378   	mov	r0,	#2
+03:173A 01-F0 7E-8F               379   	bl	_line_print	;0:821E
+03:173E                           380   _$L7:
+03:173E 3C 00                     381   	mov	r0,	#3Ch
+03:1740 88 D0                     382   	st	r0,	08h[bp]
+03:1742 08 0B                     383   	mov	r11,	#8
+03:1744                           384   _$loop2:
+03:1744 AF-90 80-90               385   	l	r0,	r10:[er8]
+03:1748 0C B2                     386   	l	er2,	0Ch[bp]
+03:174A 20-91                     387   	l	r1,	[er2]
+03:174C 21-90                     388   	st	r0,	[er2]
+03:174E 81 E2                     389   	add	er2,	#1
+03:1750 8C B2                     390   	st	er2,	0Ch[bp]
+03:1752 50 D2                     391   	l	r2,	10h[fp]
+03:1754 04 C8                     392   	bne	_$L8
+03:1756 17-80                     393   	cmp	r0,	r1
+03:1758 14 C9                     394   	beq	_$L10
+03:175A 01 01                     395   	mov	r1,	#1
+03:175C 8A D1                     396   	st	r1,	0Ah[bp]
+03:175E                           397   _$L8:
+03:175E 01-F2 10-40               398   	bl	_hex_byte	;2:2492
+03:1762 C3-90                     399   	st	er0,	[bp]
+03:1764 00 00                     400   	mov	r0,	#0
+03:1766 82 D0                     401   	st	r0,	02h[bp]
+03:1768 87-F4                     402   	cmp	er4,	er8
+03:176A A5-86                     403   	cmpc	r6,	r10
+03:176C 03 C8                     404   	bne	_$L9
+03:176E 04 00                     405   	mov	r0,	#4
+03:1770 11-90 38-D1               406   	st	r0,	0D138h
+03:1774                           407   _$L9:
+03:1774 08 B0                     408   	l	er0,	08h[bp]
+03:1776 C5-F2                     409   	mov	er2,	bp
+03:1778 01-F0 7E-8F               410   	bl	_line_print	;0:821E
+03:177C 00 00                     411   	mov	r0,	#0
+03:177E 11-90 38-D1               412   	st	r0,	0D138h
+03:1782                           413   _$L10:
+03:1782 08 B0                     414   	l	er0,	08h[bp]
+03:1784 90 E0                     415   	add	er0,	#10h
+03:1786 88 B0                     416   	st	er0,	08h[bp]
+03:1788 81 E8                     417   	add	er8,	#1
+03:178A 00 6A                     418   	addc	r10,	#0
+03:178C 1F 2A                     419   	and	r10,	#1Fh
+03:178E FF 1B                     420   	add	r11,	#-1
+03:1790 D9 C8                     421   	bne	_$loop2
+                                  422   
+03:1792 09 D1                     423   	l	r1,	09h[bp]
+03:1794 0A 11                     424   	add	r1,	#0Ah
+03:1796 89 D1                     425   	st	r1,	09h[bp]
+                                  426   
+03:1798 FF 17                     427   	add	r7,	#-1
+03:179A B7 C8                     428   	bne	_$loop1
+                                  429   	
+03:179C 50 D0                     430   	l	r0,	10h[fp]
+03:179E 1B C9                     431   	beq	_$skip_addr_print
+03:17A0 CA-F0                     432   	lea	[bp]
 RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   9 
  Title : 
 ## Loc. Object                   Line   Source Statements
 
-03:136C 51-91                     433   	st	r1,	[ea+]
-03:136E 40-80                     434   	mov	r0,	r4
-03:1370 01-F2 10-40               435   	bl	_hex_byte
-03:1374 51-90                     436   	st	r0,	[ea+]
-03:1376 51-91                     437   	st	r1,	[ea+]
-03:1378 00 00                     438   	mov	r0,	#0
-03:137A 31-90                     439   	st	r0,	[ea]
-03:137C 0E 00                     440   	mov	r0,	#0Eh
-03:137E 11-90 37-D1               441   	st	r0,	0D137h
-03:1382 02 00                     442   	mov	r0,	#2
-03:1384 30 01                     443   	mov	r1,	#30h
-03:1386 C5-F2                     444   	mov	er2,	bp
-03:1388 01-F0 7E-8F               445   	bl	_line_print
-                                  446   
-03:138C                           447   _$skip_addr_print:
-03:138C 0A D0                     448   	l	r0,	0Ah[bp]
-03:138E 02 C9                     449   	beq	_$L11
-03:1390 01-F0 7C-94               450   	bl	_render_DDD4	;0:8704
-                                  451   
-03:1394                           452   _$L11:
-03:1394 01-F0 FE-94               453   	bl	_render_stat_bar
-03:1398 00-F0 38-AC               454   	b	_leave
-                                  455   
-03:139C                           456   _restore_SFR:
-03:139C 01 00                     457   	mov	r0,	#1
-03:139E 11-90 0A-F0               458   	st	r0,	0F00Ah
-03:13A2 22 E0                     459   	mov	er0,	#22h
-03:13A4 13-90 10-F0               460   	st	er0,	0F010h
+03:17A2 60-80                     433   	mov	r0,	r6
+03:17A4 01-F2 10-40               434   	bl	_hex_byte
+03:17A8 53-90                     435   	st	er0,	[ea+]
+03:17AA 3A 00                     436   	mov	r0,	#3Ah
+03:17AC 51-90                     437   	st	r0,	[ea+]
+03:17AE 50-80                     438   	mov	r0,	r5
+03:17B0 01-F2 10-40               439   	bl	_hex_byte
+03:17B4 51-90                     440   	st	r0,	[ea+]
+03:17B6 51-91                     441   	st	r1,	[ea+]
+03:17B8 40-80                     442   	mov	r0,	r4
+03:17BA 01-F2 10-40               443   	bl	_hex_byte
+03:17BE 51-90                     444   	st	r0,	[ea+]
+03:17C0 51-91                     445   	st	r1,	[ea+]
+03:17C2 00 00                     446   	mov	r0,	#0
+03:17C4 31-90                     447   	st	r0,	[ea]
+03:17C6 0E 00                     448   	mov	r0,	#0Eh
+03:17C8 11-90 37-D1               449   	st	r0,	0D137h
+03:17CC 02 00                     450   	mov	r0,	#2
+03:17CE 30 01                     451   	mov	r1,	#30h
+03:17D0 C5-F2                     452   	mov	er2,	bp
+03:17D2 01-F0 7E-8F               453   	bl	_line_print
+                                  454   
+03:17D6                           455   _$skip_addr_print:
+03:17D6 0A D0                     456   	l	r0,	0Ah[bp]
+03:17D8 02 C9                     457   	beq	_$L11
+03:17DA 01-F0 7C-94               458   	bl	_render_DDD4	;0:8704
+                                  459   
+03:17DE                           460   _$L11:
+03:17DE 01-F0 FE-94               461   	bl	_render_stat_bar
+03:17E2 00-F0 38-AC               462   	b	_leave
+                                  463   
+03:17E6                           464   _restore_SFR:
+03:17E6 01 00                     465   	mov	r0,	#1
+03:17E8 11-90 0A-F0               466   	st	r0,	0F00Ah
+03:17EC 22 E0                     467   	mov	er0,	#22h
+03:17EE 13-90 10-F0               468   	st	er0,	0F010h
  ** Warning 25: illegal access to SFR
-03:13A8 03 00                     461   	mov	r0,	#3
-03:13AA 11-90 18-F0               462   	st	r0,	0F018h
-03:13AE 17 00                     463   	mov	r0,	#17h
-03:13B0 11-90 28-F0               464   	st	r0,	0F028h
-03:13B4 1F-FE                     465   	rt
-                                  466   
-                                  467   
-03:13B6                           468   _get_keycode_fixed:
-03:13B6 CE-F8                     469   	push	lr
-03:13B8 01-F0 30-AC               470   	bl	_enter
-03:13BC 05-F8                     471   	mov	er8,	er0
-03:13BE 01 04                     472   	mov	r4,	#1
-03:13C0 01 01                     473   	mov	r1,	#1
-03:13C2 01 03                     474   	mov	r3,	#1
-03:13C4                           475   _$get_key_loop:
-03:13C4 11-91 46-F0               476   	st	r1,	KOD0
-03:13C8 00 02                     477   	mov	r2,	#0
-03:13CA 10-90 40-F0               478   	l	r0,	KID
-03:13CE 11-92 46-F0               479   	st	r2,	KOD0
-03:13D2 00-82                     480   	mov	r2,	r0
-03:13D4 FF 70                     481   	cmp	r0,	#0FFh
-03:13D6 05 C9                     482   	beq	_$continue
-03:13D8 89-91 01-00               483   	st	r1,	01h[er8]
-03:13DC FF 40                     484   	xor	r0,	#0FFh
-03:13DE 81-90                     485   	st	r0,	[er8]
-03:13E0 05 CE                     486   	bal	_$get_key_ret
-03:13E2                           487   _$continue:
+03:17F2 03 00                     469   	mov	r0,	#3
+03:17F4 11-90 18-F0               470   	st	r0,	0F018h
+03:17F8 17 00                     471   	mov	r0,	#17h
+03:17FA 11-90 28-F0               472   	st	r0,	0F028h
+03:17FE 1F-FE                     473   	rt
+                                  474   
+                                  475   
+03:1800                           476   _get_keycode_fixed:
+03:1800 CE-F8                     477   	push	lr
+03:1802 01-F0 30-AC               478   	bl	_enter
+03:1806 05-F8                     479   	mov	er8,	er0
+03:1808 01 04                     480   	mov	r4,	#1
+03:180A 01 01                     481   	mov	r1,	#1
+03:180C 01 03                     482   	mov	r3,	#1
+03:180E                           483   _$get_key_loop:
+03:180E 11-91 46-F0               484   	st	r1,	KOD0
+03:1812 00 02                     485   	mov	r2,	#0
+03:1814 10-90 40-F0               486   	l	r0,	KID
+03:1818 11-92 46-F0               487   	st	r2,	KOD0
 RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:  10 
  Title : 
 ## Loc. Object                   Line   Source Statements
 
-03:13E2 1A-91                     488   	sll	r1,	#1
-03:13E4 01 13                     489   	add	r3,	#1
-03:13E6 07 73                     490   	cmp	r3,	#7
-03:13E8 ED C3                     491   	ble	_$get_key_loop
-03:13EA 00 04                     492   	mov	r4,	#0
-03:13EC                           493   _$get_key_ret:
-03:13EC 01-F0 6A-A1               494   	bl	_reset_ko
-03:13F0 40-80                     495   	mov	r0,	r4
-03:13F2 00-F0 38-AC               496   	b	_leave
+03:181C 00-82                     488   	mov	r2,	r0
+03:181E FF 70                     489   	cmp	r0,	#0FFh
+03:1820 05 C9                     490   	beq	_$continue
+03:1822 89-91 01-00               491   	st	r1,	01h[er8]
+03:1826 FF 40                     492   	xor	r0,	#0FFh
+03:1828 81-90                     493   	st	r0,	[er8]
+03:182A 05 CE                     494   	bal	_$get_key_ret
+03:182C                           495   _$continue:
+03:182C 1A-91                     496   	sll	r1,	#1
+03:182E 01 13                     497   	add	r3,	#1
+03:1830 07 73                     498   	cmp	r3,	#7
+03:1832 ED C3                     499   	ble	_$get_key_loop
+03:1834 00 04                     500   	mov	r4,	#0
+03:1836                           501   _$get_key_ret:
+03:1836 01-F0 6A-A1               502   	bl	_reset_ko
+03:183A 40-80                     503   	mov	r0,	r4
+03:183C 00-F0 38-AC               504   	b	_leave
 
 
 
@@ -562,4 +570,4 @@ RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   1
 
   Errors   : 0
   Warnings : 3  (/Wrpeast)
-  Lines    : 496
+  Lines    : 504

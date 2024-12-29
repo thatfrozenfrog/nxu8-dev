@@ -1,0 +1,114 @@
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   1 
+ Source File: test_cop.asm
+ Object File: test_cop.obj
+ Date  : 2024/12/27 Fri.[17:47]
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+                                    1   type(ML620906)
+                                    2   model	large
+                                    3   romwindow 0, 0cfffh
+                                    4   
+    = 00:8C60H                      5   _clear_DDD4			EQU 0:8
+                                        C60H
+    = 00:8F7EH                      6   _line_print			EQU 0:8
+                                        F7EH
+    = 00:947CH                      7   _render_DDD4		EQU 0:947CH
+    = 00:94FEH                      8   _render_stat_bar 	EQU 0:94FEH
+    = 00:9F3AH                      9   _delay				EQU 0:9
+                                        F3AH
+    = 00:9EE8H                     10   _shutdown			EQU 0:9
+                                        EE8H
+    = 00:AC30H                     11   _enter				EQU 0:0
+                                        AC30H
+    = 00:AC38H                     12   _leave				EQU 0:0
+                                        AC38H
+    = 02:4010H                     13   _hex_byte			EQU 2:4
+                                        010H
+    = 02:9892H                     14   _convert_keycode	EQU 2:9892H
+    = 02:AD4CH                     15   _display_menu		EQU 2:0AD4CH
+    = 02:D5B8H                     16   _display_settings	EQU 2:0D5B8H
+    = 02:F5E8H                     17   _get_keycode		EQU 2:0F5E8H
+    = 00:9846H                     18   _bitmap				EQU 0:9
+                                        846H
+    = 01:EB94H                     19   _memset				EQU 1:0
+                                        EB94H
+                                   20   
+                                   21   
+    = 01:F24CH                     22   _waitkey			EQU 1:0
+                                        F24CH
+                                   23   
+                                   24   
+    = 0000D800H                    25   keyat				EQU 0D8
+                                        00H
+    = 000083DAH                    26   keytable			EQU 83D
+                                        AH
+                                   27   
+    = 0000D400H                    28   _lastbutton			EQU 0D4
+                                        00H
+                                   29   
+    = 01:0EA6H                     30   __return			EQU 1:0
+                                        EA6H
+    = 02:9416H                     31   _lrstack			EQU 2:9
+                                        416H
+    = 0000D500H                    32   _$$SP	EQU	0D500h
+                                   33   
+                                   34   
+    = 0000D180H                    35   _addrkey			EQU 0D1
+                                        80h
+    = 0000D182H                    36   _hexadr				EQU 0D1
+                                        82h
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   2 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+                                   37   
+    = 0000D810H                    38   _printadr			EQU 0D8
+                                        10h
+                                   39   
+                                   40   
+  --------------------------       41   cseg	#3	at	1440h
+                                   42   
+                                   43   
+03:1440                            44   _main:
+03:1440 00 0E                      45   	mov r14, #0h
+03:1442 D5 0F                      46   	mov r15, #0D5h
+03:1444 EA-A1                      47   	mov sp, er14
+03:1446 1A-AC                      48   	mov bp, sp
+03:1448 0C-F0 56-14                49   	LEA _some_string
+ ** Warning 06: expression of type NUMBER required
+                                   50   
+03:144C 02 E2                      51   	mov er2, #2
+03:144E C5-F0                      52   	mov er0, bp
+03:1450 01-F3 64-14                53   	bl _quickcpy
+03:1454 FF-FF                      54   	brk
+                                   55   
+03:1456                            56   _some_string:
+03:1456 48 65 6C 6C 6F 2C 20 77    57   	db "Hello, world!"
+03:145E 6F 72 6C 64 21 00         >>>   , 0
+                                   58   
+03:1464                            59   _quickcpy:
+                                   60   		
+                                   61   		;dw 0E33Fh
+03:1464 03 E3 56-98                62   	l qr8, 3:[EA+]
+03:1468 CE-F1                      63   	push ea
+03:146A 0A-F0                      64   	lea [er0]
+03:146C 00 E3 37-98                65   	st qr8, 0:[ea]
+03:1470 88 E0                      66   	add er0, #8
+03:1472 8E-F1                      67   	pop ea
+                                   68   
+03:1474 FF E2                      69   	add er2, #-1
+03:1476 F6 C8                      70   	bc nz, _quickcpy
+03:1478 1F-FE                      71   	rt
+
+
+
+  Target       : ML620906 (nX-U8/100)
+  Memory Model : LARGE
+  Data   Model : NEAR
+  ROM WINDOW   :    0H to CFFFH
+  Internal RAM : D000H to EFFFH
+
+  Errors   : 0
+  Warnings : 1  (/Wrpeast)
+  Lines    : 71

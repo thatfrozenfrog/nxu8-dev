@@ -5,6 +5,7 @@ type(ML620906)
 model	large
 romwindow 0, 0cfffh
 
+_memcpy	EQU 0:0E5C8H
 _clear_DDD4		EQU 0:8C60H
 _line_print		EQU 0:8F7EH
 _render_DDD4		EQU 0:947CH
@@ -20,6 +21,8 @@ _display_settings	EQU 2:0D5B8H
 _get_keycode		EQU 2:0F5E8H
 fill_screen		EQU 0:8C0CH
 _reset_ko		EQU 0:0A16AH
+_waitkey			EQU 1:0F24CH
+
 press_ac_str		EQU 1B18H
 keytable		EQU 83DAH
 
@@ -43,6 +46,24 @@ _$start:
 	bal	_$ret_main
 
 
+_strcpy:
+	push r4
+
+	lea [er0]
+_strcpy_loop:
+	l r4, 03h:[er2]
+	st r4, [ea+]
+	beq _strcpy_end
+	add er2, #1
+	bal _strcpy_loop
+_strcpy_end:
+
+	pop r4
+
+	rt
+
+
+
 ;main function of the hex editor
 _hex_editor:
 	push	lr
@@ -61,27 +82,30 @@ _hex_editor:
 	st er0, 0D400h	
 
 	st	er0,	02h[bp]
-	gjmp	_$full_repaint
+	gjmp	_option_end
 	
 _$hexed_loop:
 	mov	er0,	#0
 	st	er0,	[bp]
 	mov	r0,	#1
 	st	er0,	04h[bp]
+
 	mov	er0,	bp
 	bl	_get_keycode_fixed	;2:A84C
 	mov	r0,	r0
 	bne	_$has_key_press
 	mov	er0,	#0
-	st	er0,	0D150h
+	st	er0,	last_ki_ko
+	
 	gjmp	_$refresh
 
 _$has_key_press:
+
 	l	er0,	[bp]
-	l	er2,	0D150h
+	l	er2,	last_ki_ko
 	cmp	er0,	er2
 	gbeq	_$refresh
-	st	er0,	0D150h
+	st	er0,	last_ki_ko
 	mov	r0,	#0
 	st	r0,	04h[bp]
 	mov	er0,	bp
@@ -225,7 +249,149 @@ _$exec:
 	brk
 
 _$option:		;edit
+			_typing_offset  EQU 0D242h
+			_address_offset EQU 0D244h
+			_lastbutton		EQU 0D200h
+			_typing_print	EQU 0D260h
+			_address_jump	EQU 0D210h
+			_option_last_kio EQU 0D250h
+
+	;Init values
+	mov er0, #0
+	st er0, _typing_offset
+	mov er0, #1
+	st er0, _address_offset
+
+	mov er0, #0
+	lea _typing_print
+	st er0, [ea+]
+	st er0, [ea+]
+	st er0, _option_last_kio
+
+	mov r0, #0Eh
+	st r0, 0D137h
+
+	;Init screen
+
+	mov r0, #00h
+	mov r1, #0D2h
+	mov r2, #byte1 _option_str
+	mov r3, #byte2 _option_str
 	
+	bl _strcpy
+
+	mov r0, #01h
+	mov r1, #01h
+
+	mov r2, #00h
+	mov r3, #0D2h
+	bl _clear_DDD4
+	bl _line_print
+	bl _render_DDD4
+
+
+_$option_loop:
+/*
+
+	mov r0, #byte1 _option_last_kio
+	mov r1, #byte2 _option_last_kio
+
+	bl _get_keycode_fixed
+	mov r0, r0
+	bne _option_key_press
+
+	mov er0, #0
+	st er0, _lastbutton	;clear the last key
+	st er0, _option_last_kio
+*/
+
+	mov r0, #byte1 _option_last_kio
+	mov r1, #byte2 _option_last_kio
+	bl _waitkey
+	gjmp _option_key_press
+
+_option_render:
+	mov r0, #88H	;x
+	mov r1, #30H	;y
+	mov r2, #byte1 _typing_print
+	mov r3, #byte2 _typing_print
+	bl _line_print
+	bl _render_DDD4
+
+	gjmp _$option_loop
+
+
+_option_key_press:
+/*
+	l er0, _option_last_kio
+	l er2, _lastbutton
+	cmp er0, er2
+	gbeq _$option_loop
+
+	st er0, _lastbutton
+*/
+	mov r0, #byte1 _option_last_kio
+	mov r1, #byte2 _option_last_kio
+
+	mov r2, #byte1 keytable
+	mov r3, #byte2 keytable
+
+	bl _convert_keycode
+
+	mov er2, #30h
+	cmp er0, er2
+	gblt _$option_loop
+	mov er2, #3Fh
+	cmp er0, er2
+	gbge _$option_loop
+
+	l er2, _typing_offset
+	push r0
+		bl _hex_byte
+		st r1, _typing_print[er2]
+	pop r0
+	add er2, #1 ;increment the offset
+	st er2, _typing_offset ;store the offset of the typing, whereas each byte (key) costs 1 byte
+
+	l er2, _address_offset ;get the current offset
+	l r1, _address_jump[er2] ;get the current value
+
+	sll r1, #4	;shift and mask the current value in r0 to push r1 high nibble in
+	and r0, #0Fh
+	or r0, r1
+
+	st r0, _address_jump[er2] ;store the new value
+
+	tb _typing_offset.0
+	gbne _option_render		;if it's a nibble, loop back to the main option loop
+
+	tb _typing_offset.1
+	gbne _full_byte			;if it's a full byte, increase the offset
+							;else, it's a full word
+	mov er0, #4h
+	push er0
+	mov r0, #00h
+	mov r1, #0D4h
+	mov r2, #byte1 _address_jump
+	mov r3, #byte2 _address_jump
+	bl _memcpy
+
+_option_end:
+	mov	r0,	#0 ;do nothing, preserve the address
+	mov	r1,	#0
+	mov	r2,	r1
+
+
+	gjmp _$change_addr ;end
+
+
+_full_byte:
+	l er2, _address_offset
+	add er2, #-1
+	st er2, _address_offset
+	gjmp _option_render
+
+
 
 
 _$type:
@@ -506,3 +672,8 @@ _$get_key_ret:
 	bl	_reset_ko
 	mov	r0,	r4
 	b	_leave
+
+
+;data
+_option_str:
+	db "Enter address: ", 0

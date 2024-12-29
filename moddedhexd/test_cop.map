@@ -1,5 +1,5 @@
 RLU8 Object Linker, Ver.1.60.3 Linkage Information
-[Wed Dec 25 20:53:09 2024]
+[Fri Dec 27 17:47:09 2024]
 
 
                          ------------------
@@ -19,7 +19,7 @@ Other controls: CC
                                                                 Creator
 Module Name           File Name                                 CCU8     RASU8
 -----------           ---------                                 -----    -----
-hexeditorg            hexeditorg.obj                            -.--     1.80
+test_cop              test_cop.obj                              -.--     1.80
 
 
 Number of Modules: 1
@@ -78,10 +78,10 @@ Link Map - Memory space above #1
      -------------------------------------------------------
  ---
 >GAP<          03:0000.0  03:143F.7  1440.0(5184.0)    (ROM)
-      S CODE   03:1440    03:183F    0400(1024)        (absolute)
+      S CODE   03:1440    03:1479    003A(58)          (absolute)
 
 
-Total size (CODE  ) = 00400   (1024)
+Total size (CODE  ) = 0003A   (58)
 Total size (DATA  ) = 00000   (0)
 Total size (BIT   ) = 00000.0 (0.0)
 Total size (NVDATA) = 00000   (0)
@@ -90,10 +90,10 @@ Total size (TABLE ) = 00000   (0)
 
 Module         Value     Type         Symbol
 ------         -----     ----------   ------
-hexeditorg
+test_cop
 
 
-Total ROM usage = 00400   (1024)
+Total ROM usage = 0003A   (58)
 Total RAM usage = 00000   (0)
 
 End of mapfile.

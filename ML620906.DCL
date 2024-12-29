@@ -924,7 +924,7 @@ BNC	BCY	BNZ	BZ
 BC
 SWI	B	BL	RTI	RT	NOP
 BRK
-
+CPL	EDSR
 ;#COPROCESSOR
 
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++
