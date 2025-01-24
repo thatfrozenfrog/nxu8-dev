@@ -2,7 +2,7 @@ type(ML620906)
 model large
 romwindow 0, 0cfffH
 
-extrn   code: _main
+;extrn   code: _main
 ;extrn 	code: _TM0
 public  $$start_up
 _$$SP	EQU	0F000h
@@ -50,7 +50,7 @@ dw 	_INT
 dw	_TM0INT
 
 _BRK:
-	b _main
+	;b _main
 	mov	psw,	#3
 	brk
 
@@ -203,4 +203,4 @@ _reset_SFR:
 	rt
 
 _entry:
-	b _main
+	;b _main
