@@ -1,5 +1,5 @@
 RLU8 Object Linker, Ver.1.60.3 Linkage Information
-[Mon Oct 28 22:48:24 2024]
+[Tue Jan 21 15:09:01 2025]
 
 
                          ------------------
@@ -21,13 +21,13 @@ Module Name           File Name                                 CCU8     RASU8
 -----------           ---------                                 -----    -----
 main                  .\main.obj                                3.66     1.80
 startup               .\startup.obj                             -.--     1.80
-SIDIVLW               E:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
-memset_f              E:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\LU8100LW.LIB -.--     1.04
-SIDIMOLW              E:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
-CIDIMOLW              E:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
-PUSHPOPU8LW           E:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.61
-SIMODLW               E:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
-IMULLW                E:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
+SIDIVLW               C:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
+memset_f              C:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\LU8100LW.LIB -.--     1.04
+SIDIMOLW              C:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
+CIDIMOLW              C:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
+PUSHPOPU8LW           C:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.61
+SIMODLW               C:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
+IMULLW                C:/LAPIS/LEXIDE/BuildTools/Ver.20231124/Lib/U16\longu8.lib -.--     1.04
 
 
 Number of Modules: 9

@@ -1,0 +1,47 @@
+type(ML620906)
+model large
+romwindow 0, 0cfffH
+
+
+
+public	_render_copy
+_render_copy:
+	push lr
+	push xr4
+	push qr8
+
+render:
+	push er0
+	mov r2, #00h
+	mov r3, #0F8h
+	mov r4, #040h
+
+render_012:
+	pop ea
+	l xr4, [EA+]
+	l qr8, [EA+]
+	push ea
+	lea [er2]
+	st xr4, [ea+]
+	st qr8, [ea+]
+	add er2, #0Ch
+	pop ea
+
+	l xr4, [EA+]
+	l qr8, [EA+]
+
+	push ea
+	lea [er2]
+	st xr4, [ea+]
+	st qr8, [ea+]
+
+	add er2, #14h
+	add r0, #-1h
+
+	bne render_012
+
+	pop er0
+
+	pop qr8
+	pop xr4
+	pop pc

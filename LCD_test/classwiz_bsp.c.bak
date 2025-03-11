@@ -1,0 +1,112 @@
+#include "classwiz_bsp.h"
+
+static void a();
+
+#pragma INTERRUPT a 8
+#pragma INTERRUPT a 10
+#pragma INTERRUPT a 12
+#pragma INTERRUPT a 14
+#pragma INTERRUPT a 16
+#pragma INTERRUPT a 18
+#pragma INTERRUPT a 20
+#pragma INTERRUPT a 22
+#pragma INTERRUPT a 24
+#pragma INTERRUPT a 26
+#pragma INTERRUPT a 28
+#pragma INTERRUPT a 30
+#pragma INTERRUPT a 32
+#pragma INTERRUPT a 34
+#pragma INTERRUPT a 36
+#pragma INTERRUPT a 38
+#pragma INTERRUPT a 40
+#pragma INTERRUPT a 42
+#pragma INTERRUPT a 44
+#pragma INTERRUPT a 46
+#pragma INTERRUPT a 48
+#pragma INTERRUPT a 50
+#pragma INTERRUPT a 52
+#pragma INTERRUPT a 54
+#pragma INTERRUPT a 56
+#pragma INTERRUPT a 58
+#pragma INTERRUPT a 60
+
+static void a() {}
+
+void reset_timer()
+{
+	Timer0Counter = 0;
+	Timer0Interval = 0x79e;
+	Timer0Control = 0x10f;
+	InterruptPending_W0 = 0;
+	__EI();
+}
+
+void delay(unsigned short after_ticks)
+{
+	if ((FCON & 2) != 0)
+		FCON &= 0xfd;
+	__DI();
+	Timer0Interval = after_ticks;
+	Timer0Counter = 0;
+	Timer0Control = 0x0101;
+	InterruptPending_W0 = 0;
+	StopAcceptor = 0x50;
+	StopAcceptor = 0xa0;
+	StopControl = 2;
+	__asm("nop");
+	__asm("nop");
+	__EI();
+}
+volatile int i = 0x32;
+void reset_sfrs()
+{
+	FCON = 0x31;
+	BlockControl = 0xf7;
+	
+	while (i--)
+	{
+		continue;
+	}
+	InterruptMask0 = 0x22;
+	InterruptMask1 = 0;
+	InterruptMask2 = 0;
+	val(0xf058) = 0;
+	KeyboardInMask = 0;
+	ExternalInterruptControl = 0;
+	ScreenPower = 7;
+	delay(200);
+	ScreenRange = 4;
+	ScreenBrightness = 7; // 7
+	ScreenInterval = 6;
+	ScreenUnk1 = 0x17;
+	ScreenUnk2 = 8;
+	ScreenOffset = 0;
+	ScreenMode = 0x17;
+	ScreenContrast = 0x12;
+	val(0xf220) = 0;
+	val(0xf221) = 0x7f;
+	val(0xf222) = 0;
+	val(0xf223) = 0x7f;
+	val(0xf224) = 0;
+	val(0xf225) = 0;
+	val(0xf048) = 0;
+	val(0xf049) = 0;
+	val(0xf04a) = 7;
+	val(0xf04b) = 0;
+	val(0xf04c) = 7;
+	val(0xf04e) = 0;
+	KeyboardInPullUp = 0;
+	KeyboardOut = 0;
+	KeyboardOutMask = 0;
+}
+
+void reset_screen_sfrs()
+{
+	ScreenRange = 4;
+	ScreenBrightness = 3;
+	ScreenInterval = 6;
+	ScreenUnk1 = 0x17;
+	ScreenUnk2 = 0x8;
+	ScreenOffset = 0;
+	ScreenMode = 0x15;
+}

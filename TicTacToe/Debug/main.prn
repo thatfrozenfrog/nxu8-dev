@@ -1,7 +1,7 @@
 RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   1 
  Source File: main.asm
  Object File: .\main.obj
- Date  : 2024/10/04 Fri.[20:10]
+ Date  : 2025/01/21 Tue.[15:09]
  Title : 
 ## Loc. Object                   Line   Source Statements
 
@@ -128,9 +128,9 @@ RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   1
                                   121   CFILE 0002H 0000004FH "..\\suwa.h"
                                   122   CFILE 0003H 00000038H "..\\printlib.h"
                                   123   CFILE 0004H 00000403H "..\\thefont.h"
-                                  124   CFILE 0005H 00000105H "E:\\LAPIS\\LEXIDE\\BuildTools\\Ver.20231124\\Inc\\U16\\stdio.h"
-                                  125   CFILE 0006H 0000007AH "E:\\LAPIS\\LEXIDE\\BuildTools\\Ver.20231124\\Inc\\U16\\yvals.h"
-                                  126   CFILE 0007H 000000C9H "E:\\LAPIS\\LEXIDE\\BuildTools\\Ver.20231124\\Inc\\U16\\string.h"
+                                  124   CFILE 0005H 00000105H "C:\\LAPIS\\LEXIDE\\BuildTools\\Ver.20231124\\Inc\\U16\\stdio.h"
+                                  125   CFILE 0006H 0000007AH "C:\\LAPIS\\LEXIDE\\BuildTools\\Ver.20231124\\Inc\\U16\\yvals.h"
+                                  126   CFILE 0007H 000000C9H "C:\\LAPIS\\LEXIDE\\BuildTools\\Ver.20231124\\Inc\\U16\\string.h"
                                   127   CFILE 0008H 00000066H "..\\tictactoe.h"
                                   128   CFILE 0009H 000000EBH "..\\screen.h"
                                   129   CFILE 0000H 00000218H "..\\main.c"

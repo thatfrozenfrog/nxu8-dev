@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+	<storageModule moduleId="org.eclipse.cdt.core.settings">
+		<cconfiguration id="com.lapis_tech.lexide.managedbuilder.ui.config.debug.1688889487">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.lapis_tech.lexide.managedbuilder.ui.config.debug.1688889487" moduleId="org.eclipse.cdt.core.settings" name="Debug">
+				<externalSettings/>
+				<extensions>
+					<extension id="com.lapis_tech.lexide.core.OMF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="com.lapis_tech.lexide.core.errorparser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="com.lapis_tech.lexide.managedbuilder.ui.propertyLapis" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=com.lapis_tech.lexide.managedbuilder.ui.propertyLapis,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -f" description="" errorParsers="com.lapis_tech.lexide.core.errorparser;org.eclipse.cdt.core.GmakeErrorParser" id="com.lapis_tech.lexide.managedbuilder.ui.config.debug.1688889487" name="Debug" optionalBuildProperties="org.eclipse.cdt.docker.launcher.containerbuild.property.dockerdpath=,org.eclipse.cdt.docker.launcher.containerbuild.property.selectedvolumes=,org.eclipse.cdt.docker.launcher.containerbuild.property.volumes=" parent="com.lapis_tech.lexide.managedbuilder.ui.config.debug" postannouncebuildStep="Build.bat" postbuildStep="">
+					<folderInfo id="com.lapis_tech.lexide.managedbuilder.ui.config.debug.1688889487." name="/" resourcePath="">
+						<toolChain id="com.lapis_tech.lexide.managedbuilder.ui.toolchain.u8u16.debug.1588987609" name="U8/U16 CCU8 Toolchain" superClass="com.lapis_tech.lexide.managedbuilder.ui.toolchain.u8u16.debug">
+							<targetPlatform archList="all" binaryParser="com.lapis_tech.lexide.core.OMF" id="com.lapis_tech.lexide.managedbuilder.ui.platform.lapis.1845356951" isAbstract="false" name="LAPIS Target Platform" osList="all" superClass="com.lapis_tech.lexide.managedbuilder.ui.platform.lapis"/>
+							<builder buildPath="${workspace_loc:/Milk}/Debug" id="com.lapis_tech.lexide.managedbuilder.ui.builder.make.1748454792" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Builder (LAPIS)" superClass="com.lapis_tech.lexide.managedbuilder.ui.builder.make"/>
+							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.common.577797042" name="Common" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.common"/>
+							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.compiler.535996402" name="Compiler" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.compiler">
+								<option id="com.lapis_tech.lexide.managedbuilder.ui.comp.comp.902045322" name="Optimization level" superClass="com.lapis_tech.lexide.managedbuilder.ui.comp.comp" value="com.lapis_tech.lexide.managedbuilder.ui.comp.comp.max" valueType="enumerated"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.lapis_tech.lexide.managedbuilder.ui.comp.incpath.2027464046" name="Include file path" superClass="com.lapis_tech.lexide.managedbuilder.ui.comp.incpath" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;C:\LAPIS\LEXIDE\BuildTools\Ver.20231124\Inc\U16&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\LAPIS\LEXIDE\BuildTools\Ver.20231124\Inc\U16\Newlib&quot;"/>
+								</option>
+								<inputType id="com.lapis_tech.lexide.managedbuilder.ui.comp.inputtype.602023198" name="Compiler Input" superClass="com.lapis_tech.lexide.managedbuilder.ui.comp.inputtype"/>
+							</tool>
+							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.assembler.485933334" name="Assembler" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.assembler">
+								<inputType id="com.lapis_tech.lexide.managedbuilder.ui.asm.inputtype.1466184216" name="ASM input" superClass="com.lapis_tech.lexide.managedbuilder.ui.asm.inputtype"/>
+							</tool>
+							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.linker.184491993" name="Linker" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.linker">
+								<inputType id="com.lapis_tech.lexide.managedbuilder.ui.link.inputtype.2080524212" name="Linker Input" superClass="com.lapis_tech.lexide.managedbuilder.ui.link.inputtype"/>
+							</tool>
+							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.objconverter.110710525" name="Object converter" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.objconverter"/>
+							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.romgenerator.550601018" name="HEX Converter" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.romgenerator"/>
+							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.scu16.2079478553" name="Stack Calculator" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.scu16"/>
+						</toolChain>
+					</folderInfo>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="com.lapis_tech.lexide.managedbuilder.ui.config.release.1437545273">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.lapis_tech.lexide.managedbuilder.ui.config.release.1437545273" moduleId="org.eclipse.cdt.core.settings" name="Release">
+				<externalSettings/>
+				<extensions>
+					<extension id="com.lapis_tech.lexide.core.OMF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="com.lapis_tech.lexide.core.errorparser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="com.lapis_tech.lexide.managedbuilder.ui.propertyLapis" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=com.lapis_tech.lexide.managedbuilder.ui.propertyLapis,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -f" description="" errorParsers="com.lapis_tech.lexide.core.errorparser;org.eclipse.cdt.core.GmakeErrorParser" id="com.lapis_tech.lexide.managedbuilder.ui.config.release.1437545273" name="Release" optionalBuildProperties="" parent="com.lapis_tech.lexide.managedbuilder.ui.config.release">
+					<folderInfo id="com.lapis_tech.lexide.managedbuilder.ui.config.release.1437545273." name="/" resourcePath="">
+						<toolChain id="com.lapis_tech.lexide.managedbuilder.ui.toolchain.u8u16.release.177056299" name="U8/U16 CCU8 Toolchain" superClass="com.lapis_tech.lexide.managedbuilder.ui.toolchain.u8u16.release">
+							<targetPlatform archList="all" binaryParser="com.lapis_tech.lexide.core.OMF" id="com.lapis_tech.lexide.managedbuilder.ui.platform.lapis.590735335" isAbstract="false" name="LAPIS Target Platform" osList="all" superClass="com.lapis_tech.lexide.managedbuilder.ui.platform.lapis"/>
+							<builder buildPath="${workspace_loc:/Milk}/Release" id="com.lapis_tech.lexide.managedbuilder.ui.builder.make.1328906604" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Builder (LAPIS)" superClass="com.lapis_tech.lexide.managedbuilder.ui.builder.make"/>
+							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.common.1548727168" name="Common" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.common"/>
+							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.compiler.2130367465" name="Compiler" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.compiler">
+								<inputType id="com.lapis_tech.lexide.managedbuilder.ui.comp.inputtype.1400860156" name="Compiler Input" superClass="com.lapis_tech.lexide.managedbuilder.ui.comp.inputtype"/>
+							</tool>
+							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.assembler.708508502" name="Assembler" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.assembler">
+								<inputType id="com.lapis_tech.lexide.managedbuilder.ui.asm.inputtype.1918913145" name="ASM input" superClass="com.lapis_tech.lexide.managedbuilder.ui.asm.inputtype"/>
+							</tool>
+							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.linker.957202995" name="Linker" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.linker">
+								<inputType id="com.lapis_tech.lexide.managedbuilder.ui.link.inputtype.100008319" name="Linker Input" superClass="com.lapis_tech.lexide.managedbuilder.ui.link.inputtype"/>
+							</tool>
+							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.objconverter.1353142670" name="Object converter" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.objconverter"/>
+							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.romgenerator.1300659091" name="HEX Converter" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.romgenerator"/>
+							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.scu16.1176904269" name="Stack Calculator" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.scu16"/>
+						</toolChain>
+					</folderInfo>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+	</storageModule>
+	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+		<project id="Milk.com.lapis_tech.lexide.managedbuilder.ui.prjtype.lapis.exe.883341624" name="Executable (LAPIS)" projectType="com.lapis_tech.lexide.managedbuilder.ui.prjtype.lapis.exe"/>
+	</storageModule>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="org.eclipse.cdt.core.language.mapping">
+		<project-mappings>
+			<content-type-mapping configuration="" content-type="org.eclipse.cdt.core.cHeader" language="com.lapis_tech.lexide.parser.ccu8"/>
+			<content-type-mapping configuration="" content-type="org.eclipse.cdt.core.cSource" language="com.lapis_tech.lexide.parser.ccu8"/>
+		</project-mappings>
+	</storageModule>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Debug">
+			<resource resourceType="PROJECT" workspacePath="/Milk"/>
+		</configuration>
+		<configuration configurationName="Release">
+			<resource resourceType="PROJECT" workspacePath="/Milk"/>
+		</configuration>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+</cproject>
