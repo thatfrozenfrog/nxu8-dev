@@ -1,0 +1,101 @@
+RLU8 Object Linker, Ver.1.60.3 Linkage Information
+[Tue Apr  8 20:46:01 2025]
+
+
+                         ------------------
+                          Control Synopsis
+                         ------------------
+
+I/O controls:   ND NSD NS NA
+
+
+                        ------------------------
+                         Object Module Synopsis
+                        ------------------------
+                                                                Creator
+Module Name           File Name                                 CCU8     RASU8
+-----------           ---------                                 -----    -----
+startup               startup.obj                               -.--     1.80
+stream580             stream580.obj                             -.--     1.80
+
+
+Number of Modules: 2
+
+Number of Symbols:
+ +---------------------------------------------------------------------------+
+ |          | CODE | DATA | BIT  |NVDATA|NVBIT |TABLE |NUMBER| TBIT || total |
+ |----------+------+------+------+------+------+------+------+------++-------|
+ | SEGMENT  |     3|     0|     0|     0|     0|     1|      |      ||      4|
+ |----------+------+------+------+------+------+------+------+------++-------|
+ | COMMUNAL |     0|     0|     0|     0|     0|     0|      |      ||      0|
+ |----------+------+------+------+------+------+------+------+------++-------|
+ | PUBLIC   |     1|     0|     0|     0|     0|     0|     0|     0||      1|
+ +---------------------------------------------------------------------------+
+
+Target:  ML620906 
+Model:   LARGE
+
+
+Memory Map - Program memory space #0:
+      Type     Start      Stop
+     -----------------------------
+      ROM      00:0000    00:FFFF
+
+Memory Map - Data memory space #0:
+      Type     Start      Stop
+     -----------------------------
+      RAM      00:D000    00:FFFF
+
+Memory Map - Memory space above #1:
+      Type     Start      Stop
+     -----------------------------
+      ROM      01:0000    03:FFFF
+      ROM      05:0000    05:FFFF
+      ROM      1F:0000    1F:0FFF
+
+                         ------------------
+                          Segment Synopsis
+                         ------------------
+
+Link Map - Program memory space #0 ( ROMWINDOW: 0000 - CFFF )
+
+      Type     Start      Stop       Size              Name
+     -------------------------------------------------------
+      S CODE   00:0000    00:01AB    01AC(428)         (absolute)
+>GAP<          00:01AC    00:A1BB    A010(40976)       (ROM)
+      S CODE   00:A1BC    00:A227    006C(108)         (absolute)
+
+
+Link Map - Data memory space #0
+
+      Type     Start      Stop       Size              Name
+     -------------------------------------------------------
+      Q ROMWIN 00:0000    00:CFFF    D000(53248)       (ROMWIN)
+>GAP<          00:D000.0  00:EFFF.7  2000.0(8192.0)    (RAM)
+      Q SFR    00:F000    00:FFFF    1000(4096)        (SFR)
+
+
+Link Map - Memory space above #1
+
+      Type     Start      Stop       Size              Name
+     -------------------------------------------------------
+ ---
+>GAP<          02:0000.0  02:E0D9.7  E0DA.0(57562.0)   (ROM)
+      S TABLE  02:E0DA    02:E128    004F(79)          (absolute)
+ ---
+>GAP<          03:0000.0  03:2AC3.7  2AC4.0(10948.0)   (ROM)
+      S CODE   03:2AC4    03:3039    0576(1398)        (absolute)
+
+
+Total size (CODE  ) = 0078E   (1934)
+Total size (DATA  ) = 00000   (0)
+Total size (BIT   ) = 00000.0 (0.0)
+Total size (NVDATA) = 00000   (0)
+Total size (NVBIT ) = 00000.0 (0.0)
+Total size (TABLE ) = 0004F   (79)
+
+
+Total ROM usage = 007DD   (2013)
+Total RAM usage = 00000   (0)
+
+End of mapfile.

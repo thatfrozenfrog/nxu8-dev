@@ -15,7 +15,7 @@
 					<folderInfo id="com.lapis_tech.lexide.managedbuilder.ui.config.debug.163791323." name="/" resourcePath="">
 						<toolChain id="com.lapis_tech.lexide.managedbuilder.ui.toolchain.u8u16.debug.491839895" name="U8/U16 CCU8 Toolchain" nonInternalBuilderId="com.lapis_tech.lexide.managedbuilder.ui.builder.make" superClass="com.lapis_tech.lexide.managedbuilder.ui.toolchain.u8u16.debug">
 							<targetPlatform archList="all" binaryParser="com.lapis_tech.lexide.core.OMF" id="com.lapis_tech.lexide.managedbuilder.ui.platform.lapis.1067421059" isAbstract="false" name="LAPIS Target Platform" osList="all" superClass="com.lapis_tech.lexide.managedbuilder.ui.platform.lapis"/>
-							<builder buildPath="${workspace_loc:/TicTacToe}/Debug" id="com.lapis_tech.lexide.managedbuilder.ui.builder.make.1784457178" superClass="com.lapis_tech.lexide.managedbuilder.ui.builder.make"/>
+							<builder buildPath="${workspace_loc:/TicTacToe}/Debug" id="com.lapis_tech.lexide.managedbuilder.ui.builder.make.1784457178" keepEnvironmentInBuildfile="false" name="Builder (LAPIS)" superClass="com.lapis_tech.lexide.managedbuilder.ui.builder.make"/>
 							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.common.1280430329" name="Common" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.common">
 								<option id="com.lapis_tech.lexide.managedbuilder.ui.common.data.557750650" name="Data access" superClass="com.lapis_tech.lexide.managedbuilder.ui.common.data" value="com.lapis_tech.lexide.managedbuilder.ui.comp.data.far" valueType="enumerated"/>
 								<option id="com.lapis_tech.lexide.managedbuilder.ui.load.pfo.2066901059" name="Specify load program file option" superClass="com.lapis_tech.lexide.managedbuilder.ui.load.pfo" value="false" valueType="boolean"/>
@@ -59,7 +59,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="${ProjName}" buildArtefactType="com.lapis_tech.lexide.managedbuilder.ui.propertyLapis" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=com.lapis_tech.lexide.managedbuilder.ui.propertyLapis,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -f" description="" errorParsers="com.lapis_tech.lexide.core.errorparser;org.eclipse.cdt.core.GmakeErrorParser" id="com.lapis_tech.lexide.managedbuilder.ui.config.release.870397809" name="Release" parent="com.lapis_tech.lexide.managedbuilder.ui.config.release">
+				<configuration artifactName="${ProjName}" buildArtefactType="com.lapis_tech.lexide.managedbuilder.ui.propertyLapis" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=com.lapis_tech.lexide.managedbuilder.ui.propertyLapis,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -f" description="" errorParsers="com.lapis_tech.lexide.core.errorparser;org.eclipse.cdt.core.GmakeErrorParser" id="com.lapis_tech.lexide.managedbuilder.ui.config.release.870397809" name="Release" optionalBuildProperties="org.eclipse.cdt.docker.launcher.containerbuild.property.dockerdpath=,org.eclipse.cdt.docker.launcher.containerbuild.property.volumes=,org.eclipse.cdt.docker.launcher.containerbuild.property.selectedvolumes=" parent="com.lapis_tech.lexide.managedbuilder.ui.config.release">
 					<folderInfo id="com.lapis_tech.lexide.managedbuilder.ui.config.release.870397809." name="/" resourcePath="">
 						<toolChain id="com.lapis_tech.lexide.managedbuilder.ui.toolchain.u8u16.release.1890801714" name="U8/U16 CCU8 Toolchain" superClass="com.lapis_tech.lexide.managedbuilder.ui.toolchain.u8u16.release">
 							<targetPlatform archList="all" binaryParser="com.lapis_tech.lexide.core.OMF" id="com.lapis_tech.lexide.managedbuilder.ui.platform.lapis.1910859045" isAbstract="false" name="LAPIS Target Platform" osList="all" superClass="com.lapis_tech.lexide.managedbuilder.ui.platform.lapis"/>
@@ -74,8 +74,14 @@
 							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.linker.329300198" name="Linker" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.linker">
 								<inputType id="com.lapis_tech.lexide.managedbuilder.ui.link.inputtype.482114232" name="Linker Input" superClass="com.lapis_tech.lexide.managedbuilder.ui.link.inputtype"/>
 							</tool>
-							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.objconverter.1957568674" name="Object converter" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.objconverter"/>
-							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.romgenerator.1457604359" name="HEX Converter" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.romgenerator"/>
+							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.objconverter.1957568674" name="Object converter" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.objconverter">
+								<option id="com.lapis_tech.lexide.managedbuilder.ui.cnv.genhex.1801506468" superClass="com.lapis_tech.lexide.managedbuilder.ui.cnv.genhex" value="true" valueType="boolean"/>
+								<option id="com.lapis_tech.lexide.managedbuilder.ui.cnv.output.1988859858" superClass="com.lapis_tech.lexide.managedbuilder.ui.cnv.output" value="com.lapis_tech.lexide.managedbuilder.ui.cnv.output.int" valueType="enumerated"/>
+							</tool>
+							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.romgenerator.1457604359" name="HEX Converter" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.romgenerator">
+								<option id="com.lapis_tech.lexide.managedbuilder.ui.romgen.genrom.1542747703" superClass="com.lapis_tech.lexide.managedbuilder.ui.romgen.genrom" value="false" valueType="boolean"/>
+								<option id="com.lapis_tech.lexide.managedbuilder.ui.romgen.output.335431122" superClass="com.lapis_tech.lexide.managedbuilder.ui.romgen.output" value="com.lapis_tech.lexide.managedbuilder.ui.romgen.output.int" valueType="enumerated"/>
+							</tool>
 							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.scu16.312141673" name="Stack Calculator" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.scu16"/>
 						</toolChain>
 					</folderInfo>

@@ -1,0 +1,261 @@
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   1 
+ Source File: startup.asm
+ Object File: startup.obj
+ Date  : 2025/04/08 Tue.[20:44]
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+                                    1   type(ML620906)
+                                    2   model large
+                                    3   romwindow 0, 0cfffH
+                                    4   
+                                    5   ;extrn   code: _main
+                                    6   ;extrn 	code: _TM0
+                                    7   public  $$start_up
+    = 0000F000H                     8   _$$SP	EQU	0F000h
+                                    9   
+00:0000 00-F0                      10   dw	_$$SP
+00:0002 6C-00                      11   dw	$$start_up
+00:0004 52-00                      12   dw	_BRK
+00:0006 56-00                      13   dw	_INT
+00:0008 56-00                      14   dw	_INT
+00:000A 56-00                      15   dw	_INT
+00:000C 56-00                      16   dw	_INT
+00:000E 56-00                      17   dw	_INT
+00:0010 56-00                      18   dw	_INT
+00:0012 56-00                      19   dw	_INT
+00:0014 56-00                      20   dw	_INT
+00:0016 56-00                      21   dw	_INT
+00:0018 56-00                      22   dw	_INT
+00:001A 56-00                      23   dw	_INT
+00:001C 56-00                      24   dw	_INT
+00:001E 56-00                      25   dw	_INT
+00:0020 56-00                      26   dw	_INT
+00:0022 56-00                      27   dw	_INT
+00:0024 56-00                      28   dw	_INT
+00:0026 56-00                      29   dw	_INT
+00:0028 56-00                      30   dw	_INT
+00:002A 56-00                      31   dw	_INT
+00:002C 56-00                      32   dw	_INT
+00:002E 56-00                      33   dw	_INT
+00:0030 56-00                      34   dw	_INT
+00:0032 56-00                      35   dw	_INT
+00:0034 56-00                      36   dw	_INT
+00:0036 56-00                      37   dw	_INT
+00:0038 56-00                      38   dw	_INT
+00:003A 56-00                      39   dw	_INT
+00:003C 56-00                      40   dw	_INT
+00:003E 56-00                      41   dw	_INT
+00:0040 56-00                      42   dw	_INT
+00:0042 56-00                      43   dw	_INT
+00:0044 56-00                      44   dw	_INT
+00:0046 56-00                      45   dw	_INT
+00:0048 56-00                      46   dw	_INT
+00:004A 56-00                      47   dw	_INT
+00:004C 56-00                      48   dw	_INT
+00:004E 56-00                      49   dw 	_INT
+00:0050 58-00                      50   dw	_TM0INT
+                                   51   
+00:0052                            52   _BRK:
+                                   53   	;b _main
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   2 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+00:0052 03 E9                      54   	mov	psw,	#3
+00:0054 FF-FF                      55   	brk
+                                   56   
+00:0056                            57   _INT:
+00:0056 0F-FE                      58   	rti
+                                   59   
+00:0058                            60   _TM0INT:
+00:0058 CE-F7                      61   	push	elr,epsw,ea
+00:005A 08-ED                      62   	ei
+00:005C 7E-F0                      63   	push	qr0
+00:005E 7E-F8                      64   	push	qr8
+00:0060 D8 01                      65   	mov r1, #0D8h
+00:0062 11-91 10-D8                66   	st r1, 0D810h
+                                   67   ;	bl _TM0
+00:0066 3E-F8                      68   	pop	qr8
+00:0068 3E-F0                      69   	pop	qr0
+00:006A 8E-F7                      70   	pop	pc,psw,ea
+                                   71   
+                                   72   
+                                   73   
+00:006C                            74   $$start_up:
+00:006C 01-F0 8A-00                75   	bl	_reset_lr
+00:0070 00 00                      76   	mov	r0,	#0
+00:0072 11-90 00-F0                77   	st	r0,	DSR
+00:0076 01-F0 8C-00                78   	bl	_init_SFR
+00:007A C8 00                      79   	mov	r0,	#0C8h
+00:007C 05 01                      80   	mov	r1,	#5
+00:007E 01-F0 D4-00                81   	bl	_timer
+00:0082 01-F0 7C-01                82   	bl	_reset_SFR
+00:0086 00-F0 AC-01                83   	b	_entry
+                                   84   
+00:008A                            85   _reset_lr:
+00:008A 1F-FE                      86   	rt
+                                   87   
+00:008C                            88   _init_SFR:
+00:008C CE-F8                      89   	push	lr
+00:008E 31 00                      90   	mov	r0,	#31h
+00:0090 11-90 0A-F0                91   	st	r0,	FCON
+00:0094 17 00                      92   	mov	r0,	#17h
+00:0096 11-90 28-F0                93   	st	r0,	BLKCON0
+                                   94   
+00:009A 32 00                      95   	mov	r0,	#32h
+00:009C                            96   _$init_clock:
+00:009C FF 10                      97   	add	r0,	#-1h
+00:009E FE C8                      98   	bne	_$init_clock
+00:00A0 0C-F0 10-F0                99   	lea	IE0
+ ** Warning 06: expression of type NUMBER required
+00:00A4 20 E0                     100   	mov	er0,	#20h
+00:00A6 53-90                     101   	st	er0,	[ea+]
+00:00A8 31-91                     102   	st	r1,	[ea]
+00:00AA 07 00                     103   	mov	r0,	#7h
+00:00AC 11-90 3D-F0               104   	st	r0,	0F03Dh
+ ** Warning 25: illegal access to SFR
+00:00B0 50 00                     105   	mov	r0,	#50h
+00:00B2 00 01                     106   	mov	r1,	#0
+00:00B4 01-F0 D4-00               107   	bl	_timer
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   3 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+00:00B8 01-F0 1C-01               108   	bl	_init_screen
+00:00BC 01-F0 4C-01               109   	bl	_init_port1
+00:00C0 01-F0 5C-01               110   	bl	_init_port0
+00:00C4 01-F0 6C-01               111   	bl	_init_p00
+00:00C8 00 E0                     112   	mov	er0,	#0
+00:00CA 11-90 42-F0               113   	st	r0,	KIMASK
+00:00CE 13-90 46-F0               114   	st	er0,	KOD
+00:00D2 8E-F2                     115   	pop	pc
+                                  116   
+00:00D4                           117   _timer:
+00:00D4 80-A0 0A-F0               118   	sb	XTM0
+00:00D8 92-A0 0A-F0               119   	rb	XTM1
+00:00DC B2-A0 28-F0               120   	rb	DTM0
+00:00E0 F7-EB                     121   	di
+00:00E2 01 E2                     122   	mov	er2,	#1
+00:00E4 13-92 24-F0               123   	st	er2,	TM0CON
+00:00E8 00 E2                     124   	mov	er2,	#0
+00:00EA 13-92 22-F0               125   	st	er2,	TM0C
+00:00EE 13-92 14-F0               126   	st	er2,	IRQ0
+ ** Warning 25: illegal access to SFR
+00:00F2 11-92 16-F0               127   	st	r2,	IRQ2
+00:00F6 D0-A0 10-F0               128   	sb	ETM0
+00:00FA 13-90 20-F0               129   	st	er0,	TM0D
+00:00FE 01 00                     130   	mov	r0,	#1
+00:0100 11-90 25-F0               131   	st	r0,	TM0CON1
+00:0104                           132   _stop:
+00:0104 50 00                     133   	mov	r0,	#50h
+00:0106 A0 01                     134   	mov	r1,	#0A0h
+00:0108 11-90 08-F0               135   	st	r0,	STPACP
+00:010C 11-91 08-F0               136   	st	r1,	STPACP
+00:0110 02 00                     137   	mov	r0,	#2
+00:0112 11-90 09-F0               138   	st	r0,	SBYCON
+00:0116 8F-FE                     139   	nop
+00:0118 8F-FE                     140   	nop
+00:011A 1F-FE                     141   	rt
+                                  142   
+00:011C                           143   _init_screen:
+00:011C 04 00                     144   	mov	r0,	#4
+00:011E 11-90 30-F0               145   	st	r0,	0F030h
+ ** Warning 25: illegal access to SFR
+00:0122 07 00                     146   	mov	r0,	#7
+00:0124 11-90 33-F0               147   	st	r0,	0F033h
+ ** Warning 25: illegal access to SFR
+00:0128 09 00                     148   	mov	r0,	#9
+00:012A 11-90 34-F0               149   	st	r0,	0F034h
+ ** Warning 25: illegal access to SFR
+00:012E 17 00                     150   	mov	r0,	#17h
+00:0130 11-90 35-F0               151   	st	r0,	0F035h
+ ** Warning 25: illegal access to SFR
+00:0134 01 E0                     152   	mov	er0,	#1
+00:0136 11-90 36-F0               153   	st	r0,	0F036h
+ ** Warning 25: illegal access to SFR
+00:013A 11-91 39-F0               154   	st	r1,	0F039h
+ ** Warning 25: illegal access to SFR
+00:013E 17 00                     155   	mov	r0,	#17h
+00:0140 11-90 31-F0               156   	st	r0,	0F031h
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   4 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+ ** Warning 25: illegal access to SFR
+00:0144 12 00                     157   	mov	r0,	#12h
+00:0146 11-90 32-F0               158   	st	r0,	0F032h
+ ** Warning 25: illegal access to SFR
+00:014A 1F-FE                     159   	rt
+                                  160   
+00:014C                           161   _init_port1:
+00:014C 0C-F0 20-F2               162   	lea	P1D
+ ** Warning 06: expression of type NUMBER required
+00:0150 00 00                     163   	mov	r0,	#0
+00:0152 7F 01                     164   	mov	r1,	#7Fh
+00:0154 53-90                     165   	st	er0,	[ea+]
+00:0156 53-90                     166   	st	er0,	[ea+]
+00:0158 31-90                     167   	st	r0,	[ea]
+00:015A 1F-FE                     168   	rt
+                                  169   
+00:015C                           170   _init_port0:
+00:015C 0C-F0 48-F0               171   	lea	P0D
+ ** Warning 06: expression of type NUMBER required
+00:0160 00 E0                     172   	mov	er0,	#0
+00:0162 07 E2                     173   	mov	er2,	#7
+00:0164 53-90                     174   	st	er0,	[ea+]
+00:0166 53-92                     175   	st	er2,	[ea+]
+00:0168 31-92                     176   	st	r2,	[ea]
+00:016A 1F-FE                     177   	rt
+                                  178   
+00:016C                           179   _init_p00:
+00:016C 00 00                     180   	mov	r0,	#0
+00:016E 11-90 41-F0               181   	st	r0,	KICON
+00:0172 80 00                     182   	mov	r0,	#80h
+00:0174 FF 01                     183   	mov	r1,	#0FFh
+00:0176 13-90 44-F0               184   	st	er0,	KOMASK
+00:017A 1F-FE                     185   	rt
+                                  186   
+00:017C                           187   _reset_SFR:
+00:017C 01 00                     188   	mov	r0,	#1
+00:017E 11-90 0A-F0               189   	st	r0,	FCON
+00:0182 04 00                     190   	mov	r0,	#4
+00:0184 11-90 30-F0               191   	st	r0,	0F030h
+ ** Warning 25: illegal access to SFR
+00:0188 03 00                     192   	mov	r0,	#3
+00:018A 11-90 33-F0               193   	st	r0,	0F033h
+ ** Warning 25: illegal access to SFR
+00:018E 09 00                     194   	mov	r0,	#9
+00:0190 11-90 34-F0               195   	st	r0,	0F034h
+ ** Warning 25: illegal access to SFR
+00:0194 17 00                     196   	mov	r0,	#17h
+00:0196 11-90 35-F0               197   	st	r0,	0F035h
+ ** Warning 25: illegal access to SFR
+00:019A 01 E0                     198   	mov	er0,	#1
+00:019C 11-90 36-F0               199   	st	r0,	0F036h
+ ** Warning 25: illegal access to SFR
+00:01A0 11-91 39-F0               200   	st	r1,	0F039h
+ ** Warning 25: illegal access to SFR
+00:01A4 15 00                     201   	mov	r0,	#15h
+00:01A6 11-90 31-F0               202   	st	r0,	0F031h
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   5 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+ ** Warning 25: illegal access to SFR
+00:01AA 1F-FE                     203   	rt
+                                  204   
+00:01AC                           205   _entry:
+                                  206   	;b _main
+
+
+
+  Target       : ML620906 (nX-U8/100)
+  Memory Model : LARGE
+  Data   Model : NEAR
+  ROM WINDOW   :    0H to CFFFH
+  Internal RAM : D000H to EFFFH
+
+  Errors   : 0
+  Warnings : 20  (/Wrpeast)
+  Lines    : 206
