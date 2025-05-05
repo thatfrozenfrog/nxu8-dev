@@ -14,4 +14,11 @@
 	<section name="CResourceRenameRefactoringInputPage">
 		<item key="updateReferences" value="true"/>
 	</section>
+	<section name="org.eclipse.cdt.internal.corext.codemanipulation">
+		<section name=".asm">
+			<item key="id" value="org.eclipse.cdt.ui.text.codetemplates.asmsourcefile"/>
+			<item key="name" value="Default assembly template"/>
+			<item key="contextId" value="org.eclipse.cdt.core.asmSource.contenttype_context"/>
+		</section>
+	</section>
 </section>

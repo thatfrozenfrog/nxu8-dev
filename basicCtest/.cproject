@@ -55,7 +55,9 @@
 						<toolChain id="com.lapis_tech.lexide.managedbuilder.ui.toolchain.u8u16.release.2086739623" name="U8/U16 CCU8 Toolchain" superClass="com.lapis_tech.lexide.managedbuilder.ui.toolchain.u8u16.release">
 							<targetPlatform archList="all" id="com.lapis_tech.lexide.managedbuilder.ui.platform.lapis.2046414405" isAbstract="false" name="LAPIS Target Platform" osList="all" superClass="com.lapis_tech.lexide.managedbuilder.ui.platform.lapis"/>
 							<builder buildPath="${workspace_loc:/basicCtest}/Release" id="com.lapis_tech.lexide.managedbuilder.ui.builder.make.955077335" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Builder (LAPIS)" superClass="com.lapis_tech.lexide.managedbuilder.ui.builder.make"/>
-							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.common.378786959" name="Common" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.common"/>
+							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.common.378786959" name="Common" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.common">
+								<option id="com.lapis_tech.lexide.managedbuilder.ui.comp.ptr.2000724602" name="Restrict FAR access" superClass="com.lapis_tech.lexide.managedbuilder.ui.comp.ptr" value="false" valueType="boolean"/>
+							</tool>
 							<tool id="com.lapis_tech.lexide.managedbuilder.ui.tool.compiler.990835042" name="Compiler" superClass="com.lapis_tech.lexide.managedbuilder.ui.tool.compiler">
 								<inputType id="com.lapis_tech.lexide.managedbuilder.ui.comp.inputtype.1368483053" name="Compiler Input" superClass="com.lapis_tech.lexide.managedbuilder.ui.comp.inputtype"/>
 							</tool>
@@ -93,6 +95,13 @@
 			<content-type-mapping configuration="" content-type="org.eclipse.cdt.core.cSource" language="com.lapis_tech.lexide.parser.ccu8"/>
 		</project-mappings>
 	</storageModule>
-	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Debug">
+			<resource resourceType="PROJECT" workspacePath="/basicCtest"/>
+		</configuration>
+		<configuration configurationName="Release">
+			<resource resourceType="PROJECT" workspacePath="/basicCtest"/>
+		</configuration>
+	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 </cproject>

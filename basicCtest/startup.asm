@@ -2,10 +2,14 @@ type(ML620906)
 model large
 romwindow 0, 0cfffH
 
+rel_code segment code
+
 extrn   code: _main
 ;extrn 	code: _TM0
 public  $$start_up
 _$$SP	EQU	0F000h
+
+cseg at 0:0h
 
 dw	_$$SP
 dw	$$start_up
@@ -49,6 +53,8 @@ dw	_INT
 dw 	_INT
 dw	_TM0INT
 
+rseg rel_code
+
 _BRK:
 	b _main
 	mov	psw,	#3
@@ -80,7 +86,37 @@ $$start_up:
 	mov	r1,	#5
 	bl	_timer
 	bl	_reset_SFR
+
+	bl _near_ram_clear
+
+
 	b	_entry
+
+;----------------------------;
+; Near Data memory zero clear;
+;----------------------------;
+NEAR_RAM_START data 0D000h
+NEAR_RAM_END   data 0EFFFh
+_near_ram_clear:
+
+	mov er0, #0
+	mov er2, #0
+	mov er4, #0
+	mov er6, #0
+
+	mov r8, #BYTE1 NEAR_RAM_START
+	mov r9, #BYTE2 NEAR_RAM_START
+	lea [er8]
+
+_near_ram_loop:
+	st qr0, [ea+]
+	add er8, #8
+	cmp r9, #BYTE2 (NEAR_RAM_END+1)
+	cmpc r8, #BYTE1 (NEAR_RAM_END+1)
+	bne _near_ram_loop
+
+	rt
+
 
 _reset_lr:
 	rt
@@ -202,5 +238,14 @@ _reset_SFR:
 	st	r0,	0F031h
 	rt
 
+
+cseg	#3	at	0000h
 _entry:
 	b _main
+
+
+cseg	#2	at	01314h
+_filler:
+	l er2, 0D110h
+	st er0, 0D100h
+	rt
