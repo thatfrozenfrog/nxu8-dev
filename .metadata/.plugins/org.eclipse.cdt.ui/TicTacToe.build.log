@@ -1,6 +1,6 @@
-00:27:50 **** Incremental Build of configuration Debug for project TicTacToe ****
+00:38:12 **** Incremental Build of configuration Debug for project TicTacToe ****
 make all 
 make: Nothing to be done for 'all'.
 
-00:27:50 Build Finished. 0 errors, 0 warnings. (took 234ms)
+00:38:12 Build Finished. 0 errors, 0 warnings. (took 231ms)
 

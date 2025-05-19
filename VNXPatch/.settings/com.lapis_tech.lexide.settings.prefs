@@ -1,0 +1,8 @@
+Project.CreatedVersion=1.1.1
+Project.LatestVersion=1.1.1
+TargetMCU.Category=ML620Q000
+TargetMCU.Group=Casio Classwiz I
+TargetMCU.LSI=ML620906
+ToolchainVersion.UseLatest=true
+ToolchainVersion.Version=
+eclipse.preferences.version=1

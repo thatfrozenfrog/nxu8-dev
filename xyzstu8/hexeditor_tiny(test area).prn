@@ -1,0 +1,306 @@
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   1 
+ Source File: .\hexeditor_tiny(test area).asm
+ Object File: .\hexeditor_tiny(test area).obj
+ Date  : 2025/05/16 Fri.[11:36]
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+                                    1   type(ML620906)
+                                    2   model	large
+                                    3   romwindow 0, 0cfffh
+                                    4   
+00:0000 FC-EF                       5   dw	0EFFCh
+00:0002 E8-00                       6   dw	start
+                                    7   
+00:0004                             8   char_bitmap:
+00:0004 70 31 C6 18 63 74           9   	db	01110000b, 00110001b, 1
+                                        1000110b, 00011000b, 01100011b, 0111010
+                                        0b
+00:000A 70 84 10 42 08 23          10   	db	01110000b, 10000100b, 0
+                                        0010000b, 01000010b, 00001000b, 0010001
+                                        1b
+00:0010 F8 10 11 11 62 74          11   	db	11111000b, 00010000b, 0
+                                        0010001b, 00010001b, 01100010b, 0111010
+                                        0b
+00:0016 70 31 06 13 62 74          12   	db	01110000b, 00110001b, 0
+                                        0000110b, 00010011b, 01100010b, 0111010
+                                        0b
+00:001C 10 E2 4B A5 8C 11          13   	db	00010000b, 11100010b, 0
+                                        1001011b, 10100101b, 10001100b, 0001000
+                                        1b
+00:0022 70 31 84 E8 21 FC          14   	db	01110000b, 00110001b, 1
+                                        0000100b, 11101000b, 00100001b, 1111110
+                                        0b
+00:0028 70 31 46 0F 21 32          15   	db	01110000b, 00110001b, 0
+                                        1000110b, 00001111b, 00100001b, 0011001
+                                        0b
+00:002E 20 84 08 21 42 FC          16   	db	00100000b, 10000100b, 0
+                                        0001000b, 00100001b, 01000010b, 1111110
+                                        0b
+00:0034 70 31 46 17 63 74          17   	db	01110000b, 00110001b, 0
+                                        1000110b, 00010111b, 01100011b, 0111010
+                                        0b
+00:003A 60 22 84 17 63 74          18   	db	01100000b, 00100010b, 1
+                                        0000100b, 00010111b, 01100011b, 0111010
+                                        0b
+00:0040 88 31 FE 18 95 22          19   	db	10001000b, 00110001b, 1
+                                        1111110b, 00011000b, 10010101b, 0010001
+                                        0b
+00:0046 F0 31 46 1F 63 F4          20   	db	11110000b, 00110001b, 0
+                                        1000110b, 00011111b, 01100011b, 1111010
+                                        0b
+00:004C 70 11 42 08 61 74          21   	db	01110000b, 00010001b, 0
+                                        1000010b, 00001000b, 01100001b, 0111010
+                                        0b
+00:0052 E0 32 C6 18 A3 E4          22   	db	11100000b, 00110010b, 1
+                                        1000110b, 00011000b, 10100011b, 1110010
+                                        0b
+00:0058 F8 10 42 0F 21 FC          23   	db	11111000b, 00010000b, 0
+                                        1000010b, 00001111b, 00100001b, 1111110
+                                        0b
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   2 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+00:005E 80 10 42 0F 21 FC          24   	db	10000000b, 00010000b, 0
+                                        1000010b, 00001111b, 00100001b, 1111110
+                                        0b
+                                   25   
+00:0064                            26   print_char:
+00:0064 7E-F8                      27   	push	qr8
+00:0066 6E-F4                      28   	push	xr4
+00:0068 05-FE                      29   	mov	fp,	er0
+00:006A 3D-9E                      30   	srlc	r14,	#3
+00:006C 3C-9F                      31   	srl	r15,	#3
+00:006E F8 1F                      32   	add	r15,	#0F8h
+00:0070 00-81                      33   	mov	r1,	r0
+00:0072 FE 11                      34   	add	r1,	#-2
+00:0074 03-A4                      35   	mov	r4,	psw
+00:0076 06 E6                      36   	mov	er6,	#6
+00:0078 24-F6                      37   	mul	er6,	r2
+00:007A 04 16                      38   	add	r6,	#byte1 offset c
+                                        har_bitmap
+00:007C 6A-F0                      39   	lea	[er6]
+00:007E 54-98                      40   	l	xr8,	[ea+]
+00:0080 32-9C                      41   	l	er12,	[ea]
+00:0082 0A 02                      42   	mov	r2,	#0Ah
+00:0084                            43   print_loop:
+00:0084 E0-96                      44   	l	r6,	[fp]
+00:0086 0B-87                      45   	sllc	r7,	r0
+00:0088 D0-86                      46   	mov	r6,	r13
+00:008A 1C-96                      47   	srl	r6,	#1
+00:008C 34-86                      48   	xor	r6,	r3
+00:008E 2D-96                      49   	srlc	r6,	#2
+00:0090 2C-97                      50   	srl	r7,	#2
+00:0092 EA-F0                      51   	lea	[fp]
+00:0094 21-A4                      52   	tb	r4.2
+00:0096 01 C9                      53   	beq	skip_ea_increment
+00:0098 50-95                      54   	l	r5,	[ea+]
+00:009A                            55   skip_ea_increment:
+00:009A 30-95                      56   	l	r5,	[ea]
+00:009C 1A-85                      57   	sll	r5,	r1
+00:009E 1D-85                      58   	srlc	r5,	r1
+00:00A0 1D-86                      59   	srlc	r6,	r1
+00:00A2 E1-96                      60   	st	r6,	[fp]
+00:00A4 31-95                      61   	st	r5,	[ea]
+00:00A6 5B-9D                      62   	sllc	r13,	#5
+00:00A8 5B-9C                      63   	sllc	r12,	#5
+00:00AA 5B-9B                      64   	sllc	r11,	#5
+00:00AC 5B-9A                      65   	sllc	r10,	#5
+00:00AE 5B-99                      66   	sllc	r9,	#5
+00:00B0 5A-98                      67   	sll	r8,	#5
+00:00B2 A0 EE                      68   	add	fp,	#20h
+00:00B4 FF 12                      69   	add	r2,	#-1
+00:00B6 E6 C8                      70   	bne	print_loop
+00:00B8 2E-F4                      71   	pop	xr4
+00:00BA 3E-F8                      72   	pop	qr8
+00:00BC 1F-FE                      73   	rt
+                                   74   
+00:00BE                            75   print_byte:
+00:00BE CE-F8                      76   	push	lr
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   3 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+00:00C0 6E-F0                      77   	push	xr0
+00:00C2 4C-92                      78   	srl	r2,	#4
+00:00C4 01-F0 64-00                79   	bl	print_char
+00:00C8 2E-F0                      80   	pop	xr0
+00:00CA 06 10                      81   	add	r0,	#6
+00:00CC 0F 22                      82   	and	r2,	#0Fh
+00:00CE 01-F0 64-00                83   	bl	print_char
+00:00D2 8E-F2                      84   	pop	pc
+                                   85   
+00:00D4                            86   is_key_pressed:
+00:00D4 11-91 46-F0                87   	st	r1,	KOD0
+00:00D8 00 02                      88   	mov	r2,	#0
+00:00DA 10 03                      89   	mov	r3,	#10h
+00:00DC                            90   wait_loop:
+00:00DC FF E2                      91   	add	er2,	#-1
+00:00DE FE C8                      92   	bne	wait_loop
+00:00E0 10-91 40-F0                93   	l	r1,	KID
+00:00E4 12-80                      94   	and	r0,	r1
+00:00E6 1F-FE                      95   	rt
+                                   96   
+00:00E8                            97   start:
+00:00E8 03 00                      98   	mov	r0,	#3
+00:00EA 11-90 3D-F0                99   	st	r0,	0F03Dh
+ ** Warning 25: illegal access to SFR
+00:00EE 20 03                     100   	mov	r3,	#20h
+00:00F0                           101   init_loop:
+00:00F0 FF E2                     102   	add	er2,	#-1
+00:00F2 FE C8                     103   	bne	init_loop
+00:00F4 15 00                     104   	mov	r0,	#15h
+00:00F6 11-90 31-F0               105   	st	r0,	0F031h
+ ** Warning 25: illegal access to SFR
+00:00FA 12 00                     106   	mov	r0,	#12h
+00:00FC 11-90 32-F0               107   	st	r0,	0F032h
+ ** Warning 25: illegal access to SFR
+00:0100 0C-F0 00-F8               108   	lea	0F800h
+00:0104 04 03                     109   	mov	r3,	#4
+00:0106                           110   clear_screen_loop:
+00:0106 53-94                     111   	st	er4,	[ea+]
+00:0108 FF E2                     112   	add	er2,	#-1
+00:010A FD C8                     113   	bne	clear_screen_loop
+00:010C F0 0D                     114   	mov	r13,	#0F0h
+00:010E 46 CE                     115   	bal	post_addr_change
+00:0110                           116   scan_key:
+00:0110 01 02                     117   	mov	r2,	#1
+00:0112                           118   key_scan_loop:
+00:0112 11-92 46-F0               119   	st	r2,	KOD0
+00:0116 20-82                     120   	mov	r2,	r2
+00:0118 47 C9                     121   	beq	repaint
+00:011A 10-90 40-F0               122   	l	r0,	KID
+00:011E FF 40                     123   	xor	r0,	#0FFh
+00:0120 02 C8                     124   	bne	test_key
+00:0122 1A-92                     125   	sll	r2,	#1
+00:0124 F6 CE                     126   	bal	key_scan_loop
+00:0126                           127   test_key:
+00:0126 20-81                     128   	mov	r1,	r2
+00:0128 5E-F0                     129   	push	er0
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   4 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+00:012A 01-F0 D4-00               130   	bl	is_key_pressed
+00:012E 1E-F0                     131   	pop	er0
+00:0130 3B C8                     132   	bne	repaint
+00:0132 05-F4                     133   	mov	er4,	er0
+00:0134 00 02                     134   	mov	r2,	#0
+00:0136 FD 03                     135   	mov	r3,	#-3
+00:0138                           136   decode_key_loop_1:
+00:0138 01 12                     137   	add	r2,	#1
+00:013A 1C-91                     138   	srl	r1,	#1
+00:013C FD C0                     139   	bnc	decode_key_loop_1
+00:013E                           140   decode_key_loop_2:
+00:013E 03 13                     141   	add	r3,	#3
+00:0140 1C-90                     142   	srl	r0,	#1
+00:0142 FD C0                     143   	bnc	decode_key_loop_2
+00:0144 06 73                     144   	cmp	r3,	#6
+00:0146 04 C2                     145   	bgt	L1
+00:0148 03 72                     146   	cmp	r2,	#3
+00:014A 2E C2                     147   	bgt	repaint
+00:014C 31-82                     148   	add	r2,	r3
+00:014E 04 CE                     149   	bal	num_input
+00:0150                           150   L1:
+00:0150 0C 73                     151   	cmp	r3,	#12
+00:0152 19 C8                     152   	bne	L2
+00:0154 09 12                     153   	add	r2,	#9
+00:0156 0F 22                     154   	and	r2,	#0Fh
+00:0158                           155   num_input:
+00:0158 A0-8A                     156   	mov	r10,	r10
+00:015A 09 C8                     157   	bne	write_addr
+00:015C B0-8B                     158   	mov	r11,	r11
+00:015E 03 C8                     159   	bne	write
+00:0160 01 0B                     160   	mov	r11,	#1
+00:0162 20-88                     161   	mov	r8,	r2
+00:0164 21 CE                     162   	bal	repaint
+00:0166                           163   write:
+00:0166 4A-98                     164   	sll	r8,	#4
+00:0168 23-88                     165   	or	r8,	r2
+00:016A C1-98                     166   	st	r8,	[bp]
+00:016C 17 CE                     167   	bal	post_addr_change
+00:016E                           168   write_addr:
+00:016E E1-92                     169   	st	r2,	[fp]
+00:0170 81 EE                     170   	add	fp,	#1
+00:0172 E0-8E                     171   	mov	r14,	r14
+00:0174 19 C8                     172   	bne	repaint
+00:0176 7C BC                     173   	l	er12,	-04h[fp]
+00:0178 7E BA                     174   	l	er10,	-02h[fp]
+00:017A 4A-9C                     175   	sll	r12,	#4
+00:017C C3-8D                     176   	or	r13,	r12
+00:017E 4A-9A                     177   	sll	r10,	#4
+00:0180 A3-8B                     178   	or	r11,	r10
+00:0182 B0-8C                     179   	mov	r12,	r11
+00:0184 0B CE                     180   	bal	post_addr_change
+00:0186                           181   L2:
+00:0186 12 73                     182   	cmp	r3,	#18
+00:0188 0F C8                     183   	bne	repaint
+00:018A 01 72                     184   	cmp	r2,	#1
+00:018C 0C C9                     185   	beq	enter_addr_mode
+RASU8(ML620906)Relocatable Assembler, Ver.1.80.4    assemble list. page:   5 
+ Title : 
+## Loc. Object                   Line   Source Statements
+
+00:018E 03 72                     186   	cmp	r2,	#3
+00:0190 04 C9                     187   	beq	left
+00:0192 05 72                     188   	cmp	r2,	#5
+00:0194 09 C8                     189   	bne	repaint
+00:0196 81 EC                     190   	add	bp,	#1
+00:0198 01 CE                     191   	bal	post_addr_change
+00:019A                           192   left:
+00:019A FF EC                     193   	add	bp,	#-1
+00:019C                           194   post_addr_change:
+00:019C 1A-AE                     195   	mov	fp,	sp
+00:019E 00 EA                     196   	mov	er10,	#0
+00:01A0 E3-9A                     197   	st	er10,	[fp]
+00:01A2 C2 BA                     198   	st	er10,	02h[fp]
+00:01A4 01 CE                     199   	bal	repaint
+00:01A6                           200   enter_addr_mode:
+00:01A6 FF 0A                     201   	mov	r10,	#0FFh
+00:01A8                           202   repaint:
+00:01A8 00 00                     203   	mov	r0,	#0
+00:01AA 01 01                     204   	mov	r1,	#1
+00:01AC D0-82                     205   	mov	r2,	r13
+00:01AE 00 03                     206   	mov	r3,	#0
+00:01B0 01-F0 BE-00               207   	bl	print_byte
+00:01B4 0C 00                     208   	mov	r0,	#0Ch
+00:01B6 01 01                     209   	mov	r1,	#1
+00:01B8 C0-82                     210   	mov	r2,	r12
+00:01BA 01-F0 BE-00               211   	bl	print_byte
+00:01BE 20 00                     212   	mov	r0,	#20h
+00:01C0 01 01                     213   	mov	r1,	#1
+00:01C2 C0-92                     214   	l	r2,	[bp]
+00:01C4 A0-83                     215   	mov	r3,	r10
+00:01C6 FF 43                     216   	xor	r3,	#0FFh
+00:01C8 01-F0 BE-00               217   	bl	print_byte
+00:01CC 00 00                     218   	mov	r0,	#0
+00:01CE 1A-A6                     219   	mov	er6,	sp
+00:01D0                           220   addr_print_loop:
+00:01D0 20 01                     221   	mov	r1,	#20h
+00:01D2 60-92                     222   	l	r2,	[er6]
+00:01D4 A0-83                     223   	mov	r3,	r10
+00:01D6 01-F0 64-00               224   	bl	print_char
+00:01DA 06 10                     225   	add	r0,	#6
+00:01DC 81 E6                     226   	add	er6,	#1
+00:01DE 60-86                     227   	mov	r6,	r6
+00:01E0 F7 C8                     228   	bne	addr_print_loop
+00:01E2 45-F0                     229   	mov	er0,	er4
+00:01E4 95 C9                     230   	beq	scan_key
+00:01E6 01-F0 D4-00               231   	bl	is_key_pressed
+00:01EA DE C9                     232   	beq	repaint
+00:01EC 00 E4                     233   	mov	er4,	#0
+00:01EE 90 CE                     234   	bal	scan_key
+                                  235   
+
+
+
+  Target       : ML620906 (nX-U8/100)
+  Memory Model : LARGE
+  Data   Model : NEAR
+  ROM WINDOW   :    0H to CFFFH
+  Internal RAM : D000H to EFFFH
+
+  Errors   : 0
+  Warnings : 3  (/Wrpeast)
+  Lines    : 235

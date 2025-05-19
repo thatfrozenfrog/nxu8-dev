@@ -27,7 +27,7 @@ void main(void){
     out:
     i = 0xF800;
 
-    
+
     while (1){
 
         *((byte *)i) = j;

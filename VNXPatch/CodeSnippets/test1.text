@@ -1,0 +1,46 @@
+void main(void){
+	char str[33];
+	byte x = 1;
+	byte y = 1;
+	byte i = 0;
+	memcpy_seg3((word __near)s_Hello_World, str, 33);
+
+	memzero(0xF800, 0x800);
+
+	for (i; i <= 3; i++){
+		lineprint(x, y, str);
+		x += 5;
+		y += 5;
+		render_ddd4();
+	}
+
+
+
+}
+
+
+void main(void){
+	char *tempbuf[10];
+	word keytable;
+	memzero(0xF800, 0x800);
+
+	while (1){
+		input_key();
+
+		if (HW_STATUS_BAR[0]){
+			keytable = 0x4390;
+		}
+		else if (HW_STATUS_BAR[1]){
+			keytable = 0x19C6;
+		} else {
+			keytable = 0x7b0e; //0x83da;
+		}
+		token_to_string(convertscancode(0xD150, keytable), 0xD180);
+		render_textbox();
+		//lineprint(5,5,tempbuf);
+		render_ddd4();
+
+
+
+	}
+}

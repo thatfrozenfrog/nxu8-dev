@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "ios": "c",
+        "xiosbase": "c",
+        "types.h": "c",
+        "sstream": "c",
+        "functions.h": "c"
+    }
+}
